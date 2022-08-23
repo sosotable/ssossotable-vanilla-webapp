@@ -1,5 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+if(!isset($_COOKIE['user_pw'])) {
+    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+    exit;
+}
+$conn = new mysqli(
+    "18.117.84.165",
+    "ssossotable",
+    "mysql7968!",
+    "ssossotable_food"
+);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT count(*) as cnt FROM food";
+mt_srand(time());
+$result = $conn->query($sql);
+$len=0;
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $len=$row["cnt"];
+    }
+}
+$randNum = mt_rand(1, $len);
+
+$foodName='foodname';
+$sql = "SELECT name FROM food where id="."'".$randNum."'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $foodName=$row["name"];
+    }
+}
+
+$conn->close();
+?>
+
 <head>
     <meta charset="UTF-8">
     <title>Rating main</title>
@@ -37,6 +77,19 @@
             padding: 15px;
             margin: auto;
         }
+        #food_name_modify {
+            width: 250px !important;
+            margin: 2rem 0 2rem 0;
+            display: inline-block;
+        }
+        #food_name_modify_button {
+            width: 50px !important;
+            height: 30px !important;
+            font-size: 15px;
+            padding: 0;
+            margin: 2rem 0 2rem 0;
+            display: inline-block;
+        }
         #trait_name {
             width: 250px !important;
         }
@@ -72,11 +125,27 @@
             align-items: start;
         }
     </style>
-
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <script>
+        const user = <?php echo "'". $_COOKIE['user_pw'] ."'"; ?>
+
+        const randNum = <?php echo $randNum ?>
+
+        let foodName = <?php echo "'".$foodName."'"; ?>
+
+        let len = <?php echo $len; ?>
+
+        let userId= <?php echo $_COOKIE['user_id']; ?>
+
+        let score=0
         let list_idx=0
         let list={}
+        let list_content={}
         let flag=[false,false,false,false,false]
+        
         const before_rate="font-variation-settings:\n" +
             "                    'FILL' 0,\n" +
             "                    'wght' 400,\n" +
@@ -101,16 +170,18 @@
         const set=(idx)=>{
             clear()
             set_rate(idx)
+            score=idx
         }
 
         const delete_trait=(idx)=>{
             let trait_list=document.getElementById('traits_list')
             delete list[idx]
-            let list_content=''
+            delete list_content[idx]
+            let list_items=''
             for(let key in list) {
-                list_content+=list[key]
+                list_items+=list[key]
             }
-            trait_list.innerHTML=list_content
+            trait_list.innerHTML=list_items
         }
         const add_trait=()=>{
             let trait=document.getElementById('trait_name').value
@@ -123,28 +194,66 @@
             </div>
             `
                 list[list_idx]=format
+                list_content[list_idx]=trait
                 list_idx++
                 let trait_list=document.getElementById('traits_list')
-                let list_content=''
+                let list_items=''
                 for(let key in list) {
-                    list_content+=list[key]
+                    list_items+=list[key]
                 }
-                trait_list.innerHTML=list_content
+                trait_list.innerHTML=list_items
             }
+        }
+        const modify_foodname=()=>{
+            foodName=document.getElementById('food_name_modify').value
+            document.getElementById('food_name').innerText=foodName
 
         }
+        const recycle=()=>{
+            location.reload()
+        }
+        const commit=()=>{
+            $.ajax({
+                url: "insert.php",
+                method: "POST",
+                data: {
+                    name: foodName,
+                    contents: list_content,
+                    scoreResult:score,
+                    userName:user,
+                    userid:userId,
+                    foodName:randNum,
+                    currTime:Date.now(),
+                    maxLen:len
+                }
+            })
+                .done((data)=>{
+                    console.log(data)
+                    location.reload()
+                    //$('#name').text(data);
+                })
+                .fail( (err) => {
+                    console.log('err',JSON.stringify(err))
+                });
+        }
+
     </script>
 </head>
 <body class="text-center">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <main class="form-rating">
     <div id="food_rating_database">
         <div id="title">
             <h1>Food Rating System</h1>
         </div>
-        <div id="food_name">
-            <h3>Food Name</h3>
-            <span class="material-symbols-outlined">cycle</span>
+        <div id="food_name_modify_div">
+            <input type="text" id="food_name_modify">
+            <input type="button" id="food_name_modify_button" value="입력" class="w-100 btn btn-lg btn-primary" onclick="modify_foodname()">
+        </div>
+        <div id="food_name_div">
+            <h3 id="food_name">Food Name</h3>
+            <span class="material-symbols-outlined" onclick="recycle()">cycle</span>
         </div>
         <div id="rating">
             <span class="material-symbols-outlined" onclick="set(1)">star_rate</span>
@@ -159,7 +268,13 @@
             <input type="button" id="add_trait" value="추가" class="w-100 btn btn-lg btn-primary" onclick="add_trait()">
             <ul id="traits_list">
             </ul>
-            <input type="button" id="commit_to_database"value="commit to database" class="w-100 btn btn-lg btn-primary">
+            <input type="button" id="commit_to_database"value="commit to database" class="w-100 btn btn-lg btn-primary" onclick="commit()">
         </div>
     </div>
+    <script>
+        const init=()=>{
+            document.getElementById('food_name').innerText=foodName
+        }
+        init()
+    </script>
 </main>
