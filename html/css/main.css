@@ -1,0 +1,69 @@
+@font-face { /* 애플산돌고딕 폰트 적용 */
+    font-family: "Jua";
+    src: url("font/Jua-Regular.ttf") format("truetype");
+    font-weight: normal;
+}
+html,
+body {
+    font-family: Jua;
+    height: 100%;
+}
+body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+}
+.form-rating {
+    width: 100%;
+    padding: 15px;
+    margin: auto;
+}
+#food_name_modify {
+    width: 250px !important;
+    margin: 2rem 0 2rem 0;
+    display: inline-block;
+}
+#food_name_modify_button {
+    width: 50px !important;
+    height: 30px !important;
+    font-size: 15px;
+    padding: 0;
+    margin: 2rem 0 2rem 0;
+    display: inline-block;
+}
+#trait_name {
+    width: 250px !important;
+}
+#traits_list {
+    text-align: left;
+    width: 300px !important;
+    margin: auto;
+    padding-top: 20px;
+}
+#add_trait {
+    margin-top: 20px;
+    width: 250px !important;
+}
+#commit_to_database {
+    width: 250px !important;
+    margin-top: 20px;
+}
+#rating .material-symbols-outlined {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
+}
+#traits ul .material-symbols-outlined {
+    display: inline-block !important;
+    vertical-align: middle;
+}
+#traits ul li {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+    align-items: start;
+}
