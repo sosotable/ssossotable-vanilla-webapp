@@ -25,6 +25,33 @@ let default_traits={
     jelly:false,
     beverage:false
 }
+let traits_en_kr={
+    korean:'한국',
+    japanese:'일본',
+    chinese:'중국',
+    southeast_asian:'동남아시아',
+    south_asian:'남아시아',
+    middle_eastern:'중동',
+    western:'서양',
+    african:'아프리카',
+    latin_american:'라틴아메리카',
+    north_american:'북아메리카',
+    oceania:'오세아니아',
+    mediterranean:'지중해',
+    fried:'튀김',
+    sushi:'회',
+    grilled:'구이',
+    soup:'국',
+    stir_fried:'볶음',
+    raw_food:'생식',
+    stewed:'조림',
+    stew:'찌개',
+    steamed:'찜',
+    snack:'과자',
+    bread:'빵',
+    jelly:'젤리',
+    beverage:'음료수'
+}
 
 const clear=()=>{
     let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
@@ -33,7 +60,6 @@ const clear=()=>{
 }
 const set_rate=(idx)=>{
     let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
-    console.log(target)
     for(let i=0;i<idx;i++)
         target[i].style=after_rate
 }
@@ -44,6 +70,7 @@ const set=(idx)=>{
 }
 
 const delete_trait=(idx)=>{
+    document.getElementById(list_content[idx]).style.visibility='visible'
     let trait_list=document.getElementById('traits_list')
     if(default_traits[list_content[idx]]!==undefined) {
         default_traits[list_content[idx]]=false
@@ -55,6 +82,7 @@ const delete_trait=(idx)=>{
         list_items+=list[key]
     }
     trait_list.innerHTML=list_items
+
 }
 function add_trait() {
     if(arguments[0]==0) {
@@ -82,11 +110,12 @@ function add_trait() {
         if(default_traits[arguments[0]]!=true) {
             let trait=arguments[0]
             default_traits[arguments[0]]=true
+            let id=arguments[0]+"_li"
             if(trait!=='') {
                 const format=
                     `
-                <div class="trait_item" id="${arguments[0]}">
-                    <li>${arguments[0]}</li> <span class="material-symbols-outlined" onclick="delete_trait(${list_idx})">close</span> <br>
+                <div class="trait_item" id="${id}">
+                    <li>${traits_en_kr[arguments[0]]}</li> <span class="material-symbols-outlined" onclick="delete_trait(${list_idx})">close</span> <br>
                 </div>
                 `
                 list[list_idx]=format
@@ -98,6 +127,7 @@ function add_trait() {
                     list_items+=list[key]
                 }
                 trait_list.innerHTML=list_items
+                document.getElementById(trait).style.visibility='hidden'
             }
         }
     }

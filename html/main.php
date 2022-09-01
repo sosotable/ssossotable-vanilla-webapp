@@ -107,35 +107,35 @@ $conn->close();
             <span class="material-symbols-outlined" onclick="set(5)">star_rate</span>
         </div>
         <div id="default_traits">
-            <span class="badge rounded-pill bg-primary" onclick="add_trait('korean');">한국</span>
-            <span class="badge rounded-pill bg-secondary" onclick="add_trait('japanese');">일본</span>
-            <span class="badge rounded-pill bg-success" onclick="add_trait('chinese');">중국</span>
-            <span class="badge rounded-pill bg-danger" onclick="add_trait('southeast');">동남아시아</span>
-            <span class="badge rounded-pill bg-warning text-dark" onclick="add_trait('south_asian');">남아시아</span>
+            <span class="badge rounded-pill bg-primary" id="korean" onclick="add_trait('korean');">한국</span>
+            <span class="badge rounded-pill bg-secondary" id="japanese" onclick="add_trait('japanese');">일본</span>
+            <span class="badge rounded-pill bg-success" id="chinese" onclick="add_trait('chinese');">중국</span>
+            <span class="badge rounded-pill bg-danger" id="southeast_asian" onclick="add_trait('southeast_asian');">동남아시아</span>
+            <span class="badge rounded-pill bg-warning text-dark" id="south_asian" onclick="add_trait('south_asian');">남아시아</span>
             <br>
-            <span class="badge rounded-pill bg-info text-dark" onclick="add_trait('middle_eastern');">중동</span>
-            <span class="badge rounded-pill bg-light text-dark" onclick="add_trait('western');">서양</span>
-            <span class="badge rounded-pill bg-dark" onclick="add_trait('african');">아프리카</span>
-            <span class="badge rounded-pill bg-primary" onclick="add_trait('latin_american');">라틴아메리카</span>
-            <span class="badge rounded-pill bg-secondary" onclick="add_trait('north_american');">북아메리카</span>
+            <span class="badge rounded-pill bg-info text-dark" id="middle_eastern" onclick="add_trait('middle_eastern');">중동</span>
+            <span class="badge rounded-pill bg-light text-dark" id="western" onclick="add_trait('western');">서양</span>
+            <span class="badge rounded-pill bg-dark" id="african" onclick="add_trait('african');">아프리카</span>
+            <span class="badge rounded-pill bg-primary" id="latin_american" onclick="add_trait('latin_american');">라틴아메리카</span>
+            <span class="badge rounded-pill bg-secondary" id="north_american" onclick="add_trait('north_american');">북아메리카</span>
             <br>
-            <span class="badge rounded-pill bg-success" onclick="add_trait('oceania');">오세아니아</span>
-            <span class="badge rounded-pill bg-danger" onclick="add_trait('mediterranean');">지중해</span>
-            <span class="badge rounded-pill bg-warning text-dark" onclick="add_trait('fried');">튀김</span>
-            <span class="badge rounded-pill bg-info text-dark" onclick="add_trait('sushi');">회</span>
-            <span class="badge rounded-pill bg-light text-dark" onclick="add_trait('grilled');">구이</span>
+            <span class="badge rounded-pill bg-success" id="oceania" onclick="add_trait('oceania');">오세아니아</span>
+            <span class="badge rounded-pill bg-danger" id="mediterranean" onclick="add_trait('mediterranean');">지중해</span>
+            <span class="badge rounded-pill bg-warning text-dark" id="fried" onclick="add_trait('fried');">튀김</span>
+            <span class="badge rounded-pill bg-info text-dark" id="sushi" onclick="add_trait('sushi');">회</span>
+            <span class="badge rounded-pill bg-light text-dark" id="grilled" onclick="add_trait('grilled');">구이</span>
             <br>
-            <span class="badge rounded-pill bg-dark" onclick="add_trait('soup');">국</span>
-            <span class="badge rounded-pill bg-primary" onclick="add_trait('stir_fried');">볶음</span>
-            <span class="badge rounded-pill bg-secondary" onclick="add_trait('raw_food');">생식</span>
-            <span class="badge rounded-pill bg-success" onclick="add_trait('stewed');">조림</span>
-            <span class="badge rounded-pill bg-danger" onclick="add_trait('stew');">찌개</span>
+            <span class="badge rounded-pill bg-dark" id="soup" onclick="add_trait('soup');">국</span>
+            <span class="badge rounded-pill bg-primary" id="stir_fried" onclick="add_trait('stir_fried');">볶음</span>
+            <span class="badge rounded-pill bg-secondary" id="raw_food" onclick="add_trait('raw_food');">생식</span>
+            <span class="badge rounded-pill bg-success" id="stewed" onclick="add_trait('stewed');">조림</span>
+            <span class="badge rounded-pill bg-danger" id="stew" onclick="add_trait('stew');">찌개</span>
             <br>
-            <span class="badge rounded-pill bg-warning text-dark" onclick="add_trait('steamed');">찜</span>
-            <span class="badge rounded-pill bg-info text-dark" onclick="add_trait('snack');">과자</span>
-            <span class="badge rounded-pill bg-light text-dark" onclick="add_trait('bread');">빵</span>
-            <span class="badge rounded-pill bg-dark" onclick="add_trait('jelly');">젤리</span>
-            <span class="badge rounded-pill bg-primary" onclick="add_trait('beverage');">음료수</span>
+            <span class="badge rounded-pill bg-warning text-dark" id="steamed" onclick="add_trait('steamed');">찜</span>
+            <span class="badge rounded-pill bg-info text-dark" id="snack" onclick="add_trait('snack');">과자</span>
+            <span class="badge rounded-pill bg-light text-dark" id="bread" onclick="add_trait('bread');">빵</span>
+            <span class="badge rounded-pill bg-dark" id="jelly" onclick="add_trait('jelly');">젤리</span>
+            <span class="badge rounded-pill bg-primary" id="beverage" onclick="add_trait('beverage');">음료수</span>
         </div>
 
         <div id="traits">
