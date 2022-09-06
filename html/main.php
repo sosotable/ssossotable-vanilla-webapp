@@ -93,7 +93,7 @@ $conn->close();
         </div>
         <div id="food_name_modify_div">
             <input type="text" id="food_name_modify">
-            <input type="button" id="food_name_modify_button" value="입력" class="w-100 btn btn-lg btn-primary" onclick="modify_foodname()">
+            <input type="button" id="food_name_modify_button" value="입력" class="w-100 btn btn-lg btn-info" onclick="modify_foodname()">
         </div>
         <div id="food_name_div">
             <h3 id="food_name">Food Name</h3>
@@ -141,10 +141,10 @@ $conn->close();
         <div id="traits">
             <input type="text" id="trait_name">
             <br>
-            <input type="button" id="add_trait" value="추가" class="w-100 btn btn-lg btn-primary" onclick="add_trait(0)">
+            <input type="button" id="add_trait" value="추가" class="w-100 btn btn-lg btn-info" onclick="add_trait(0)">
             <ul id="traits_list">
             </ul>
-            <input type="button" id="commit_to_database"value="commit to database" class="w-100 btn btn-lg btn-primary" onclick="commit()">
+            <input type="button" id="commit_to_database"value="commit to database" class="w-100 btn btn-lg btn-info" onclick="commit()">
         </div>
     </div>
     <script>

@@ -24,4 +24,4 @@ setcookie('user_name',$user_name,time()+(180),'/');
 setcookie('user_id',$user_id,time()+180,'/');
 $conn->close();
 ?>
-<meta http-equiv='refresh' content='0;url=main.php'>
+<meta http-equiv='refresh' content='0;url=select.php'>
