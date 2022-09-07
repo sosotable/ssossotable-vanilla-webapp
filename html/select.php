@@ -5,6 +5,10 @@ if(!isset($_COOKIE['user_name'])) {
     echo "<meta http-equiv='refresh' content='0;url=index.php'>";
     exit;
 }
+else {
+    setcookie('user_name',$_COOKIE['user_name'],time()+(180),'/');
+    setcookie('user_id',$_COOKIE['user_id'],time()+180,'/');
+}
 ?>
 <head>
     <meta charset="UTF-8">

@@ -3,7 +3,7 @@
 <?php
 if(isset($_COOKIE['user_name'])) {
     $user_name = $_COOKIE['user_name'];
-    echo "<meta http-equiv='refresh' content='0;url=main.php'>";
+    echo "<meta http-equiv='refresh' content='0;url=select.php'>";
     exit;
 }
 ?>

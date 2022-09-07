@@ -1,19 +1,28 @@
 let selectedObj={
+    score:0,
     what:"",
     when:{},
     where:{},
     who:{},
     why:{}
 }
+
 //0
 const what=`
 <div class="card" style="width: 18rem;" id="what">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="../src/what.jpg" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">오늘 뭘 먹었나요?</p>
     </div>
-    <input type="text" placeholder="음식 입력" id="foodName" onchange="setWhat();">
+    <div id="rating">   
+        <span class="material-symbols-outlined" onclick="set(1)">star_rate</span>
+        <span class="material-symbols-outlined" onclick="set(2)">star_rate</span>
+        <span class="material-symbols-outlined" onclick="set(3)">star_rate</span>
+        <span class="material-symbols-outlined" onclick="set(4)">star_rate</span>
+        <span class="material-symbols-outlined" onclick="set(5)">star_rate</span>
+    </div>
+    <input type="text" placeholder="음식 입력" id="foodName" autocomplete='off' onchange="setWhat();">
     <div class="card-body" id="hrefId">
         <div class="href">
             <div></div>
@@ -23,13 +32,10 @@ const what=`
 </div>
 `
 
-const beforeSelected="list-group-item"
-const selected="list-group-item bg-info text-white"
-
 //1
 const when=`
 <div class="card" style="width: 18rem;" id="when">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="../src/when.jpg" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">언제 먹었나요?</p>
@@ -50,7 +56,7 @@ const when=`
 //2
 const where=`
 <div class="card" style="width: 18rem;" id="where">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="../src/where.jpg" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">어디서 먹었나요?</p>
@@ -71,7 +77,7 @@ const where=`
 //3
 const who=`
 <div class="card" style="width: 18rem;" id="who">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="../src/who.jpg" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">누구와 먹었나요?</p>
@@ -92,7 +98,7 @@ const who=`
 `
 const why=`
 <div class="card" style="width: 18rem;" id="why">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="../src/why.PNG" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">왜 먹었나요?</p>
@@ -110,7 +116,21 @@ const why=`
     </div>
 </div>
 `
-
+const clear=()=>{
+    let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
+    for(let i=0;i<5;i++)
+        target[i].style=before_rate
+}
+const set_rate=(idx)=>{
+    let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
+    for(let i=0;i<idx;i++)
+        target[i].style=after_rate
+}
+const set=(idx)=>{
+    clear()
+    set_rate(idx)
+    selectedObj.score=idx
+}
 function setWhat() {
     let value=document.getElementById("foodName").value
     selectedObj.what=value
@@ -134,13 +154,13 @@ function setWhen() {
     }
     switch (idx) {
         case 0:
-            selectedObj.when.name='아침'
+            selectedObj.when.name='breakfast'
             break
         case 1:
-            selectedObj.when.name='점심'
+            selectedObj.when.name='lunch'
             break
         case 2:
-            selectedObj.when.name='저녁'
+            selectedObj.when.name='dinner'
             break
         default:
     }
@@ -165,13 +185,13 @@ function setWhere() {
     }
     switch (arguments[0]) {
         case 0:
-            selectedObj.where.name='집'
+            selectedObj.where.name='home'
             break
         case 1:
-            selectedObj.where.name='외식'
+            selectedObj.where.name='outside'
             break
         case 2:
-            selectedObj.where.name='여행'
+            selectedObj.where.name='travel'
             break
         default:
     }
@@ -195,16 +215,16 @@ function setWho() {
     }
     switch (arguments[0]) {
         case 0:
-            selectedObj.who.name='혼자'
+            selectedObj.who.name='alone'
             break
         case 1:
-            selectedObj.who.name='친구'
+            selectedObj.who.name='friend'
             break
         case 2:
-            selectedObj.who.name='가족'
+            selectedObj.who.name='family'
             break
         case 3:
-            selectedObj.who.name='연인'
+            selectedObj.who.name='couple'
             break
         default:
     }
@@ -228,13 +248,13 @@ function setWhy() {
     }
     switch (arguments[0]) {
         case 0:
-            selectedObj.why.name='일반식사'
+            selectedObj.why.name='meal'
             break
         case 1:
-            selectedObj.why.name='친목도모'
+            selectedObj.why.name='friendship'
             break
         case 2:
-            selectedObj.why.name='데이트'
+            selectedObj.why.name='dating'
             break
         default:
     }
@@ -264,4 +284,22 @@ function setOption() {
 
 function commit() {
     console.log(selectedObj)
+    $.ajax({
+        url: "/script/meal_insert.php",
+        method: "POST",
+        data: {
+            username:userName,
+            userid:userId,
+            selected:selectedObj,
+            maxLen:len
+        }
+    })
+        .done((data)=>{
+            console.log(data)
+            // location.reload()
+        })
+        .fail( (err) => {
+            console.log('err',JSON.stringify(err))
+        });
+
 }
