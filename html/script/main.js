@@ -161,7 +161,7 @@ const recycle=()=>{
 }
 const commit=()=>{
     $.ajax({
-        url: "insert.php",
+        url: "/script/insert.php",
         method: "POST",
         data: {
             username:userName,

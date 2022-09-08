@@ -19,18 +19,17 @@ else {
     <script src="/script/meal.js" type="text/javascript"></script>
 </head>
 <body class="text-center">
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<main class="form_food_option">
-    <div class="item" id="title">
-        <h1>Select Option</h1>
-    </div>
-    <div class="item" id="food_select_div">
-        <a href="/main.php"><input type="button" value="음식 기록하기" id="food_select" class="btn btn-info"></a>
-    </div>
-    <div class="item" id="meal_select_div">
-        <a href="/meal.php"><input type="button" value="한끼 기록하기" id="meal_select" class="btn btn-info"></a>
-    </div>
-</main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <main class="form_food_option">
+        <div class="item" id="title">
+            <h1>Select Option</h1>
+        </div>
+        <div class="item" id="food_select_div">
+            <a href="/main.php"><input type="button" value="음식 기록하기" id="food_select" class="btn btn-info"></a>
+        </div>
+        <div class="item" id="meal_select_div">
+            <a href="/meal.php"><input type="button" value="한끼 기록하기" id="meal_select" class="btn btn-info"></a>
+        </div>
+    </main>
 </body>
 </html>
