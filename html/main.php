@@ -24,13 +24,11 @@ if ($result->num_rows > 0) {
 $foodId = mt_rand(1, $len);
 
 $foodName='foodname';
-$sql = "SELECT name FROM food where id="."'".$foodId."'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $foodName=$row["name"];
-    }
-}
+$sql = 'SELECT name FROM food where id=?';
+$stmt=$conn->prepare($sql);
+$stmt->bind_param("i", $foodId);
+$stmt->execute();
+$foodName=(($stmt->get_result())->fetch_assoc())['name'];
 
 $conn->close();
 ?>
@@ -62,8 +60,11 @@ $conn->close();
 
         // 음식 이름(String)
         let foodName = <?php echo "'".$foodName."'"; ?>
+
         // 음식 아이디(int)
         let foodId = <?php echo $foodId ?>
+
+        let foodLocation=""
 
         // food 테이블의 총 길이(int)
         let len = <?php echo $len; ?>
@@ -72,18 +73,11 @@ $conn->close();
         let list_idx=0
         let list={}
         let list_content={}
-        let flag=[false,false,false,false,false]
 
-        const before_rate="font-variation-settings:\n" +
-            "                    'FILL' 0,\n" +
-            "                    'wght' 400,\n" +
-            "                    'GRAD' 0,\n" +
-            "                    'opsz' 48"
-        const after_rate="font-variation-settings:\n" +
-            "                    'FILL' 1,\n" +
-            "                    'wght' 400,\n" +
-            "                    'GRAD' 0,\n" +
-            "                    'opsz' 48"
+        function init() {
+            console.log(len)
+            document.getElementById('food_name').innerText=foodName
+        }
     </script>
     <script src="/script/main.js"></script>
 </head>
@@ -96,54 +90,62 @@ $conn->close();
             <h1>Food Rating System</h1>
         </div>
         <div id="food_name_modify_div">
-            <input type="text" id="food_name_modify">
+            <input type="text" placeholder="뭘 먹었나요?" id="food_name_modify">
             <input type="button" id="food_name_modify_button" value="입력" class="w-100 btn btn-lg btn-info" onclick="modify_foodname()">
+        </div>
+        <div id="food_location_modify_div">
+            <input type="text" placeholder="어디서 먹었나요?" id="food_location_modify">
+            <input type="button" id="food_loaction_modify_button" value="입력" class="w-100 btn btn-lg btn-info" onclick="modify_location()">
         </div>
         <div id="food_name_div">
             <h3 id="food_name">Food Name</h3>
             <span class="material-symbols-outlined" onclick="recycle()">cycle</span>
+            <span class="material-symbols-outlined" onclick="delete_food()">delete</span>
+        </div>
+        <div id="food_location_div">
+            <h3 id="food_location">Food location</h3>
         </div>
         <div id="rating">
-            <span class="material-symbols-outlined" onclick="set(1)">star_rate</span>
-            <span class="material-symbols-outlined" onclick="set(2)">star_rate</span>
-            <span class="material-symbols-outlined" onclick="set(3)">star_rate</span>
-            <span class="material-symbols-outlined" onclick="set(4)">star_rate</span>
-            <span class="material-symbols-outlined" onclick="set(5)">star_rate</span>
+            <span class="material-symbols-outlined" onclick="set(1)"><img src="/src/rate_star_before.png" height="80" width="80"></span>
+            <span class="material-symbols-outlined" onclick="set(2)"><img src="/src/rate_star_before.png" height="80" width="80"></span>
+            <span class="material-symbols-outlined" onclick="set(3)"><img src="/src/rate_star_before.png" height="80" width="80"></span>
+            <span class="material-symbols-outlined" onclick="set(4)"><img src="/src/rate_star_before.png" height="80" width="80"></span>
+            <span class="material-symbols-outlined" onclick="set(5)"><img src="/src/rate_star_before.png" height="80" width="80"></span>
         </div>
         <div id="default_traits">
             <span class="badge rounded-pill bg-primary" id="korean" onclick="add_trait('korean');">한국</span>
             <span class="badge rounded-pill bg-secondary" id="japanese" onclick="add_trait('japanese');">일본</span>
             <span class="badge rounded-pill bg-success" id="chinese" onclick="add_trait('chinese');">중국</span>
-            <span class="badge rounded-pill bg-danger" id="southeast_asian" onclick="add_trait('southeast_asian');">동남아시아</span>
-            <span class="badge rounded-pill bg-warning text-dark" id="south_asian" onclick="add_trait('south_asian');">남아시아</span>
+            <span class="badge rounded-pill bg-danger" id="asian" onclick="add_trait('asian');">아시아</span>
+            <span class="badge rounded-pill bg-warning text-dark" id="western" onclick="add_trait('western');">양식</span>
             <br>
-            <span class="badge rounded-pill bg-info text-dark" id="middle_eastern" onclick="add_trait('middle_eastern');">중동</span>
-            <span class="badge rounded-pill bg-light text-dark" id="western" onclick="add_trait('western');">서양</span>
-            <span class="badge rounded-pill bg-dark" id="african" onclick="add_trait('african');">아프리카</span>
-            <span class="badge rounded-pill bg-primary" id="latin_american" onclick="add_trait('latin_american');">라틴아메리카</span>
-            <span class="badge rounded-pill bg-secondary" id="north_american" onclick="add_trait('north_american');">북아메리카</span>
+            <span class="badge rounded-pill bg-info text-dark" id="fried" onclick="add_trait('fried');">튀김</span>
+            <span class="badge rounded-pill bg-light text-dark" id="sushi" onclick="add_trait('sushi');">회</span>
+            <span class="badge rounded-pill bg-dark" id="grilled" onclick="add_trait('grilled');">구이</span>
+            <span class="badge rounded-pill bg-primary" id="soup" onclick="add_trait('soup');">국</span>
+            <span class="badge rounded-pill bg-secondary" id="stir_fried" onclick="add_trait('stir_fried');">볶음</span>
             <br>
-            <span class="badge rounded-pill bg-success" id="oceania" onclick="add_trait('oceania');">오세아니아</span>
-            <span class="badge rounded-pill bg-danger" id="mediterranean" onclick="add_trait('mediterranean');">지중해</span>
-            <span class="badge rounded-pill bg-warning text-dark" id="fried" onclick="add_trait('fried');">튀김</span>
-            <span class="badge rounded-pill bg-info text-dark" id="sushi" onclick="add_trait('sushi');">회</span>
-            <span class="badge rounded-pill bg-light text-dark" id="grilled" onclick="add_trait('grilled');">구이</span>
-            <br>
-            <span class="badge rounded-pill bg-dark" id="soup" onclick="add_trait('soup');">국</span>
-            <span class="badge rounded-pill bg-primary" id="stir_fried" onclick="add_trait('stir_fried');">볶음</span>
-            <span class="badge rounded-pill bg-secondary" id="raw_food" onclick="add_trait('raw_food');">생식</span>
             <span class="badge rounded-pill bg-success" id="stewed" onclick="add_trait('stewed');">조림</span>
             <span class="badge rounded-pill bg-danger" id="stew" onclick="add_trait('stew');">찌개</span>
-            <br>
             <span class="badge rounded-pill bg-warning text-dark" id="steamed" onclick="add_trait('steamed');">찜</span>
-            <span class="badge rounded-pill bg-info text-dark" id="snack" onclick="add_trait('snack');">과자</span>
-            <span class="badge rounded-pill bg-light text-dark" id="bread" onclick="add_trait('bread');">빵</span>
-            <span class="badge rounded-pill bg-dark" id="jelly" onclick="add_trait('jelly');">젤리</span>
-            <span class="badge rounded-pill bg-primary" id="beverage" onclick="add_trait('beverage');">음료수</span>
+            <span class="badge rounded-pill bg-info text-dark" id="raw_food" onclick="add_trait('raw_food');">생식</span>
+            <span class="badge rounded-pill bg-light text-dark" id="snack" onclick="add_trait('snack');">과자</span>
+            <br>
+            <span class="badge rounded-pill bg-dark" id="bread" onclick="add_trait('bread');">빵</span>
+            <span class="badge rounded-pill bg-primary" id="jelly" onclick="add_trait('jelly');">젤리</span>
+            <span class="badge rounded-pill bg-secondary" id="beverage" onclick="add_trait('beverage');">음료</span>
+            <span class="badge rounded-pill bg-success" id="sweetness" onclick="add_trait('sweetness');">단맛</span>
+            <span class="badge rounded-pill bg-danger" id="sour_taste" onclick="add_trait('sour_taste');">신맛</span>
+            <br>
+            <span class="badge rounded-pill bg-warning text-dark" id="spicy" onclick="add_trait('spicy');">매운맛</span>
+            <span class="badge rounded-pill bg-info text-dark" id="noodle" onclick="add_trait('noodle');">면</span>
+            <span class="badge rounded-pill bg-light text-dark" id="seafood" onclick="add_trait('seafood');">해물</span>
+            <span class="badge rounded-pill bg-dark" id="meat" onclick="add_trait('meat');">육고기</span>
+            <span class="badge rounded-pill bg-primary" id="vegetable" onclick="add_trait('vegetable');">채소</span>
         </div>
 
         <div id="traits">
-            <input type="text" id="trait_name">
+            <input type="text" placeholder="무슨 특성이 있나요?" id="trait_name">
             <br>
             <input type="button" id="add_trait" value="추가" class="w-100 btn btn-lg btn-info" onclick="add_trait(0)">
             <ul id="traits_list">
@@ -152,10 +154,6 @@ $conn->close();
         </div>
     </div>
     <script>
-        const init=()=>{
-            console.log(len)
-            document.getElementById('food_name').innerText=foodName
-        }
         init()
     </script>
 </main>

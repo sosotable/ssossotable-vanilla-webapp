@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+/**쿠키값 확인**/
 if(isset($_COOKIE['user_name'])) {
     $user_name = $_COOKIE['user_name'];
     echo "<meta http-equiv='refresh' content='0;url=select.php'>";

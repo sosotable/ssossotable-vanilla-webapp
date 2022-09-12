@@ -3,7 +3,7 @@ if(!isset($_POST['user_name'])) exit;
 $user_name = $_POST['user_name'];
 $user_id=0;
 
-include 'script/db_conn.php';
+include 'db_conn.php';
 
 $sql = "SELECT * FROM user where userid="."'".$user_name."'";
 $result = $conn->query($sql);
@@ -24,4 +24,4 @@ setcookie('user_name',$user_name,time()+(180),'/');
 setcookie('user_id',$user_id,time()+180,'/');
 $conn->close();
 ?>
-<meta http-equiv='refresh' content='0;url=select.php'>
+<meta http-equiv='refresh' content='0;url=../main.php'>

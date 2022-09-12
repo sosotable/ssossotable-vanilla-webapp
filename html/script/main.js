@@ -2,15 +2,8 @@ let default_traits={
     korean:false,
     japanese:false,
     chinese:false,
-    southeast_asian:false,
-    south_asian:false,
-    middle_eastern:false,
-    western:false,
-    african:false,
-    latin_american:false,
-    north_american:false,
-    oceania:false,
-    mediterranean:false,
+    asian:false,
+    western: false,
     fried:false,
     sushi:false,
     grilled:false,
@@ -23,21 +16,21 @@ let default_traits={
     snack:false,
     bread:false,
     jelly:false,
-    beverage:false
+    beverage:false,
+    sweetness:false,
+    sour_taste:false,
+    spicy:false,
+    noodle:false,
+    seafood:false,
+    meat:false,
+    vegetable:false
 }
 let traits_en_kr={
     korean:'한국',
     japanese:'일본',
     chinese:'중국',
-    southeast_asian:'동남아시아',
-    south_asian:'남아시아',
-    middle_eastern:'중동',
-    western:'서양',
-    african:'아프리카',
-    latin_american:'라틴아메리카',
-    north_american:'북아메리카',
-    oceania:'오세아니아',
-    mediterranean:'지중해',
+    asian:'아시아',
+    western: '양식',
     fried:'튀김',
     sushi:'회',
     grilled:'구이',
@@ -50,20 +43,38 @@ let traits_en_kr={
     snack:'과자',
     bread:'빵',
     jelly:'젤리',
-    beverage:'음료수'
+    beverage:'음료수',
+    sweetness:'단맛',
+    sour_taste:'신맛',
+    spicy:'매운맛',
+    noodle:'면',
+    seafood:'해물',
+    meat:'육고기',
+    vegetable:'채소'
 }
 
 const clear=()=>{
     let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
-    for(let i=0;i<5;i++)
-        target[i].style=before_rate
+    for(let i=0;i<5;i++) {
+        target[i].innerHTML =
+        `<span className="material-symbols-outlined" onClick="set(${i + 1})">
+            <img src="/src/rate_star_before.png" height="80" width="80">
+        </span>`
+    }
 }
 const set_rate=(idx)=>{
     let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
-    for(let i=0;i<idx;i++)
-        target[i].style=after_rate
+    for(let i=0;i<idx;i++) {
+        target[i].innerHTML =
+        `<span className="material-symbols-outlined" onClick="set(${i + 1})">
+            <img src="/src/rate_star_after.png" height="80" width="80">
+        </span>`
+    }
 }
 const set=(idx)=>{
+    let target = document.getElementById("rating").getElementsByClassName("material-symbols-outlined")
+    console.log(target[idx])
+    console.log(idx)
     clear()
     set_rate(idx)
     score=idx
@@ -137,6 +148,7 @@ function add_trait() {
 const modify_foodname=()=>{
     foodName=document.getElementById('food_name_modify').value
     document.getElementById('food_name').innerText=foodName
+    document.getElementById('food_name_modify').value=''
     $.ajax({
         url: "getId.php",
         method: "POST",
@@ -156,12 +168,33 @@ const modify_foodname=()=>{
             console.log('err',JSON.stringify(err))
         });
 }
+function modify_location() {
+    foodLocation=document.getElementById('food_location_modify').value
+    document.getElementById('food_location_modify').value=''
+    document.getElementById('food_location').innerText=foodLocation
+}
 const recycle=()=>{
     location.reload()
 }
+function delete_food() {
+    $.ajax({
+        url: "/script/delete_food.php",
+        method: "POST",
+        data: {
+            foodId:foodId
+        }
+        })
+        .done((data)=>{
+            // console.log(data)
+            location.reload()
+        })
+        .fail( (err) => {
+            console.log('err',JSON.stringify(err))
+        });
+}
 const commit=()=>{
     $.ajax({
-        url: "/script/insert.php",
+        url: "/script/main_insert.php",
         method: "POST",
         data: {
             username:userName,
@@ -169,14 +202,12 @@ const commit=()=>{
 
             foodname:foodName,
             foodid:foodId,
+            foodLocation:foodLocation,
 
             contents: list_content,
             default_traits: default_traits,
 
             scoreResult:score,
-
-            currTime:Date.now(),
-            maxLen:len
         }
     })
         .done((data)=>{
