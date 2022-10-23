@@ -19,21 +19,30 @@
     <title>ssosso-table.food-db.signin</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="css/main/cover.css" rel="stylesheet">
+    <link href="./css/main/cover.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
+    <style>
+    </style>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    </script>
 </head>
 <body class="text-center">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <main class="form-signin">
-        <form action="/script/auth.php" method="post">
-            <h3 class="h3 mb-3 fw-normal">Food Rating Auth</h3>
+        <img src="src/logo.png" width="240" height="240"/>
+        <form action="/script/php/auth.php" method="post">
 
             <div class="form-floating">
-                <input type="password" name="user_name" class="form-control" id="floatingInput" placeholder="password" autocomplete='off'>
+                <input type="password" id="user_name" name="user_name" class="form-control" id="floatingInput" placeholder="password" autocomplete='off'>
                 <label for="floatingInput">Auth Code</label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Check Auth</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2022–2022 ssossotable</p>
+            <button class="w-100 btn btn-lg" type="submit" style="background-color:#e4bd74; color:white;">Check Auth</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2022–2022 ssosso.table</p>
         </form>
     </main>
 </body>
