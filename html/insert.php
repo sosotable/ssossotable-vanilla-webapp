@@ -10,7 +10,7 @@ include 'script/modules/CookieManager.php';
     <meta name="description" content="">
     <meta name="author" content="ssosso.table.u">
     <meta name="generator" content="ssosso.table food-db 0.1.0">
-    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="icon" href="src/favicon.png">
 
     <title>ssosso-table.food-db.insert</title>
 
@@ -18,15 +18,6 @@ include 'script/modules/CookieManager.php';
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon.ico">
-    <meta name="theme-color" content="#7952b3">
 
     <style>
         .bd-placeholder-img {
@@ -218,10 +209,10 @@ include 'script/modules/CookieManager.php';
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
             <div class="inner">
-                <a href="http://ssossotable.com/rating.php"><h3 class="masthead-brand">소소식탁</h3></a>
+                <a href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link text-muted" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-                    <a class="nav-link active" href="http://ssossotable.com/insert.php">음식 추가하기</a>
+                    <a class="nav-link text-muted" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
                     <a class="nav-link text-muted" href="http://ssossotable.com/record.php">식사 기록하기</a>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
@@ -229,6 +220,8 @@ include 'script/modules/CookieManager.php';
                             <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
                             <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
                             <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
+                            <li><a class="dropdown-item" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a></li>
+                            <li><a class="dropdown-item" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -293,7 +286,6 @@ include 'script/modules/CookieManager.php';
         </div>
     </footer>
 </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script></body>
-
-</body></html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

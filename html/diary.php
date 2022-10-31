@@ -25,15 +25,6 @@ else {
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
-    <link rel="icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon.ico">
-    <meta name="theme-color" content="#7952b3">
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -85,10 +76,10 @@ else {
 
     <header class="masthead mb-auto">
         <div class="inner">
-            <a href="http://ssossotable.com/rating.php"><h3 class="masthead-brand">소소식탁</h3></a>
+            <a href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
             <nav class="nav nav-masthead justify-content-center">
                 <a class="nav-link text-muted" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-                <a class="nav-link text-muted" href="http://ssossotable.com/insert.php">음식 추가하기</a>
+                <a class="nav-link text-muted" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
                 <a class="nav-link text-muted" href="http://ssossotable.com/record.php">식사 기록하기</a>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
@@ -96,6 +87,8 @@ else {
                         <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
                         <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
                         <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
+                        <li><a class="dropdown-item" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a></li>
+                        <li><a class="dropdown-item" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a></li>
                     </ul>
                 </div>
             </nav>
@@ -186,7 +179,6 @@ else {
                             <div><span>${info[7]}</span></div>
                         </div>
                         `
-                        console.log(rfmt)
                         document.getElementById('modal-content').innerHTML=``
                         document.getElementById('modal-content').innerHTML=rfmt
                         document.getElementById(`diary-list-${info[3]}`).click()
@@ -201,9 +193,6 @@ else {
                         infowindow.setContent(format);
                         infowindow.open(map,marker);
                     });
-
-                    // 생성된 마커를 배열에 추가합니다
-
                 }
 
                 // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
@@ -222,9 +211,7 @@ else {
                 function hideMarkers() {
                     setMarkers(null);
                 }
-                function showInfo() {
-
-                    console.log(arguments)
+                async function showInfo() {
 
                     if(document.getElementById(`diary-list-${arguments[2]}`).classList.contains('active')) {
                         document.getElementById(`diary-list-${arguments[2]}`).classList.remove('active')
@@ -238,7 +225,32 @@ else {
                     }
                     const marker=markers[arguments[2]]
                     let f=``
+                    let commentContent=``
+                    const commentInfo=JSON.parse(await $.ajax({
+                        type: "POST",
+                        url: '/script/php/DAOHandler.php',
+                        data: {
+                            0:'select',
+                            1:'*',
+                            2:`diary_comment`,
+                            3:`userId=<?php echo $_COOKIE['user_id']?> and locationid=${arguments[2]}`
+                        }}))
+                    if(commentInfo.length!==0) {
+                        for(let i=0;i<commentInfo.length;i++) {
+                            commentContent+=`<li class="list-group-item d-flex justify-content-evenly" id='${commentInfo[i][0]}'>
+                            <div>
+                                <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
+                                <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
+                            </div>
+                            <span style="display:block;">${commentInfo[i][3]}</span>
+                            <div>
+                                <img src='src/close.png' width="20px" height="20px" onclick="delete_comment('${commentInfo[i][0]}')"/>
+                            </div>
+                        </li>`
+                        }
 
+                        console.log(commentInfo)
+                    }
                     switch (parseInt(arguments[0])) {
                         case 1:
                             f=getScore(0,arguments[2],`${arguments[5]}`,`${arguments[6]}`,`${arguments[1]}`,arguments[3],arguments[4])
@@ -280,6 +292,13 @@ else {
                             <div><span>${f}</span></div>
                             <div><span>${arguments[5]}</span></div>
                             <div><span>${arguments[6]}</span></div>
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" id="comment-value" placeholder="코멘트 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+                              <button class="btn btn-outline-secondary" type="button" onclick="add_comment(${arguments[2]});" id="button-addon2">작성</button>
+                            </div>
+                            <ul class="list-group" id="comment-list">
+                                ${commentContent}
+                            </ul>
                         </div>
                         `
                     document.getElementById('modal-content').innerHTML=``
@@ -295,15 +314,58 @@ else {
                     infowindow.setContent(format);
                     infowindow.open(map,marker);
                 }
+                async function add_comment() {
+                    const userId=<?php echo $_COOKIE['user_id'];?>
+
+                    const locationId=parseInt(arguments[0])
+                    const comment=document.getElementById('comment-value').value
+                    const commentId=`comment-${userId}-${locationId}-${Date.now()}`
+                    document.getElementById('comment-value').value=''
+                    if(comment!=='') {
+                        let comment_format=`
+                        <li class="list-group-item d-flex justify-content-evenly" id='${commentId}'>
+                            <div>
+                                <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
+                                <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
+                            </div>
+                            <span style="display:block;">${comment}</span>
+                            <div>
+                                <img src='src/close.png' width="20px" height="20px" onclick="delete_comment('${commentId}')"/>
+                            </div>
+                        </li>
+                        `
+                        document.getElementById('comment-list').innerHTML+=comment_format
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data: {
+                                0:'insert',
+                                1:'diary_comment(id,userid,locationid,comment)',
+                                2:`'${commentId}',${userId},${locationId},'${comment}'`
+                            }})
+                    }
+                }
+                async function delete_comment() {
+                     await $.ajax({
+                         type: "POST",
+                         url: '/script/php/DAOHandler.php',
+                         data: {
+                             0:'delete',
+                             1:'diary_comment',
+                             2:`userid=<?php echo $_COOKIE['user_id']?> and id='${arguments[0]}'`
+                         }})
+                    document.getElementById(arguments[0]).remove()
+                }
                 async function init() {
-
-                    postJson={}
-                    postJson[0]=2
-                    postJson[1]='*'
-                    postJson[2]='record'
-                    postJson[3]=`userid=${<?php echo $_COOKIE['user_id']?>}`
-
-                    k=JSON.parse(await $.post( "script/php/DAOHandler.php",postJson));
+                    k=JSON.parse(await $.ajax({
+                        type: "POST",
+                        url: '/script/php/DAOHandler.php',
+                        data: {
+                            0:'select',
+                            1:'*',
+                            2:'record',
+                            3:`userid=${<?php echo $_COOKIE['user_id']?>}`
+                        }}))
 
                     if(k.length !== 0) {
                         let format=``
@@ -421,7 +483,7 @@ else {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="recordModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="recordModalLabel">다이어리</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-content">
