@@ -173,7 +173,6 @@ function clear_page() {
 }
 
 async function commit() {
-    let postJson={}
 
     let traits=``
     for(let i=0;i<Object.keys(list_content).length;i++) {
@@ -183,36 +182,60 @@ async function commit() {
             traits+=list_content[i]+'|'
     }
 
-    postJson[0]=2
-    postJson[1]='*'
-    postJson[2]='food'
-    postJson[3]=`name='${foodName}'`
-
-    let find_food=JSON.parse(await $.ajax({type: "POST", url: '/script/php/DAOHandler.php', data: postJson}))
+    let find_food=JSON.parse(await $.ajax({
+        type: "POST",
+        url: '/script/php/DAOHandler.php',
+        data: {
+            0:'select',
+            1:'*',
+            2:'food',
+            3:`name='${foodName}'`
+        }}))
 
     if(find_food.length>0) {
         alert('이미 존재하는 음식')
     }
     else {
-        postJson={}
-        postJson[0]=1
-        postJson[1]=`food(name,trait)`
-        postJson[2]=`'${foodName}','${traits}'`
-        await $.ajax({type: "POST", url: '/script/php/DAOHandler.php', data: postJson})
-
-        postJson={}
-        postJson[0]=2
-        postJson[1]=`id`
-        postJson[2]='food'
-        postJson[3]=`name='${foodName}'`
-        const v=JSON.parse(await $.ajax({type: "POST", url: '/script/php/DAOHandler.php', data: postJson}))
+        await $.ajax({
+            type: "POST",
+            url: '/script/php/DAOHandler.php',
+            data: {
+                0:'insert',
+                1:`food(name,trait)`,
+                2:`'${foodName}','${traits}'`
+            }})
+        const v=JSON.parse(await $.ajax({
+            type: "POST",
+            url: '/script/php/DAOHandler.php',
+            data: {
+                0:'select',
+                1:'id',
+                2:'food',
+                3:`name='${foodName}'`
+            }}))
         const id=parseInt(v[0][0])
-
-        postJson={}
-        postJson[0]=1
-        postJson[1]= `trait(id,korean,japanese,chinese,asian,western,fried,raw,grilled,soup,stir_fried,steamed,wheat,dessert,beverage,sweetness,sour_taste,spicy,noodle,seafood,meat,vegetable,rice,spice)`
-        postJson[2]=`${id},${default_traits['korean']},${default_traits['japanese']},${default_traits['chinese']},${default_traits['asian']},${default_traits['western']},${default_traits['fried']},${default_traits['raw']},${default_traits['grilled']},${default_traits['soup']},${default_traits['stir_fried']},${default_traits['steamed']},${default_traits['wheat']},${default_traits['dessert']},${default_traits['beverage']},${default_traits['sweetness']},${default_traits['sour_taste']},${default_traits['spicy']},${default_traits['noodle']},${default_traits['seafood']},${default_traits['meat']},${default_traits['vegetable']},${default_traits['rice']},${default_traits['spice']}`
-        await $.ajax({type: "POST", url: '/script/php/DAOHandler.php', data: postJson})
+        await $.ajax({
+            type: "POST",
+            url: '/script/php/DAOHandler.php',
+            data: {
+                0:'insert',
+                1:
+                    `trait(`+
+                    `id,korean,japanese,chinese,asian,`+
+                    `western,fried,raw,grilled,soup,stir_fried,`+
+                    `steamed,wheat,dessert,beverage,sweetness,`+
+                    `sour_taste,spicy,noodle,seafood,`+
+                    `meat,vegetable,rice,spice)`,
+                2:`${id},`+
+                    `${default_traits['korean']},${default_traits['japanese']},${default_traits['chinese']},`+
+                    `${default_traits['asian']},${default_traits['western']},${default_traits['fried']},`+
+                    `${default_traits['raw']},${default_traits['grilled']},${default_traits['soup']},`+
+                    `${default_traits['stir_fried']},${default_traits['steamed']},${default_traits['wheat']},`+
+                    `${default_traits['dessert']},${default_traits['beverage']},${default_traits['sweetness']},`+
+                    `${default_traits['sour_taste']},${default_traits['spicy']},${default_traits['noodle']},`+
+                    `${default_traits['seafood']},${default_traits['meat']},${default_traits['vegetable']},`+
+                    `${default_traits['rice']},${default_traits['spice']}`
+            }})
     }
     clear_page()
 }

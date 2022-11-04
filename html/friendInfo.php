@@ -2,6 +2,7 @@
 <?php
 include 'script/modules/CookieManager.php';
 (CookieManager::factory())->refreshCookie();
+print_r($_POST);
 ?>
 <html lang="en">
 <head>
@@ -17,8 +18,7 @@ include 'script/modules/CookieManager.php';
     <link rel="canonical" href="http://ssossotable.com">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -50,6 +50,13 @@ include 'script/modules/CookieManager.php';
                 max-height: 600px !important;
                 margin: auto;
                 overflow-y: scroll;
+            }
+            .nav-link {
+                font-size: 10px;
+            }
+            .masthead-brand {
+                width: 40px;
+                height: 40px;
             }
         }
         @font-face { /* 애플산돌고딕 폰트 적용 */
@@ -148,6 +155,8 @@ include 'script/modules/CookieManager.php';
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
         let userId= <?php echo $_POST['friendId'];?>
@@ -344,26 +353,44 @@ include 'script/modules/CookieManager.php';
     init()
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column" style="margin: 0 !important;">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <a href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link text-muted" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-                <a class="nav-link text-muted" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
-                <a class="nav-link text-muted" href="http://ssossotable.com/record.php">식사 기록하기</a>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
-                    <ul class="dropdown-menu" style="">
-                        <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a></li>
-                    </ul>
+    <nav class="navbar d-flex">
+        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
+        <button style="margin: 10px;" class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://ssossotable.com/myInfo.php">내 정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
+                    </li>
+                </ul>
+                <div class="input-group mb-3 mt-3">
+                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main role="main" class="inner cover" id="rating" style="margin-top: 20px;">
         <div class="card" style="margin: auto;">
@@ -601,9 +628,8 @@ include 'script/modules/CookieManager.php';
         </div>
     </div>
 </div>
-
-
-
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script></body>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </html>

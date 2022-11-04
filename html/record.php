@@ -10,14 +10,14 @@ include 'script/modules/CookieManager.php';
     <meta name="description" content="">
     <meta name="author" content="ssosso.table.u">
     <meta name="generator" content="ssosso.table food-db 0.1.0">
-    <link rel="icon" href="src/favicon.png">
+    <link rel="icon" href="src/favicon.ico">
 
     <title>ssosso-table.food-db.record</title>
 
     <link rel="canonical" href="http://ssossotable.com">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -81,6 +81,13 @@ include 'script/modules/CookieManager.php';
                 width: 10px!important;
                 height: 20px!important;
             }
+            .nav-link {
+                font-size: 10px;
+            }
+            .masthead-brand {
+                width: 40px;
+                height: 40px;
+            }
         }
         /* iPhone4와 같은 높은 해상도 가로 */
         @media only screen and (max-width : 640px) {
@@ -113,7 +120,53 @@ include 'script/modules/CookieManager.php';
             height: 32px;
             cursor: pointer;
         }
+        body {
+            padding:0!important;
+            margin-left: 0!important;
+            margin-right: 0!important;
+            margin-bottom: 0!important;
 
+        }
+        .cover-container {
+            padding:0!important;
+            margin-left: 0!important;
+            margin-right: 0!important;
+            margin-bottom: 0!important;
+        }
+        main {
+            padding: 0!important;
+            margin: 0!important;
+            height: 100%!important;
+            width: 100% !important;
+        }
+        #scroll_layout {
+            height: 100%;
+        }
+        nav {
+            background-color:#ffebaa;
+            height: 80px!important;
+            padding: 0!important;
+        }
+        .cover-container {
+            max-width: 100%;
+            width: 100%;
+            padding-left: 0!important;
+            padding-right: 0!important;
+            margin: 0!important;
+        }
+        #food-info {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+        .card {
+            width: 100% !important;
+        }
+        #map {
+            width: 100%!important;
+            height: 100%!important;
+            padding:20px;
+        }
     </style>
 
     <script src="./script/rating/dsp" type="text/javascript" defer="" async=""></script>
@@ -121,6 +174,8 @@ include 'script/modules/CookieManager.php';
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
     </script>
 </head>
@@ -130,28 +185,46 @@ include 'script/modules/CookieManager.php';
     window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <a href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link text-muted" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-                <a class="nav-link text-muted" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
-                <a class="nav-link active" href="http://ssossotable.com/record.php">식사 기록하기</a>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: transparent;background-color: transparent;"></button>
-                    <ul class="dropdown-menu" style="">
-                        <li><a class="dropdown-item" href="http://ssossotable.com/myInfo.php">내 정보</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/friends.php">친구 목록</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/diary.php">다이어리</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a></li>
-                        <li><a class="dropdown-item" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a></li>
-                    </ul>
+    <nav class="navbar d-flex">
+        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
+        <a class="nav-link active p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
+        <button style="margin: 10px;" class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://ssossotable.com/myInfo.php">내 정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
+                    </li>
+                </ul>
+                <div class="input-group mb-3 mt-3">
+                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main role="main" class="inner cover" id="rating_main"  style="">
+    <main role="main" class="inner cover d-flex" id="rating_main"  >
         <div class="card">
             <div class="card-body" id="title">
                 <h5 class="card-title">식사 입력</h5>
@@ -187,6 +260,8 @@ include 'script/modules/CookieManager.php';
                 let selectedFriendId=-1
 
 
+                let format=``
+                format_right=``
 
                 function friend_selected() {
                     selectedFriendId=parseInt(arguments[0])
@@ -245,8 +320,6 @@ include 'script/modules/CookieManager.php';
                     postJson[3]=`user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
                     let friends=await $.post("script/php/DAOHandler.php",postJson);
 
-
-                    let format=``
                     let ffmt=``
 
                     if(friends!=='null') {
@@ -275,11 +348,11 @@ include 'script/modules/CookieManager.php';
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${arguments[2]}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(0,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(1,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(2,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
                                     </div>
                                 </div>
                                 <div class="dropdown">
@@ -292,6 +365,8 @@ include 'script/modules/CookieManager.php';
                                     </ul>
                                 </div>
                                 `
+
+                        document.getElementById('record-info').innerHTML=format_right
                         infowindow.setContent(format);
                     }
                     else {
@@ -349,7 +424,9 @@ include 'script/modules/CookieManager.php';
                                     </div>
                                 </div>
                                 `
+
                         infowindow.setContent(format);
+                        document.getElementById('record-info').innerHTML=format_right
                     }
                     infowindow.open(map, markers[arguments[1]]);
                     const preview = document.getElementById("preview"),
@@ -409,17 +486,19 @@ include 'script/modules/CookieManager.php';
 
                         let format=``
                         if(v.length===0) {
+                            let width=15
+                            let height=30
                             format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
                                     <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${place.place_name}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(0,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(1,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(2,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
-                                        <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(0,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(1,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x})">
                                     </div>
                                     <div class="dropdown">
                                       <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -590,79 +669,81 @@ include 'script/modules/CookieManager.php';
 
                 }
                 function getScore() {
+                    let width=parseInt(arguments[7])/2
+                    let height=parseInt(arguments[7])
                     switch (parseInt(arguments[0])) {
                         case -1:
                             return `
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 0:
                             return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 1:
                             return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 2:
                             return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 3:
                             return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 4:
                             return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 5: return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 6: return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 7: return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_before_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 8: return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         case 9: return `
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
-            <img src="/src/rate_star_after_half-left.png" height="30" width="15" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="30" width="15" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">
+            <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[1]},'${arguments[2]}','${arguments[3]}','${arguments[4]}',${arguments[5]},${arguments[6]})">`
                         default:
                             break
                     }
@@ -747,14 +828,37 @@ include 'script/modules/CookieManager.php';
                 </ul>
             </div>
         </div>
+        <div class="card" id='record-info' style="">
+            <div style="padding:5px;font-size:36px;display: inline-block;">
+                <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
+                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                <span>${arguments[2]}</span>
+                <div class="d-flex justify-content-center fs-2" id="record-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
+                    <img src="/src/rate_star_before_half-left.png" height="60" width="30" onclick="set(0,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="60" width="30" onclick="set(1,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                    <img src="/src/rate_star_before_half-left.png" height="60" width="30" onclick="set(2,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="60" width="30" onclick="set(3,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                    <img src="/src/rate_star_before_half-left.png" height="60" width="30" onclick="set(4,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="60" width="30" onclick="set(5,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                    <img src="/src/rate_star_before_half-left.png" height="60" width="30" onclick="set(6,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="60" width="30" onclick="set(7,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                    <img src="/src/rate_star_before_half-left.png" height="60" width="30" onclick="set(8,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="60" width="30" onclick="set(9,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    누구와 먹었나요?
+                </a>
+                <ul class="dropdown-menu">
+                    ${ffmt}
+                </ul>
+            </div>
+        </div>
     </main>
 
-    <footer class="mastfoot mt-auto">
+    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
-            <p>Created by<a href="http://ssossotable.com"> ssosso.table</a>, by <a href="http://ssossotable.com">@ssosso.table</a></p>
+            <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
         </div>
     </footer>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body></html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+</html>

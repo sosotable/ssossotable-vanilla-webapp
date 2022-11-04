@@ -1,14 +1,20 @@
 async function init() {
-    let postJson={}
-    let div=``
+    let div=`<div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="코드 입력" aria-label="Recipient's username" aria-describedby="button-addon2" id="friendInputInfo">
+                <button class="btn btn-outline-secondary" type="button" value="친구 추가" onclick="searchFriend()" data-bs-toggle="modal" data-bs-target="#friendSearchModal">Button</button>
+            </div>`
     let modal=``
     let rating=``
 
-    postJson[0]=2
-    postJson[1]='id,nickname,image'
-    postJson[2]='user'
-    postJson[3]=`id in (select friendid from user,friend where friend.userid=${id} and user.id = friend.userid);`
-    let v=JSON.parse(await $.post("script/php/DAOHandler.php",postJson))
+    let v=JSON.parse(await $.ajax({
+        type: "POST",
+        url: '/script/php/DAOHandler.php',
+        data:{
+            0:'select',
+            1:'id,nickname,image',
+            2:'user',
+            3:`id in (select friendid from user,friend where friend.userid=${id} and user.id = friend.userid);`
+        }}))
 
     for(let i=0;i<v.length;i++) {
         userIds.push(v[i][0])
