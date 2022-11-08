@@ -45,7 +45,7 @@ include 'script/modules/CookieManager.php';
     <style>
         /* iPhone4와 같은 높은 해상도 가로 */
         @media only screen and (max-width : 640px) {
-            #friend_layout {
+            #friend-layout {
                 width: 400px !important;
                 margin: auto !important;
             }
@@ -75,18 +75,14 @@ include 'script/modules/CookieManager.php';
             background-color: transparent;
         }
         body {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding:0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
 
         }
         .cover-container {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding:0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
@@ -97,12 +93,11 @@ include 'script/modules/CookieManager.php';
             height: 100%!important;
             width: 100% !important;
         }
-        header {
-            width: 100%!important;
+
+        nav {
             background-color:#ffebaa;
-        }
-        .card {
-            width: 100% !important;
+            height: 80px!important;
+            padding: 0!important;
         }
         .cover-container {
             max-width: 100%;
@@ -110,6 +105,53 @@ include 'script/modules/CookieManager.php';
             padding-left: 0!important;
             padding-right: 0!important;
             margin: 0!important;
+        }
+        #friend-info-left {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+        #friend-info-right {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+        .card {
+            width: 100% !important;
+        }
+        .masthead {
+            width: 100%;
+            background-color: #ffebaa;
+        }
+        #high-rating-holder{
+            display: flex;
+            overflow-y: hidden !important;
+        }
+
+        .high-rating-layout{
+            margin: 5px;
+            -webkit-box-flex: 0;
+            -ms-flex-positive: 0;
+            flex-grow: 0;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            max-width: 77px;
+        }
+        #low-rating-holder{
+            display: flex;
+            overflow-y: hidden !important;
+        }
+        .low-rating-layout{
+            margin: 5px;
+            -webkit-box-flex: 0;
+            -ms-flex-positive: 0;
+            flex-grow: 0;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            max-width: 77px;
+        }
+        #preview {
+            margin: 30px auto;
         }
     </style>
 
@@ -122,6 +164,25 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
+
+        let mql = window.matchMedia("screen and (max-width: 768px)");
+        let flag=false;
+        mql.addListener(function(e) {
+            if(e.matches) {
+                // 모바일
+                flag = true
+                document.getElementById('friend-info-left').style.cssText='display:none!important'
+                document.getElementById('friend-info-right').style.cssText='display:none!important'
+                document.getElementById('friend-layout').style.cssText=`
+                    padding: 0!important;
+                    margin: 0!important;
+                    width: 100%!important;
+                `
+            } else {
+                // 데스크탑
+                flag=false
+            }
+        });
 
         let id= <?php echo $_COOKIE['user_id']?>
 
@@ -276,8 +337,6 @@ include 'script/modules/CookieManager.php';
                     2:`friend_request,user`,
                     3:'`to`=<?php echo $_COOKIE['user_id'];?> and friend_request.`from`=user.id;'
                 }}))
-            console.log('aaa')
-            console.log(search_res)
             if(search_res.length==0) {
                 document.getElementById('friend-request-notification').src='src/notification.png'
                 document.getElementById('friend-request').innerHTML=`<span>친구 요청이 없어요</span>`
@@ -315,17 +374,14 @@ include 'script/modules/CookieManager.php';
 
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <script>
-        init()
-        init_v2()
-    </script>
 
-    <header class="masthead mb-auto fixed-top">
-        <div class="inner">
+
+    <header class="masthead mb-auto">
+        <div class="inner d-flex justify-content-between">
             <a href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
             <nav class="nav nav-masthead justify-content-center">
                 <a href="#" data-bs-toggle="modal" data-bs-target="#friendRequestModal">
-                    <img id='friend-request-notification'src="src/notification.png" width="24px" height="24px"/>
+                    <img id='friend-request-notification'src="src/notification.png" width="36px" height="36px"/>
                 </a>
             </nav>
         </div>
@@ -333,14 +389,12 @@ include 'script/modules/CookieManager.php';
     </header>
 
     <main role="main" class="inner cover d-flex" id="rating" >
-
-        <div class="p-3 bg-light card" id="friend_layout">
+        <div class="p-3 bg-light card" id="friend-layout">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="코드 입력" aria-label="Recipient's username" aria-describedby="button-addon2" id="friendInputInfo">
                 <button class="btn btn-outline-secondary" type="button" value="친구 추가" onclick="searchFriend()" data-bs-toggle="modal" data-bs-target="#friendSearchModal">Button</button>
             </div>
             <div class="friends-placeholders">
-
                 <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                     <div class="img-box" style="display: inline-block; margin: 0;">
                         <img class="friend-img" src="/src/Portrait_Placeholder.png" height="80" width="80">
@@ -421,19 +475,40 @@ include 'script/modules/CookieManager.php';
                 </div>
             </div>
         </div>
-        <div class="card" id='my-info' style="">
-            <div class="card-body" id="title">
-                <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
-                <h1 class="card-title" id="food-name">음식 이름</h1>
-                <p class="card-text" id="food-traits">특성 목록</p>
-                <div id="rating" style="margin-bottom: 50px;">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
+        <div class="card" id="friend-info-left" style="margin: auto; height: 100%">
+            <div>
+                <div id="preview" class="img-box col align-self-center" style="">
+                    <img src="/src/Portrait_Placeholder.png" id="userImage" class="card-img-top" alt="...">
                 </div>
             </div>
+
+            <div class="card-body">
+                <h5 class="card-title" id="friend-nickname"></h5>
+                <p class="card-text">ssosso.table</p>
+                <div id="high-rating">
+                    <span style="display:block;">높은 점수를 준 음식들</span>
+                    <div id="high-rating-holder" class="placeholder-glow" style="overflow-x: auto;">
+                    </div>
+                </div>
+                <div id="low-rating" >
+                    <span style="display:block;">낮은 점수를 준 음식들</span>
+                    <div id="low-rating-holder" class="placeholder-glow" style="overflow-x: auto;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card d-flex flex-columns" id="friend-info-right" style="">
+            <span class="card-title" style="display: block">음식 취향 순위</span>
+            <div class="placeholder-glow">
+                <div class="card-img-top" id="taste-list" style="">
+                </div>
+            </div>
+            <ul class="card list-group list-group-flush">
+                <li class="list-group-item" style="padding:0;">
+                    <input type="button" value="평가한 음식" class="btn" style="background-color:#e4bd74; color:white; width: 100%;" data-bs-toggle="modal" data-bs-target="#myFoodModal" style="width:100%;">
+                </li>
+            </ul>
         </div>
         <!-- Button trigger modal -->
 
@@ -554,7 +629,7 @@ include 'script/modules/CookieManager.php';
 
     </main>
 
-    <footer id="footer"  class="mastfoot mt-auto fixed-bottom" style="background-color:#ffebaa;">
+    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
             <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
         </div>
@@ -562,7 +637,11 @@ include 'script/modules/CookieManager.php';
 
 
 </div>
-</body>
 
+</body>
+<script>
+    init()
+    init_v2()
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </html>

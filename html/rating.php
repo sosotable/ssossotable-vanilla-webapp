@@ -129,7 +129,7 @@ include 'script/modules/CookieManager.php';
             main {
                 padding: 0!important;
                 margin: 0!important;
-                height: 100%;
+                height: 85%;
                 width: 100%;
             }
             .card {
@@ -165,19 +165,15 @@ include 'script/modules/CookieManager.php';
             let flag=false;
             mql.addListener(function(e) {
                 if(e.matches) {
+                    // 모바일
                     flag=true;
-                    console.log('모바일 화면 입니다.');
-                    //document.getElementById('nav').classList.remove('fixed-top')
-                    //document.getElementById('footer').classList.remove('fixed-bottom')
                     document.getElementById('rating').classList.remove('justify-content-center')
                     document.getElementById('food-info').style.cssText=`width: 100%; height: 100%; display:none;`
                 } else {
+                    // 데스크탑
                     flag=false
-                    //document.getElementById('nav').classList.add('fixed-top')
-                    //document.getElementById('footer').classList.add('fixed-bottom')
                     document.getElementById('rating').classList.add('justify-content-center')
                     document.getElementById('food-info').style.cssText=`width: 100%; height: 100%;`
-                    console.log('데스크탑 화면 입니다.');
                 }
             });
             let rating_placeHolder=`

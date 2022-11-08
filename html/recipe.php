@@ -44,7 +44,7 @@ include 'script/modules/CookieManager.php';
     <!--    <link rel="stylesheet" href="/css/insert.css">-->
     <style>
         /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 640px) {
+        @media only screen and (max-width : 768px) {
             #default_traits span {
                 font-size: 14px !important;
                 font-weight: 150 !important;
@@ -206,6 +206,27 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+        let mql = window.matchMedia("screen and (max-width: 768px)");
+        let flag=false;
+        mql.addListener(function(e) {
+            if(e.matches) {
+                // 모바일
+                flag=true;
+                document.getElementById('recipe-info').style.cssText='display:none!important'
+                document.getElementById('recipe-contents').style.display='flex'
+                document.getElementById('recipe-title').style.width='60%'
+                document.getElementById('title').style.width='100%'
+                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
+            } else {
+                // 데스크탑
+                flag=false
+                document.getElementById('recipe-info').style.cssText='display:flex!important'
+                document.getElementById('recipe-contents').style.cssText='display:none!important'
+                document.getElementById('recipe-title').style.width='30%'
+                document.getElementById('title').style.width='80%'
+                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
+            }
+        });
         let file=null
         let formData = new FormData();
         let filePath=``
@@ -214,6 +235,19 @@ include 'script/modules/CookieManager.php';
         let foodNameArray=null
         let foodNameArrayString=``
         function init() {
+            if(mql.matches) {
+                // 모바일
+                document.getElementById('recipe-info').style.cssText='display:none!important'
+                document.getElementById('recipe-contents').style.display='flex'
+                document.getElementById('recipe-title').style.width='60%'
+                document.getElementById('title').style.width='100%'
+                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
+                flag=true;
+            }
+            else {
+                // 데스크톱
+                flag=false
+            }
             const preview = document.getElementById("preview"),
                 fileElem = document.getElementById("fileElem");
 
@@ -378,11 +412,28 @@ include 'script/modules/CookieManager.php';
                     <div id="preview"><img src="src/food_placeholder.png" style="width: 300px!important; height: 300px!important;" class="card-img-top" alt="..."></div>
                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                 </div>
-                <div class="mb-3" style="width: 30%">
+                <div id="recipe-title" class="mb-3" style="width: 30%">
                     <h1 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h1>
                     <div class="input-group mb-3">
                         <input id="food-name-modify-input" type="text" class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="button" onclick="food_name_modify();" id="food-name-modify">입력</button>
+                    </div>
+                </div>
+                <div id="recipe-contents" style="display: none">
+                    <div class="align-middle" id="title" style="width: 80%;">
+                        <div class="mb-3">
+                            <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="3"></textarea>
+                        </div>
+                        <div id="recipes">
+                            <div class="input-group mb-3">
+                                <input type="text" id="recipe-input" class="form-control" placeholder="레시피를 추가해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" onclick="add_recipe();">추가</button>
+                            </div>
+                        </div>
+                        <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
+                        </ul>
+                        <br>
+                        <input type="button" value="저장하기" onclick="commit();" class="w-100 btn" style="background-color:#e4bd74; color:white;">
                     </div>
                 </div>
             </div>

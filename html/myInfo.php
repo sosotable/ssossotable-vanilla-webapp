@@ -126,12 +126,6 @@ include 'script/modules/CookieManager.php';
         p {
             color: #2c3034 !important;
         }
-        #scroll_layout {
-            max-width: 1000px;
-            width: 500px;
-            max-height: 700px;
-            overflow-y:scroll;
-        }
         html::-webkit-scrollbar {
             display: none;  /* Safari and Chrome */
         }
@@ -166,7 +160,6 @@ include 'script/modules/CookieManager.php';
             display: flex;
             overflow-y: hidden !important;
         }
-
         .low-rating-layout{
             margin: 5px;
             -webkit-box-flex: 0;
@@ -177,18 +170,14 @@ include 'script/modules/CookieManager.php';
             max-width: 77px;
         }
         body {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding:0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
 
         }
         .cover-container {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding:0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
@@ -199,11 +188,11 @@ include 'script/modules/CookieManager.php';
             height: 100%!important;
             width: 100% !important;
         }
-        #scroll_layout {
-            height: 100%;
-        }
+
         nav {
-            background-color:#ffebaa!important;
+            background-color:#ffebaa;
+            height: 80px!important;
+            padding: 0!important;
         }
         .cover-container {
             max-width: 100%;
@@ -218,7 +207,12 @@ include 'script/modules/CookieManager.php';
             background-color: transparent;
         }
         .card {
+            background-color: transparent;
             width: 100% !important;
+        }
+        #taste-list img {
+            width: 100%;
+            height: 100%;
         }
     </style>
     <script src="./script/main/dsp" type="text/javascript" defer="" async=""></script>
@@ -232,6 +226,18 @@ include 'script/modules/CookieManager.php';
     <script type="text/javascript">
 
         let userId= <?php echo $_COOKIE['user_id'];?>
+
+        let mql = window.matchMedia("screen and (max-width: 768px)");
+        let flag=false;
+        mql.addListener(function(e) {
+            if(e.matches) {
+                // 모바일
+                flag=true
+            } else {
+                // 데스크탑
+                flag=false
+            }
+        });
 
         function getScore() {
             let height=parseInt(arguments[1])
@@ -308,6 +314,25 @@ include 'script/modules/CookieManager.php';
         }
 
         async function init() {
+            if(mql.matches) {
+                // 모바일
+                flag=true
+                document.getElementById('my-info').style.cssText="display:none!important"
+                document.getElementById('my-info-taste').style.cssText="display:block"
+                document.getElementById('left-content').style.cssText=`
+                margin: 0 auto auto auto;
+                max-height: 100%;
+                overflow-y: auto;
+                `
+                document.getElementById('taste-image').style.cssText=`
+                width: 100%!important;
+                height: fit-content!important;
+                `
+            }
+            else {
+                // 데스크톱
+                flag=false
+            }
             const high_rating=JSON.parse(await $.ajax({
                 type: "POST",
                 url: '/script/php/DAOHandler.php',
@@ -433,49 +458,18 @@ include 'script/modules/CookieManager.php';
                 const reader = new FileReader();
                 reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
                 reader.readAsDataURL(file);
-
             }
         }
     </script>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <py-env>
-        - matplotlib
-        - pandas
-        - numpy
-    </py-env>
-    <py-script>
-        import pandas as pd
-        import matplotlib.pyplot as plt
-        import matplotlib
-        from pyodide.http import open_url
-        import numpy as np
-        from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-        df = pd.read_csv(open_url("http://ssossotable.com/database/user_profile.csv"), index_col='userid')
-        user=df.loc[<?php echo $_COOKIE['user_id']; ?>]
-        user=user.fillna(user.mean())
-
-        user=user.sort_values()
-        sorted_user=pd.concat([user[:3],user[-3:]])
-        fig = plt.figure(figsize=(4, 3))
-        plt.plot(sorted_user, 'bo')
-
-        csv = Element('taste-list')
-
-        csv.write(fig)
-    </py-script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
 <script type="text/javascript">
     window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();
 </script>
-<script>
-    init()
-</script>
+
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column" style="margin: 0 !important;">
-    <nav class="navbar d-flex fixed-top">
+    <nav class="navbar d-flex">
         <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
@@ -514,16 +508,17 @@ include 'script/modules/CookieManager.php';
         </div>
     </nav>
 
-    <main role="main" class="inner cover d-flex" id="rating" style="margin-top: 20px;">
-        <div class="card" style="margin: auto;">
-            <div id="preview" class="img-box col align-self-center" style="margin: 20px;">
-                <img src="/src/Portrait_Placeholder.png" id="userImage" class="card-img-top" alt="...">
-            </div>
+    <main role="main" class="inner cover d-flex" id="rating">
+        <div id="left-content" class="card" style="margin: auto; height: 100%">
             <div>
-                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                <input type="button" class="btn" id="fileSelect" value="프로필 이미지 변경" style="background-color:#e4bd74; color:white;">
+                <div id="preview" class="img-box col align-self-center" style="margin: 20px auto 20px auto;">
+                    <img src="/src/Portrait_Placeholder.png" id="userImage" class="card-img-top" alt="...">
+                </div>
+                <div>
+                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                    <input type="button" class="btn" id="fileSelect" value="프로필 이미지 변경" style="background-color:#e4bd74; color:white;">
+                </div>
             </div>
-
             <div class="card-body">
                 <h5 class="card-title"> <?php echo $_COOKIE['user_nickname']; ?> </h5>
                 <p class="card-text">ssosso.table</p>
@@ -615,17 +610,35 @@ include 'script/modules/CookieManager.php';
                             <span class="placeholder col-12"></span>
                             <span class="placeholder col-12" ></span>
                         </div>
-
                     </div>
                 </div>
-                <div class="placeholder-glow">
-                    <span style="display: block">음식 취향 순위</span>
-                    <div id="taste-list" style="max-height:300px; overflow-y:auto;">
-                        <span class="placeholder col-12"></span>
+                <div id="my-info-taste" style="display:none;">
+                    <span class="card-title" style="display: block">음식 취향 순위</span>
+                    <div class="placeholder-glow">
+                        <div class="card-img-top" id="taste-list" style="">
+                            <img id="taste-image" src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png" style="width: 640px; height: 480px">
+                        </div>
                     </div>
+                    <ul class="card list-group list-group-flush" style="margin-top: auto;">
+                        <li class="list-group-item" style="padding:0;">
+                            <input type="button" value="평가한 음식" class="btn" style="background-color:#e4bd74; color:white; width: 100%;" data-bs-toggle="modal" data-bs-target="#myFoodModal" style="width:100%;">
+                        </li>
+                        <li class="list-group-item" style="padding: 0;">
+                            <a href="/script/php/logout.php" style="margin-top: 5px;"><input type="button" value="로그아웃" class="btn" style="background-color:#e4bd74; color:white; width: 100%;"></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <ul class="list-group list-group-flush">
+
+        </div>
+        <div class="card d-flex flex-columns" id='my-info' style="">
+            <span class="card-title" style="display: block">음식 취향 순위</span>
+            <div class="placeholder-glow">
+                <div class="card-img-top" id="taste-list" style="">
+                    <img src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png" style="width: 640px; height: 480px">
+                </div>
+            </div>
+            <ul class="card list-group list-group-flush" style="margin-top: auto;">
                 <li class="list-group-item" style="padding:0;">
                     <input type="button" value="평가한 음식" class="btn" style="background-color:#e4bd74; color:white; width: 100%;" data-bs-toggle="modal" data-bs-target="#myFoodModal" style="width:100%;">
                 </li>
@@ -634,23 +647,10 @@ include 'script/modules/CookieManager.php';
                 </li>
             </ul>
         </div>
-        <div class="card" id='my-info' style="">
-            <div class="card-body" id="title">
-                <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
-                <h1 class="card-title" id="food-name">음식 이름</h1>
-                <p class="card-text" id="food-traits">특성 목록</p>
-                <div id="rating" style="margin-bottom: 50px;">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                </div>
-            </div>
-        </div>
     </main>
 
-        <footer id="footer"  class="mastfoot mt-auto fixed-bottom" style="background-color:#ffebaa;">
+        <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
+
             <div class="inner">
                 <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
             </div>
@@ -771,6 +771,9 @@ include 'script/modules/CookieManager.php';
         </div>
 
 </div>
+<script>
+    init()
+</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </html>

@@ -100,16 +100,14 @@ function set_rating() {
 }
 async function init() {
     if(mql.matches) {
+        // 모바일
         flag=true
-        //document.getElementById('nav').classList.remove('fixed-top')
-        //document.getElementById('footer').classList.remove('fixed-bottom')
         document.getElementById('rating').classList.remove('justify-content-center')
         document.getElementById('food-info').style.cssText=`width: 100%; height: 100%; display:none;`
     }
     else {
+        // 데스크톱
         flag=false
-        //document.getElementById('nav').classList.add('fixed-top')
-        //document.getElementById('footer').classList.add('fixed-bottom')
         document.getElementById('rating').classList.add('justify-content-center')
         document.getElementById('food-info').style.cssText=`width: 100%; height: 100%;`
     }

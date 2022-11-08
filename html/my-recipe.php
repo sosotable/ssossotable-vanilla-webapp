@@ -70,18 +70,14 @@ include 'script/modules/CookieManager.php';
             background-color: #e4bd74;
         }
         body {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding: 0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
 
         }
         .cover-container {
-            padding-left: 0!important;
-            padding-right: 0!important;
-            padding-bottom: 0!important;
+            padding: 0!important;
             margin-left: 0!important;
             margin-right: 0!important;
             margin-bottom: 0!important;
@@ -97,6 +93,7 @@ include 'script/modules/CookieManager.php';
         }
         nav {
             background-color:#ffebaa;
+            padding: 0!important;
         }
         .cover-container {
             max-width: 100%;
@@ -117,6 +114,17 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
         let recipeInfos=null
+        let mql = window.matchMedia("screen and (max-width: 768px)");
+        let flag=false;
+        mql.addListener(function(e) {
+            if(e.matches) {
+                // 모바일
+                flag=true;
+            } else {
+                // 데스크탑
+                flag=false
+            }
+        });
         async function init() {
             recipeInfos=JSON.parse(await $.ajax({
                 type: "POST",
@@ -131,7 +139,20 @@ include 'script/modules/CookieManager.php';
             for(let i=0;i<recipeInfos.length;i++) {
                 format+=`<li class="list-group-item" onclick="show_recipe(${i})">${recipeInfos[i][1]}</li>`
             }
-            document.getElementById('recipe-list').innerHTML=format
+            if(mql.matches) {
+                // 모바일
+                document.getElementById('my-recipe-info').style.cssText='display:none!important'
+                document.getElementById('recipe-list-layout').style.cssText='display:none!important'
+                document.getElementById('mobile-recipe').style.cssText='width: 100%!important;'
+                document.getElementById('recipe-list-mobile').innerHTML=format
+                flag=true;
+            } else {
+                // 데스크탑
+                document.getElementById('recipe-list').innerHTML=format
+                flag=false
+            }
+
+
         }
         async function show_recipe() {
             let recipeInfo=recipeInfos[arguments[0]]
@@ -145,25 +166,30 @@ include 'script/modules/CookieManager.php';
                 `
             }
             let recipeForm=`
-            <div class="card" style="width: 500px;">
-                <div class="d-flex justify-content-center">
-                    <div id="preview"><img src="${recipeInfo[4]}" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>
-                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                </div>
-                <div class="mb-3">
-                    <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">${recipeInfo[1]}</label></h5>
-                </div>
-                <div class="mb-3">
-                    <p id="recipe-memo" class="card-text">${recipeInfo[2]}</p>
-                </div>
-                <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
-                    ${traitList}
-                </ul>
-                <br>
+            <div class="d-flex justify-content-center">
+                <div id="preview"><img src="${recipeInfo[4]}" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>
+                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
             </div>
+            <div class="mb-3">
+                <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">${recipeInfo[1]}</label></h5>
+            </div>
+            <div class="mb-3">
+                <p id="recipe-memo" class="card-text">${recipeInfo[2]}</p>
+            </div>
+            <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
+                ${traitList}
+            </ul>
+            <br>
             `
-            document.getElementById('food_rating_database').innerHTML=recipeForm
             document.getElementById('navbarToggleExternalContent').classList.remove('show')
+            if(mql.matches) {
+                document.getElementById('food-rating-database').innerHTML=recipeForm
+            }
+            else {
+                document.getElementById('my-recipe-info').innerHTML=recipeForm
+            }
+
+
         }
     </script>
 </head>
@@ -173,7 +199,7 @@ include 'script/modules/CookieManager.php';
     window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <nav class="navbar d-flex fixed-top">
+    <nav class="navbar d-flex">
         <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
@@ -213,58 +239,64 @@ include 'script/modules/CookieManager.php';
     </nav>
 
     <main role="main" class="inner cover d-flex" id="rating" style="margin-top: 20px;">
-        <div class="card">
-<!--            <div class="collapse" id="navbarToggleExternalContent">-->
-<!--                <div class="bg-ssosseji p-4">-->
-<!--                    <ul id="recipe-list" class="list-group" style="max-height: 200px; overflow-y: auto">-->
-<!--                        <li class="list-group-item">item</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <nav class="navbar navbar-dark bg-ssosseji">-->
-<!--                <div class="container-fluid">-->
-<!--                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                        <span class="navbar-toggler-icon"></span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </nav>-->
-<!--            <div id="food_rating_database">-->
-<!--                <div class="card" style="width: 500px;">-->
-<!--                    <div class="d-flex justify-content-center">-->
-<!--                        <div id="preview"><img src="src/food_placeholder.png" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>-->
-<!--                        <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h5>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        <p id="recipe-memo" class="card-text">좋은 음식은 사람을 행복하게 하는 음식.</p>-->
-<!--                    </div>-->
-<!--                    <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">-->
-<!--                    </ul>-->
-<!--                    <br>-->
-<!--                </div>-->
-<!--            </div>-->
+        <div id="recipe-list-layout" class="card" style="width: 30%!important;">
+            <ul id="recipe-list" class="list-group list-group-flush">
+            </ul>
         </div>
+        <div id="mobile-recipe" class="card" style="display: none!important; width: 100%!important;">
+            <div>
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-ssosseji p-4">
+                        <ul id="recipe-list-mobile" class="list-group" style="max-height: 200px; overflow-y: auto">
+                        </ul>
+                    </div>
+                </div>
 
-        <div class="card" id='my-recipe-info'>
-            <div class="card-body" id="title">
-                <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
-                <h1 class="card-title" id="food-name">음식 이름</h1>
-                <p class="card-text" id="food-traits">특성 목록</p>
-                <div id="rating" style="margin-bottom: 50px;">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
+                <nav class="navbar navbar-dark bg-ssosseji">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </nav>
+                <div id="food-rating-database">
+                    <div class="card" style="width: 500px;">
+                        <div class="d-flex justify-content-center">
+                            <div id="preview"><img src="src/food_placeholder.png" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>
+                            <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                        </div>
+                        <div class="mb-3">
+                            <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h5>
+                        </div>
+                        <div class="mb-3">
+                            <p id="recipe-memo" class="card-text">좋은 음식은 사람을 행복하게 하는 음식.</p>
+                        </div>
+                        <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
+                        </ul>
+                        <br>
+                    </div>
                 </div>
             </div>
+
+        </div>
+        <div class="card" id='my-recipe-info' style="width: 100% height: 100%">
+            <div class="d-flex justify-content-center">
+                <div id="preview"><img src="src/food_placeholder.png" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>
+                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+            </div>
+            <div class="mb-3">
+                <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h5>
+            </div>
+            <div class="mb-3">
+                <p id="recipe-memo" class="card-text">좋은 음식은 사람을 행복하게 하는 음식.</p>
+            </div>
+            <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
+            </ul>
+            <br>
         </div>
     </main>
 
-    <footer id="footer"  class="mastfoot mt-auto fixed-bottom" style="background-color:#ffebaa;">
+    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
             <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
         </div>

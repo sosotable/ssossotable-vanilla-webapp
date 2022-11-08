@@ -2,7 +2,6 @@
 <?php
 include 'script/modules/CookieManager.php';
 (CookieManager::factory())->refreshCookie();
-print_r($_POST);
 ?>
 <html lang="en">
 <head>
@@ -106,6 +105,40 @@ print_r($_POST);
         }
         html::-webkit-scrollbar {
             display: none;  /* Safari and Chrome */
+        }
+        body {
+            padding:0!important;
+            margin-left: 0!important;
+            margin-right: 0!important;
+            margin-bottom: 0!important;
+
+        }
+        .cover-container {
+            padding:0!important;
+            margin-left: 0!important;
+            margin-right: 0!important;
+            margin-bottom: 0!important;
+        }
+        main {
+            padding: 0!important;
+            margin: 0!important;
+            height: 85%;
+            width: 100%;
+        }
+        .card {
+            width: 100% !important;
+        }
+        nav {
+            background-color:#ffebaa;
+            padding: 0!important;
+            height: 100%!important;
+        }
+        .cover-container {
+            max-width: 100%;
+            width: 100%;
+            padding-left: 0!important;
+            padding-right: 0!important;
+            margin: 0!important;
         }
         .img-box {
             width: 150px;
@@ -315,34 +348,6 @@ print_r($_POST);
             document.getElementById('scroll-layout-rating').innerHTML=rating_divs
         }
     </script>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <py-env>
-        - matplotlib
-        - pandas
-        - numpy
-    </py-env>
-    <py-script>
-        import pandas as pd
-        import matplotlib.pyplot as plt
-        import matplotlib
-        from pyodide.http import open_url
-        import numpy as np
-        from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-        df = pd.read_csv(open_url("http://ssossotable.com/database/user_profile.csv"), index_col='userid')
-        user=df.loc[<?php echo $_POST['friendId']; ?>]
-        user=user.fillna(user.mean())
-
-        user=user.sort_values()
-        sorted_user=pd.concat([user[:3],user[-3:]])
-        fig = plt.figure(figsize=(4, 3))
-        plt.plot(sorted_user, 'bo')
-
-        csv = Element('taste-list')
-
-        csv.write(fig)
-    </py-script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -495,7 +500,7 @@ print_r($_POST);
                 <div class="placeholder-glow">
                     <span style="display: block">음식 취향 순위</span>
                     <div id="taste-list" style="max-height:300px; overflow-y:auto;">
-                        <span class="placeholder col-12"></span>
+                        <img id="taste-image" src="config/ratingInfos/<?php echo $_POST['friendId'];?>.png" style="width: 100%!important; height: fit-content!important;"/>
                     </div>
                 </div>
             </div>
@@ -509,7 +514,7 @@ print_r($_POST);
 
             </li>
         </ul>
-        <footer class="mastfoot mt-auto">
+        <footer class="mastfoot mt-auto" style="background-color:#ffebaa;">
             <div class="inner">
                 <p>Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
             </div>
