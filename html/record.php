@@ -5,43 +5,17 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="ssosso.table.u">
-    <meta name="generator" content="ssosso.table food-db 0.1.0">
-    <link rel="icon" href="src/favicon.ico">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <title>ssosso-table.food-db.record</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="canonical" href="http://ssossotable.com">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 
     <!-- Custom styles for this template -->
-    <script src="./script/main/dsp" type="text/javascript" defer="" async=""></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="stylesheet" href="./css/main/css2">
-    <link rel="stylesheet" href="./css/rating/css2">
-    <link href="./css/main/cover.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/record.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <style>
         @media screen and (max-resolution: 50dpi) {
 
@@ -160,15 +134,32 @@ include 'script/modules/CookieManager.php';
             height: 100%!important;
             padding:20px;
         }
+        .footer-link:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+        .footer-link:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+        .footer-link:hover {
+            color: white;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+        .footer-link:active {
+            color: white;
+            background-color: transparent;
+            text-decoration: underline;
+        }
     </style>
 
-    <script src="./script/rating/dsp" type="text/javascript" defer="" async=""></script>
     <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
@@ -191,14 +182,12 @@ include 'script/modules/CookieManager.php';
                 flag=true
                 document.getElementById('record-info').style.cssText='display:none!important;'
                 document.getElementById('record-map').style.cssText='margin:0'
-                console.log(flag)
             }
             else {
                 // 데스크톱
                 flag=false
                 document.getElementById('record-info').style.cssText='display:flex!important;'
                 document.getElementById('record-map').style.cssText='margin:auto'
-                console.log(flag)
             }
         }
     </script>
@@ -283,7 +272,7 @@ include 'script/modules/CookieManager.php';
                 </div>
             </div>
             <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     누구와 먹었나요?
                 </a>
                 <ul class="dropdown-menu">
@@ -294,7 +283,7 @@ include 'script/modules/CookieManager.php';
 
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
+            <p style="margin: 0;">Created by<a class="footer-link" href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
         </div>
     </footer>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a4b680f23e6397395260cfd7b38420b8&libraries=services,clusterer,drawing"></script>
@@ -303,7 +292,7 @@ include 'script/modules/CookieManager.php';
 
         let userId=<?php echo $_COOKIE['user_id']?>
 
-            let cok={}
+        let cok={}
         cok.before=null
         let beforeSearch={}
         beforeSearch.data=null
@@ -324,20 +313,40 @@ include 'script/modules/CookieManager.php';
         let ps = new kakao.maps.services.Places();
 
         let selectedFriendId=-1
-
-
         let format=``
         let format_right=``
 
-        function friend_selected() {
+        async function friend_selected() {
             selectedFriendId=parseInt(arguments[0])
             document.getElementById('record-friend').innerText=arguments[1]
+            const visited=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'*',
+                2:'record',
+                3:`userid=${userId} and \`where\`=${placeId}`
+            }));
+            if(visited.length!==0) {
+                await $.post("script/php/DAOHandler.php",{
+                    0:'update',
+                    1:'record',
+                    2:`who=${selectedFriendId}`,
+                    3:`userid=${userId} and \`where\`=${placeId}`
+                })
+            }
+            else {
+                await $.post("script/php/DAOHandler.php",{
+                    0:'insert',
+                    1:'record(userid,`where`,who)',
+                    2:`${userId},${placeId},${selectedFriendId}`
+                })
+            }
+
         }
 
         // 키워드 검색 완료 시 호출되는 콜백함수 입니다
         function placesSearchCB (data, status, pagination) {
-            markers=[]
             if (status === kakao.maps.services.Status.OK) {
+                infowindow.close();
                 if(markers.length!==0) {
                     for(let i=0; i < markers.length;i++) {
                         markers[i].setMap(null)
@@ -348,8 +357,7 @@ include 'script/modules/CookieManager.php';
                 let bounds = new kakao.maps.LatLngBounds();
                 let resultdiv=``
                 document.getElementById('search-result-list').innerHTML=``
-
-                for (var i=0; i<data.length; i++) {
+                for (let i=0; i<data.length; i++) {
                     resultdiv+=`
                             <li class="list-group-item" id='list-content-${data[i].id}' onclick="location_onclick(${data[i].id},${i},'${data[i].place_name}','${data[i].road_address_name}','${data[i].category_name}',${data[i].y},${data[i].x})">
                                 <span>${data[i].place_name}</span>
@@ -371,26 +379,25 @@ include 'script/modules/CookieManager.php';
         async function location_onclick() {
             let postJson={}
             let friendInfo={}
-            console.log(arguments)
             placeId=parseInt(arguments[0])
 
-            postJson[0]=2
-            postJson[1]='*'
-            postJson[2]='record'
-            postJson[3]=`userid=${userId} and \`where\`=${parseInt(arguments[0])}`
-            let v=JSON.parse(await $.post("script/php/DAOHandler.php",postJson));
+            let v=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'*',
+                2:'record',
+                3:`userid=${userId} and \`where\`=${parseInt(arguments[0])}`
+            }));
 
-            postJson={}
-            postJson[0]=2
-            postJson[1]='id,nickname'
-            postJson[2]='user'
-            postJson[3]=`user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
-            let friends=await $.post("script/php/DAOHandler.php",postJson);
+            let friends=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'id,nickname',
+                2:'user',
+                3:`user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
+            }));
 
             let ffmt=``
 
-            if(friends!=='null') {
-                friends=JSON.parse(friends)
+            if(friends.length!==0) {
 
                 for(let i=0;i<friends.length;i++) {
                     ffmt+=`
@@ -425,7 +432,7 @@ include 'script/modules/CookieManager.php';
                                     </div>
                                 </div>
                                 <div class="dropdown">
-                                    <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                     </a>
 
@@ -434,7 +441,29 @@ include 'script/modules/CookieManager.php';
                                     </ul>
                                 </div>
                                 `
+                format_right=`
+                                <div style="padding:5px;font-size:12px;display: inline-block;">
+                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
+                                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                                    <span>${arguments[2]}</span>
+                                    <div class="d-flex justify-content-start fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(0,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(1,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(2,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(3,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(4,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(5,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(6,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(7,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(8,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(9,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        누구와 먹었나요?
+                                    </a>
 
+                                    <ul class="dropdown-menu">
+                                        ${ffmt}
+                                    </ul>
+                                </div>
+                                `
                 document.getElementById('record-info').innerHTML=format_right
                 infowindow.setContent(format);
             }
@@ -495,7 +524,7 @@ include 'script/modules/CookieManager.php';
                                         ${f}
                                     </div>
                                     <div class="dropdown">
-                                        <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             누구와 먹었나요?
                                         </a>
 
@@ -512,11 +541,11 @@ include 'script/modules/CookieManager.php';
                                     <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${arguments[2]}</span>
-                                    <div class="d-flex justify-content-center fs-2" id="record-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;">
+                                    <div class="d-flex justify-content-center fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;">
                                         ${fr}
                                     </div>
                                     <div class="dropdown">
-                                        <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             누구와 먹었나요?
                                         </a>
 
@@ -560,24 +589,25 @@ include 'script/modules/CookieManager.php';
 
                 placeId=parseInt(place.id)
 
-                postJson[0]=2
-                postJson[1]='*'
-                postJson[2]='record'
-                postJson[3]=`userid=${userId} and \`where\`=${parseInt(place.id)}`
-                let v=JSON.parse(await $.post("script/php/DAOHandler.php",postJson));
+                let v=JSON.parse(await $.post("script/php/DAOHandler.php",
+                    {
+                        0:'select',
+                        1:'*',
+                        2:'record',
+                        3:`userid=${userId} and \`where\`=${parseInt(place.id)}`
+                    }));
 
-                postJson={}
-                postJson[0]=2
-                postJson[1]='id,nickname'
-                postJson[2]='user'
-                postJson[3]=`user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
-                let friends=await $.post("script/php/DAOHandler.php",postJson);
+                let friends=JSON.parse(await $.post("script/php/DAOHandler.php",
+                    {
+                        0: 'select',
+                        1: 'id,nickname',
+                        2: 'user',
+                        3: `user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
+                    }));
 
                 let ffmt=``
 
-                if(friends!=='null') {
-                    friends=JSON.parse(friends)
-
+                if(friends.length!==0) {
                     for(let i=0;i<friends.length;i++) {
                         ffmt+=`
                                 <li onclick="friend_selected(${friends[i][0]},'${friends[i][1]}')"><a class="dropdown-item" href="#">${friends[i][1]}</a></li>
@@ -602,16 +632,38 @@ include 'script/modules/CookieManager.php';
                                         <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
                                     </div>
                                     <div class="dropdown">
-                                      <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                       </a>
-
                                       <ul class="dropdown-menu">
                                         ${ffmt}
                                       </ul>
                                     </div>
                                 </div>
                                 `
+                    format_right=`
+                                <div style="padding:5px;font-size:12px;display: inline-block;">
+                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
+                                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                                    <span>${place.place_name}</span>
+                                    <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(0,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(1,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(2,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(3,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(4,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(5,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(6,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(7,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
+                                        <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(8,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(9,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
+                                    </div>
+                                    <div class="dropdown">
+                                      <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        누구와 먹었나요?
+                                      </a>
+                                      <ul class="dropdown-menu">
+                                        ${ffmt}
+                                      </ul>
+                                    </div>
+                                </div>
+                                `
+                    document.getElementById('record-info').innerHTML=format_right
                     infowindow.setContent(format);
                 }
                 else {
@@ -676,7 +728,7 @@ include 'script/modules/CookieManager.php';
                                         ${f}
                                     </div>
                                     <div class="dropdown">
-                                      <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                       </a>
 
@@ -691,11 +743,11 @@ include 'script/modules/CookieManager.php';
                                     <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${place.place_name}</span>
-                                    <div class="d-flex justify-content-center fs-2" id="record-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
+                                    <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
                                         ${fr}
                                     </div>
                                     <div class="dropdown">
-                                      <a class="btn btn-secondary dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                       </a>
 
@@ -723,34 +775,44 @@ include 'script/modules/CookieManager.php';
             let postJson={}
             switch (parseInt(arguments[0])) {
                 case 0:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(0,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(0,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(0,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 1:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(1,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(1,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(1,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 2:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(2,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(2,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(2,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 3:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(3,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(3,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(3,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 4:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(4,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(4,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(4,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 5:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(5,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(5,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(5,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 6:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(6,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(6,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(6,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 7:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(7,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(7,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(7,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 8:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(8,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(8,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(8,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 case 9:
-                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(9,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6])
+                    document.getElementById(`record-${arguments[1]}`).innerHTML=getScore(9,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30)
+                    document.getElementById(`record-desktop-${arguments[1]}`).innerHTML=getScore(9,arguments[1],`${arguments[2]}`,`${arguments[3]}`,`${arguments[4]}`,arguments[5],arguments[6],30*2)
                     break
                 default:
                     break
@@ -759,7 +821,7 @@ include 'script/modules/CookieManager.php';
 
             postJson.userId=<?php echo $_COOKIE['user_id']?>
 
-                postJson.rating=parseInt(arguments[0])+1
+            postJson.rating=parseInt(arguments[0])+1
             postJson.id=arguments[1]
             postJson.location=arguments[2]
             postJson.category=arguments[3]
@@ -953,6 +1015,5 @@ include 'script/modules/CookieManager.php';
     </script>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

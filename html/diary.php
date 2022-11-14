@@ -12,44 +12,26 @@ else {
 ?>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="ssosso.table.u">
-    <meta name="generator" content="ssosso.table food-db 0.1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>ssosso-table.food-db.diary</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>ssosso-table.food-db.record</title>
-
-    <link rel="canonical" href="http://ssossotable.com">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="./css/footer.css" rel="stylesheet">
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
+        @font-face { /* 애플산돌고딕 폰트 적용 */
+            font-family: "Jua";
+            src: url("css/font/Jua-Regular.ttf") format("truetype");
+            font-weight: normal;
         }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
+        html,
+        body {
+            font-family: Jua;
+            height: 100%;
+            overflow-y: auto;
         }
-    </style>
-
-    <!-- Custom styles for this template -->
-    <script src="./script/main/dsp" type="text/javascript" defer="" async=""></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="stylesheet" href="./css/main/css2">
-    <link rel="stylesheet" href="./css/rating/css2">
-    <link href="./css/main/cover.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/record.css">
-
-    <style>
         /* iPhone4와 같은 높은 해상도 가로 */
         @media only screen and (max-width : 768px) {
             .nav-link {
@@ -114,13 +96,10 @@ else {
         }
     </style>
 
-    <script src="./script/rating/dsp" type="text/javascript" defer="" async=""></script>
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
@@ -135,7 +114,6 @@ else {
                 flag=false
             }
         });
-
     </script>
 </head>
 
@@ -192,7 +170,7 @@ else {
             <div id="map" style="width:100%;height:350px;"></div>
 
             <!-- Button trigger modal -->
-            <ul class="list-group list-group-flush flex-row" id="diary-list" style="max-height: 100%; height: 600px; overflow-x: auto; overflow-y: auto;">
+            <ul class="list-group list-group-flush flex-row" id="diary-list" style="max-height: 100%; height: 100%; overflow-x: auto; overflow-y: auto;">
 
             </ul>
         </div>
@@ -213,7 +191,7 @@ else {
     </main>
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
+            <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
         </div>
     </footer>
 
@@ -485,7 +463,8 @@ else {
                 }}))
             if(commentInfo.length!==0) {
                 for(let i=0;i<commentInfo.length;i++) {
-                    commentContent+=`<li class="list-group-item d-flex justify-content-evenly" id='${commentInfo[i][0]}'>
+                    commentContent+=`
+                        <li class="list-group-item d-flex justify-content-evenly" id='${commentInfo[i][0]}'>
                             <div>
                                 <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
                                 <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
@@ -741,29 +720,24 @@ else {
             // 모바일
             flag=true;
             document.getElementById('diary-info').style.cssText='display:none!important;'
-            console.log(flag)
-        } else {
-            // 데스크탑
-            flag=false
-        }
-        k=JSON.parse(await $.ajax({
-            type: "POST",
-            url: '/script/php/DAOHandler.php',
-            data: {
-                0:'select',
-                1:'*',
-                2:'record',
-                3:`userid=${<?php echo $_COOKIE['user_id']?>}`
-            }}))
+            k=JSON.parse(await $.ajax({
+                type: "POST",
+                url: '/script/php/DAOHandler.php',
+                data: {
+                    0:'select',
+                    1:'*',
+                    2:'record',
+                    3:`userid=${<?php echo $_COOKIE['user_id']?>}`
+                }}))
 
-        if(k.length !== 0) {
-            let format=``
-            for(let i=0; i < k.length; i++) {
-                addMarker(
-                    new kakao.maps.LatLng(k[i][4], k[i][5]),
-                    k[i]
-                )
-                format+=`
+            if(k.length !== 0) {
+                let format=``
+                for(let i=0; i < k.length; i++) {
+                    addMarker(
+                        new kakao.maps.LatLng(k[i][4], k[i][5]),
+                        k[i]
+                    )
+                    format+=`
                         <li class='list-group-item diary-list' id='diary-list-${k[i][3]}'
                         data-bs-toggle="modal" data-bs-target="#recordModal"
                         onclick="showInfo(${k[i][1]},'${k[i][2]}',${k[i][3]},${k[i][4]},${k[i][5]},'${k[i][6]}','${k[i][7]}','${k[i][9]}')"
@@ -771,9 +745,41 @@ else {
                             <span>${k[i][2]}</span>
                         </li>
                         `
+                }
+                document.getElementById('diary-list').innerHTML=format
             }
-            document.getElementById('diary-list').innerHTML=format
+        } else {
+            // 데스크탑
+            flag=false
+            k=JSON.parse(await $.ajax({
+                type: "POST",
+                url: '/script/php/DAOHandler.php',
+                data: {
+                    0:'select',
+                    1:'*',
+                    2:'record',
+                    3:`userid=${<?php echo $_COOKIE['user_id']?>}`
+                }}))
+
+            if(k.length !== 0) {
+                let format=``
+                for(let i=0; i < k.length; i++) {
+                    addMarker(
+                        new kakao.maps.LatLng(k[i][4], k[i][5]),
+                        k[i]
+                    )
+                    format+=`
+                        <li class='list-group-item diary-list' id='diary-list-${k[i][3]}'
+                        onclick="showInfo(${k[i][1]},'${k[i][2]}',${k[i][3]},${k[i][4]},${k[i][5]},'${k[i][6]}','${k[i][7]}','${k[i][9]}')"
+                        >
+                            <span>${k[i][2]}</span>
+                        </li>
+                        `
+                }
+                document.getElementById('diary-list').innerHTML=format
+            }
         }
+
 
     }
     function set() {
@@ -855,6 +861,5 @@ else {
     }
     init()
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

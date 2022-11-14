@@ -72,14 +72,14 @@ function getScore() {
     }
 }
 function makeDiv() {
-    let width=parseInt(arguments[2])/2
-    let height=parseInt(arguments[2])
+    let width=parseInt(arguments[3])/2
+    let height=parseInt(arguments[3])
     return `
-          <div onclick="show_foodinfo(${arguments[0]});" style="height: 140px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center food-list" aria-current="true" id="${arguments[0]}">
-                <div class="rating-image" id="img_${arguments[0]}" style="display: inline-block; margin: 0;" class="food-image">
-                    <img src="/src/ramen.jpg" height="120" width="120">
+          <div onclick="show_foodinfo(${arguments[0]});" style="height: 100%;" class="list-group-item list-group-item-action py-3 lh-tight d-flex food-list" aria-current="true" id="${arguments[0]}">
+                <div class="rating-image" id="img_${arguments[0]}" style="height:160px; width:160px;" onclick="foodInfo(${arguments[0]})" class="food-image">
+                    <div class="box" style="height:120px; width:120px; margin: 0;"><img class="profile" src="${arguments[2]}"></div>
                 </div>
-                <div style="width: 300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content" id="content_${arguments[0]}">
+                <div style="width: 100%; display: inline-block; margin: 0 0 0 20px;" class="rating_content" id="content_${arguments[0]}">
                     <div class="d-flex justify-content-start fs-3" style="font-size: 25px; margin: 0px !important; padding: 0px !important;" class="food-name">
                         <span>${arguments[1]}</span>
                     </div>
@@ -92,7 +92,6 @@ function makeDiv() {
                     </div>
                 </div>
             </div>`
-
 }
 
 function set_rating() {
@@ -111,7 +110,6 @@ async function init() {
         document.getElementById('rating').classList.add('justify-content-center')
         document.getElementById('food-info').style.cssText=`width: 100%; height: 100%;`
     }
-    console.log(flag)
     let inner=''
     rating_info=JSON.parse(await $.ajax({
         type: "POST",
@@ -131,17 +129,18 @@ async function init() {
             2:"food",
             3:`1>0;`
         }}))
-
+    console.log(src)
     if(rating_info.length===0) {
         for(let i=0;i<src.length;i++) {
             foods[src[i][0]]=src[i][1]
-            rating_dict[src[i][0]]=makeDiv(src[i][0],src[i][1],80)
+            rating_dict[src[i][0]]=makeDiv(src[i][0],src[i][1],src[i][2],80)
         }
     }
     else {
         for(let i=0;i<rating_info.length;i++) {
             rating_info_json[rating_info[i][0]]={
                 name:rating_info[i][1],
+                image:rating_info[i][2],
                 userId:rating_info[i][3],
                 rating:rating_info[i][4]
             }
@@ -149,11 +148,12 @@ async function init() {
         keys=Object.keys(rating_info_json)
         for(let i=0;i<src.length;i++) {
             foods[src[i][0]]=src[i][1]
-            rating_dict[src[i][0]]=makeDiv(src[i][0],src[i][1],80)
+            rating_dict[src[i][0]]=makeDiv(src[i][0],src[i][1],src[i][2],80)
         }
         for(let i=0;i<keys.length;i++) {
             let obj=rating_info_json[keys[i]]
         }
+        console.log(rating_info_json)
     }
     let rating_dict_keys=Object.keys(rating_dict)
     for(let i=0;i<rating_dict_keys.length;i++) {
@@ -174,61 +174,67 @@ async function init() {
     ratingIdx+=20
 }
 async function foodInfo() {
+    const name=rating_info_json[arguments[0]]
+    if(flag===false) {
+    }
+    else {
+        var form = document.createElement("form");
 
-    var form = document.createElement("form");
+        form.setAttribute("type", "hidden");
+        form.setAttribute("id","food-info")
+        form.setAttribute("action","foodinfo.php")
+        form.setAttribute("method","post")
 
-    form.setAttribute("type", "hidden");
-    form.setAttribute("id","food-info")
-    form.setAttribute("action","foodinfo.php")
-    form.setAttribute("method","post")
+        var input = document.createElement("input")
 
-    var input = document.createElement("input")
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "foodid");
+        input.setAttribute("value", JSON.stringify(name));
 
-    input.setAttribute("type", "hidden");
-    input.setAttribute("name", "foodid");
-    input.setAttribute("value", JSON.stringify(arguments[1]));
+        form.appendChild(input)
+        document.getElementById(`img_${arguments[0]}`).appendChild(form)
 
-    form.appendChild(input)
-    document.getElementById(`img_${arguments[0]}`).appendChild(form)
-
-    document.getElementById("food-info").submit()
-
+        document.getElementById("food-info").submit()
+    }
 }
 
 async function set() {
-    score=arguments[0]+1
-    let set_info=JSON.parse(await $.ajax({
+    score = arguments[0] + 1
+    let set_info = JSON.parse(await $.ajax({
         type: "POST",
         url: '/script/php/DAOHandler.php',
         data: {
-            0:'select',
-            1:'*',
-            2:'rating',
-            3:`userid=${id} and foodid=${arguments[1]};`
-        }}))
+            0: 'select',
+            1: '*',
+            2: 'rating',
+            3: `userid=${id} and foodid=${arguments[1]};`
+        }
+    }))
 
-    if(set_info.length>0) {
+    if (set_info.length > 0) {
         await $.ajax({
             type: "POST",
             url: '/script/php/DAOHandler.php',
             data: {
-                0:'update',
-                1:'rating',
-                2:`rating=${score}`,
-                3:`userid=${id} and foodid=${arguments[1]};`
-            }})
-    }
-    else {
+                0: 'update',
+                1: 'rating',
+                2: `rating=${score}`,
+                3: `userid=${id} and foodid=${arguments[1]};`
+            }
+        })
+    } else {
         await $.ajax({
             type: "POST",
             url: '/script/php/DAOHandler.php',
             data: {
-                0:'insert',
-                1:'rating(userid,foodid,rating)',
-                2:`${id},${arguments[1]},${score}`
-            }})
+                0: 'insert',
+                1: 'rating(userid,foodid,rating)',
+                2: `${id},${arguments[1]},${score}`
+            }
+        })
     }
-    document.getElementById('rating_'+arguments[1]).innerHTML=getScore(arguments[0],arguments[1],80)
+    document.getElementById('rating_' + arguments[1]).innerHTML = getScore(arguments[0], arguments[1], 80)
+    document.getElementById('desktop-rating-info').innerHTML = getScore(arguments[0], arguments[1], 100)
 }
 function set_init() {
     try {
@@ -255,7 +261,7 @@ function refresh() {
     if(rating_info.length===0) {
         for(let i=ratingIdx;i<lim;i++) {
             foods[src[i][0]]=src[i][1]
-            inner+=makeDiv(src[i][0],src[i][1],80)
+            inner+=makeDiv(src[i][0],src[i][1],src[i][2],80)
         }
         document.getElementById('scroll_layout').innerHTML=inner
         document.getElementById('scroll_layout').innerHTML+=loading
@@ -263,7 +269,7 @@ function refresh() {
     else {
         for(let i=ratingIdx;i<lim;i++) {
             foods[src[i][0]]=src[i][1]
-            inner+=makeDiv(src[i][0],src[i][1],80)
+            inner+=makeDiv(src[i][0],src[i][1],src[i][2],80)
         }
         document.getElementById('scroll_layout').innerHTML=inner
         let foodKeys=Object.keys(foods)

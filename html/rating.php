@@ -5,42 +5,15 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="ssosso.table.u">
-        <meta name="generator" content="ssosso.table food-db 0.1.0">
-        <link rel="icon" href="src/favicon.ico">
-
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
         <title>ssosso-table.food-db.rating</title>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <link rel="canonical" href="http://ssossotable.com">
-
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <style>
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
-            <!-- 모바일 화면 -->
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                    font-size: 3.5rem;
-                }
-
-            }
-            /* 태블릿, 아이패드 */
-        </style>
-        <!-- Custom styles for this template -->
-        <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true">
-        <link rel="preconnect" href="https://fonts.gstatic.com/">
-        <link href="./css/main/cover.css" rel="stylesheet">
         <link rel="stylesheet" href="/css/rating.css">
-
+        <link rel="stylesheet" href="/css/footer.css">
         <style type="text/css">
             /* iPhone4와 같은 높은 해상도 가로 */
             @media only screen and (max-width : 768px) {
@@ -86,9 +59,23 @@ include 'script/modules/CookieManager.php';
                     width: 25px !important;
                     height: 50px !important;
                 }
-                .rating-image img {
+                .box img {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+                .rating-image {
+                    width: 120px !important;
+                    height: 120px !important;
+                }
+                .list-group-item {
+                    height: 120px!important;
+                }
+                .box {
                     width: 80px !important;
                     height: 80px !important;
+                    margin: auto;
+                    border-radius: 30%;
+                    overflow: hidden;
                 }
             }
             @media (min-width : 768px) and (max-width : 1366px) {
@@ -155,11 +142,22 @@ include 'script/modules/CookieManager.php';
                 height: 100%;
                 background-color: transparent;
             }
+            .box {
+                margin: auto;
+                border-radius: 30%;
+                overflow: hidden;
+            }
+            .profile {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         </style>
 
-        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous"></script>
         <script type="text/javascript">
             let mql = window.matchMedia("screen and (max-width: 768px)");
             let flag=false;
@@ -313,7 +311,7 @@ include 'script/modules/CookieManager.php';
                     lim=ratingIdx+20
                 }
                 for(let i=0;i<lim;i++) {
-                    rating_list[i].style.cssText = "height: 140px; display: flex!important";
+                    rating_list[i].style.cssText = "height: 100%; display: flex!important";
                 }
                 ratingIdx+=20
             }
@@ -322,10 +320,12 @@ include 'script/modules/CookieManager.php';
                 if(flag===false) {
                     let format=`
                     <div class="card-body" id="title">
-                        <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
+                        <div class="box" style="height:360px; width:360px;">
+                            <img class="profile" id="food-info-image" src="${info.image}" />
+                        </div>
                         <h1 class="card-title" id="food-name">${info.name}</h1>
                         <p class="card-text" id="food-traits">특성 목록</p>
-                        <div id="rating" style="margin-bottom: 50px;">
+                        <div id="desktop-rating-info" style="margin-bottom: 50px;">
                             ${getScore(info.rating-1, arguments[0],100)}
                         </div>
                     </div>
@@ -333,7 +333,7 @@ include 'script/modules/CookieManager.php';
                     document.getElementById('food-info').innerHTML=format
                 }
                 else {
-                    foodInfo(arguments[0],rating_info_json[arguments[0]])
+                    //foodInfo(arguments[0],rating_info_json[arguments[0]])
                 }
             }
         </script>
@@ -389,14 +389,10 @@ include 'script/modules/CookieManager.php';
                 let lock=false
                 $(async function () {
                     $('#scroll_layout').scroll(function() {
-                        console.log($('#scroll_layout').scrollTop())
-                        console.log($('main').height())
-                        console.log($('#scroll_layout').prop('scrollHeight'))
                         if($('#scroll_layout').scrollTop() + $('main').height() >= $('#scroll_layout').prop('scrollHeight')) {
                             // $('html, #scroll_layout').animate({
                             //     scrollTop: 0
                             // }, 1000);
-                            console.log('aaa')
                             read_more()
                         }
                     });
@@ -410,7 +406,7 @@ include 'script/modules/CookieManager.php';
                     <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
                     <h1 class="card-title" id="food-name">음식 이름</h1>
                     <p class="card-text" id="food-traits">특성 목록</p>
-                    <div id="rating" style="margin-bottom: 50px;">
+                    <div id="desktop-rating-info" style="margin-bottom: 50px;">
                         <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
                         <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
                         <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
@@ -426,13 +422,12 @@ include 'script/modules/CookieManager.php';
 
         <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
             <div class="inner">
-                <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
+                <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
             </div>
         </footer>
     </div>
         <script>
             init()
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
 </html>

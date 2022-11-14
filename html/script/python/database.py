@@ -2,9 +2,12 @@ import pymysql.cursors
 import pymysql
 import pandas as pd
 import numpy as np
-
-from sklearn.model_selection import train_test_split
+import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Lasso
 
 connection = pymysql.connect(host='*',
                              user='*',
@@ -17,32 +20,49 @@ with connection:
         # Read a single record
         sql = "SELECT * FROM `food`"
         cursor.execute(sql)
-        food=cursor.fetchall()
+        foods=cursor.fetchall()
         sql = "SELECT * FROM `rating`"
         cursor.execute(sql)
-        rating=cursor.fetchall()
+        ratings=cursor.fetchall()
         sql = "SELECT * FROM `trait`"
         cursor.execute(sql)
-        trait=cursor.fetchall()
+        traits=cursor.fetchall()
 
-food=pd.DataFrame(food)
-rating=pd.DataFrame(rating)
-trait=pd.DataFrame(trait)
+foods=pd.DataFrame(foods)
+ratings=pd.DataFrame(ratings)
+traits=pd.DataFrame(traits)
 
-food.to_csv('/var/www/html/database/food.csv', index=False, encoding="utf-8-sig")
-rating.to_csv('/var/www/html/database/rating.csv', index=False, encoding="utf-8-sig")
-trait.to_csv('/var/www/html/database/trait.csv', index=False, encoding="utf-8-sig")
+ratings=ratings.merge(traits, how='inner', left_on='foodid', right_on='id')
+ratings=ratings.drop('id',axis=1)
+traits=traits.set_index('id',drop=True)
 
-ratings=rating.merge(trait, how='inner', left_on='foodid', right_on='id')
-ratings=ratings.replace(0,np.nan)
-train, test=train_test_split(ratings, random_state=7968, test_size=0.1)
+train, test=train_test_split(ratings,test_size=0.1,random_state=7968)
 
-cols=list(trait.columns)
-del cols[0]
+user_profile_list_lasso=[]
 
-for col in cols :
-    train[col]=train[col] * train['rating']
+for userId in train['userid'].unique():
+    user=train[train['userid']==userId]
+    X_train=user[traits.columns]
+    y_train=user['rating']
 
-user_profile=train.groupby('userid')[cols].mean()
+    reg=Lasso(alpha=0.03)
+    reg.fit(X_train,y_train)
+    user_profile_list_lasso.append([reg.intercept_, *reg.coef_])
 
-user_profile.to_csv('/var/www/html/database/user_profile.csv', index=True, encoding="utf-8-sig")
+user_profile_lasso=pd.DataFrame(
+    user_profile_list_lasso,
+    index=train['userid'].unique(),
+    columns=['intercept', *traits.columns])
+
+predict=[]
+for idx,row in test.iterrows():
+    user=row['userid']
+    intercept=user_profile_lasso.loc[user,'intercept']
+    genre_score=sum(user_profile_lasso.loc[user,traits.columns] * row[traits.columns])
+    expected_score=intercept+genre_score
+    predict.append(expected_score)
+
+test['predict']=predict
+
+user_profile_lasso.index.name='id'
+user_profile_lasso.to_csv('/var/www/html/database/user_profile_lasso.csv',index=True, encoding="utf-8-sig")

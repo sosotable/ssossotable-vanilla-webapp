@@ -21,7 +21,10 @@ let default_traits={
     meat:0,
     vegetable:0,
     rice:0,
-    spice:0
+    spice:0,
+    soda:0,
+    slimy:0,
+    fruit:0
 }
 
 let traits_en_kr={
@@ -47,7 +50,10 @@ let traits_en_kr={
     meat:'육고기',
     vegetable:'채소',
     rice:'쌀',
-    spice:'향신료'
+    spice:'향신료',
+    soda:'탄산',
+    slimy:'물컹거림',
+    fruit:'과일'
 }
 
 const delete_trait=(idx)=>{
@@ -76,6 +82,7 @@ const delete_trait=(idx)=>{
 
 }
 function add_trait() {
+    console.log(arguments)
     if(arguments[0]==0) {
         let trait=document.getElementById('trait_name').value
         if(trait!=='') {
@@ -153,7 +160,10 @@ function clear_trait() {
         meat:0,
         vegetable:0,
         rice:0,
-        spice:0
+        spice:0,
+        soda:0,
+        slimy:0,
+        fruit:0
     }
     for(let idx=0;idx<list_idx;idx++) {
         delete_trait(idx)
@@ -225,7 +235,8 @@ async function commit() {
                     `western,fried,raw,grilled,soup,stir_fried,`+
                     `steamed,wheat,dessert,beverage,sweetness,`+
                     `sour_taste,spicy,noodle,seafood,`+
-                    `meat,vegetable,rice,spice)`,
+                    `meat,vegetable,rice,spice,`+
+                    `soda,slimy,fruit)`,
                 2:`${id},`+
                     `${default_traits['korean']},${default_traits['japanese']},${default_traits['chinese']},`+
                     `${default_traits['asian']},${default_traits['western']},${default_traits['fried']},`+
@@ -234,7 +245,8 @@ async function commit() {
                     `${default_traits['dessert']},${default_traits['beverage']},${default_traits['sweetness']},`+
                     `${default_traits['sour_taste']},${default_traits['spicy']},${default_traits['noodle']},`+
                     `${default_traits['seafood']},${default_traits['meat']},${default_traits['vegetable']},`+
-                    `${default_traits['rice']},${default_traits['spice']}`
+                    `${default_traits['rice']},${default_traits['spice']}`+
+                    `${default_traits['soda']},${default_traits['slimy']},${default_traits['fruit']}`
             }})
     }
     clear_page()

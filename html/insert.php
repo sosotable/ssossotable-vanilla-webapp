@@ -294,6 +294,9 @@ include 'script/modules/CookieManager.php';
                 <span class="badge rounded-pill " id="sour_taste" onclick="add_trait('sour_taste');" style="background-color:#FFEAD8; color:white; text-shadow: -1px 0 #808080, 0 1px #808080, 1px 0 #808080, 0 -1px #808080;">신맛</span>
                 <span class="badge rounded-pill " id="spicy" onclick="add_trait('spicy');" style="background-color:#F2DAC9; color:white; text-shadow: -1px 0 #808080, 0 1px #808080, 1px 0 #808080, 0 -1px #808080;">매운맛</span>
                 <br>
+                <span class="badge rounded-pill " id="soda" onclick="add_trait('soda');" style="background-color:#F5F4DD; color:white; text-shadow: -1px 0 #808080, 0 1px #808080, 1px 0 #808080, 0 -1px #808080;">탄산</span>
+                <span class="badge rounded-pill " id="slimy" onclick="add_trait('slimy');" style="background-color:#EEE9CC; color:white; text-shadow: -1px 0 #808080, 0 1px #808080, 1px 0 #808080, 0 -1px #808080;">물컹거림</span>
+                <span class="badge rounded-pill " id="fruit" onclick="add_trait('fruit');" style="background-color:#F9E4B7; color:white; text-shadow: -1px 0 #808080, 0 1px #808080, 1px 0 #808080, 0 -1px #808080;">과일</span>
             </div>
 
             <div id="traits">

@@ -76,6 +76,16 @@ async function toFriendInfo() {
     }
     else {
         document.getElementById('friend-nickname').innerHTML=arguments[1]
+        const friendInfo=JSON.parse(await $.ajax({
+            type: "POST",
+            url: '/script/php/DAOHandler.php',
+            data: {
+                0:'select',
+                1:'*',
+                2:'user',
+                3:`user.id=${arguments[0]}`
+            }}))
+        document.getElementById('friend-image').src=friendInfo[0][4]
         const high_rating=JSON.parse(await $.ajax({
             type: "POST",
             url: '/script/php/DAOHandler.php',
@@ -97,19 +107,27 @@ async function toFriendInfo() {
         for(let i=0; i <high_rating.length;i++) {
             let high_div=
                 `<div class="high-rating-layout">
-                        <img src="src/ramen.jpg" width="80px" height="80px">
-                        <span style="display: block;">${high_rating[i][1]}</span>
-                        <span>${getScore(high_rating[i][4],10)}</span>
-                        </div>`
+                    <div>
+                        <div class="box" style="height: 80px; width: 80px;">
+                            <img class="profile" src="${high_rating[i][3]}">
+                        </div>
+                    </div>
+                    <span style="display: block;">${high_rating[i][1]}</span>
+                    <span>${getScore(high_rating[i][4],10)}</span>
+                </div>`
             document.getElementById('high-rating-holder').innerHTML+=high_div
         }
         for(let i=0; i <low_rating.length;i++) {
             let low_div=
                 `<div class="high-rating-layout">
-                        <img src="src/ramen.jpg" width="80px" height="80px">
-                        <span style="display: block;">${low_rating[i][1]}</span>
-                        <span>${getScore(low_rating[i][4],10)}</span>
-                        </div>`
+                    <div>
+                        <div class="box" style="height: 80px; width: 80px;">
+                            <img class="profile" src="${low_rating[i][3]}">
+                        </div>
+                    </div>
+                    <span style="display: block;">${low_rating[i][1]}</span>
+                    <span>${getScore(low_rating[i][4],10)}</span>
+                </div>`
             document.getElementById('low-rating-holder').innerHTML+=low_div
         }
         let ratingInfoPath=`http://ssossotable.com/config/ratingInfos/${arguments[0]}.png`

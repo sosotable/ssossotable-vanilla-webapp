@@ -5,45 +5,16 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="ssosso.table.u">
-    <meta name="generator" content="ssosso.table food-db 0.1.0">
-    <link rel="icon" href="src/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>ssosso-table.food-db.myinfo</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>ssosso-table.food-db.rating</title>
-
-    <link rel="canonical" href="http://ssossotable.com">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/footer.css">
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-
-        }
-    </style>
-    <!-- Custom styles for this template -->
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="stylesheet" href="./css/main/css2">
-    <link rel="stylesheet" href="./css/rating/css2">
-
-    <link href="./css/main/cover.css" rel="stylesheet">
-    <!--        <link href="./css/main.css" rel="stylesheet">-->
-    <style>
-        @media only screen and (max-width : 640px) {
+        @media only screen and (max-width : 768px) {
             #scroll_layout {
                 max-width: 1000px !important;
                 width: 400px !important;
@@ -55,16 +26,12 @@ include 'script/modules/CookieManager.php';
                 width: 350px !important;
                 margin: auto;
             }
-            .high-rating-layout img,.low-rating-layout img {
-                width: 40px!important;
-                height: 40px!important;
-            }
             .rating-stars img {
                 width: 5px!important;
                 height: 10px!important;
             }
             #high-rating-holder,#low-rating-holder {
-                height: 100px !important;
+                height: 100% !important;
             }
             ul {
                 display: inline-block!important;
@@ -84,6 +51,13 @@ include 'script/modules/CookieManager.php';
                 width: 40px;
                 height: 40px;
             }
+            /*.box {*/
+            /*    width: 60px !important;*/
+            /*    height: 60px !important;*/
+            /*    margin: auto;*/
+            /*    border-radius: 30%;*/
+            /*    overflow: hidden;*/
+            /*}*/
         }
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
@@ -214,15 +188,21 @@ include 'script/modules/CookieManager.php';
             width: 100%;
             height: 100%;
         }
+        .box {
+            margin: auto;
+            border-radius: 30%;
+            overflow: hidden;
+        }
+        .profile {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
-    <script src="./script/main/dsp" type="text/javascript" defer="" async=""></script>
-    <script src="./script/rating/dsp" type="text/javascript" defer="" async=""></script>
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
         let userId= <?php echo $_COOKIE['user_id'];?>
@@ -359,7 +339,12 @@ include 'script/modules/CookieManager.php';
             for(let i=0; i <high_rating.length;i++) {
                 let high_div=
                         `<div class="high-rating-layout">
-                        <img src="src/ramen.jpg" width="80px" height="80px">
+                        <div>
+                            <div class="box" style="width: 80px; height: 80px">
+                                <img class="profile" src="${high_rating[i][3]}">
+                            </div>
+                        </div>
+
                         <span style="display: block;">${high_rating[i][1]}</span>
                         <span class="rating-stars">${getScore(high_rating[i][4],10)}</span>
                         </div>`
@@ -368,7 +353,11 @@ include 'script/modules/CookieManager.php';
             for(let i=0; i <low_rating.length;i++) {
                 let low_div=
                     `<div class="high-rating-layout">
-                        <img src="src/ramen.jpg" width="80px" height="80px">
+                        <div>
+                            <div class="box" style="width: 80px; height: 80px">
+                                <img src="${low_rating[i][3]}" width="80px" height="80px">
+                            </div>
+                        </div>
                         <span style="display: block;">${low_rating[i][1]}</span>
                         <span class="rating-stars">${getScore(low_rating[i][4],10)}</span>
                         </div>`
@@ -394,7 +383,9 @@ include 'script/modules/CookieManager.php';
                 rating_divs+=`
                 <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                 <div style="display: inline-block; margin: 0;">
-                <img src="/src/ramen.jpg" height="60" width="60">
+                    <div class="box" style="height: 80px; width: 80px;">
+                        <img class="profile" src="${v[j][4]}">
+                    </div>
                 </div>
                 <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
                 <div class="d-flex justify-content-start fs-3" style="">
@@ -650,9 +641,8 @@ include 'script/modules/CookieManager.php';
     </main>
 
         <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
-
             <div class="inner">
-                <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
+                <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
             </div>
         </footer>
         </div>
@@ -769,11 +759,9 @@ include 'script/modules/CookieManager.php';
                 </div>
             </div>
         </div>
-
 </div>
 <script>
     init()
 </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </html>

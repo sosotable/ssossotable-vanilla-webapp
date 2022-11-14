@@ -5,44 +5,19 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="ssosso.table.u">
-    <meta name="generator" content="ssosso.table food-db 0.1.0">
-    <link rel="icon" href="src/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>ssosso-table.food-db.my-recipe</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>ssosso-table.food-db.rating</title>
-
-    <link rel="canonical" href="http://ssossotable.com">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-    <!-- Custom styles for this template -->
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link href="./css/main/cover.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/rating.css">
+    <link href="./css/footer.css" rel="stylesheet">
 
     <style type="text/css">
+
         /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 640px) {
+        @media only screen and (max-width : 768px) {
             #scroll_layout {
                 width: 300px !important;
             }
@@ -64,6 +39,17 @@ include 'script/modules/CookieManager.php';
                 width: 40px;
                 height: 40px;
             }
+        }
+        @font-face { /* 애플산돌고딕 폰트 적용 */
+            font-family: "Jua";
+            src: url("css/font/Jua-Regular.ttf") format("truetype");
+            font-weight: normal;
+        }
+        html,
+        body {
+            font-family: Jua;
+            height: 100%;
+            overflow-y:scroll !important;
         }
         .bg-ssosseji {
             --bs-bg-opacity: 1;
@@ -109,9 +95,10 @@ include 'script/modules/CookieManager.php';
         }
     </style>
 
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <script type="text/javascript">
         let recipeInfos=null
         let mql = window.matchMedia("screen and (max-width: 768px)");
@@ -298,13 +285,12 @@ include 'script/modules/CookieManager.php';
 
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
         <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com">@ssosso.table</a></p>
+            <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
         </div>
     </footer>
     <script>
         init()
     </script>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
