@@ -245,7 +245,7 @@ async function commit() {
                     `${default_traits['dessert']},${default_traits['beverage']},${default_traits['sweetness']},`+
                     `${default_traits['sour_taste']},${default_traits['spicy']},${default_traits['noodle']},`+
                     `${default_traits['seafood']},${default_traits['meat']},${default_traits['vegetable']},`+
-                    `${default_traits['rice']},${default_traits['spice']}`+
+                    `${default_traits['rice']},${default_traits['spice']},`+
                     `${default_traits['soda']},${default_traits['slimy']},${default_traits['fruit']}`
             }})
     }

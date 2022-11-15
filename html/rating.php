@@ -152,6 +152,9 @@ include 'script/modules/CookieManager.php';
                 height: 100%;
                 object-fit: cover;
             }
+            .predict-disable {
+                display: none;
+            }
         </style>
 
         <script
@@ -161,6 +164,8 @@ include 'script/modules/CookieManager.php';
         <script type="text/javascript">
             let mql = window.matchMedia("screen and (max-width: 768px)");
             let flag=false;
+            let traits=null;
+            let trait_keys=null
             mql.addListener(function(e) {
                 if(e.matches) {
                     // 모바일
@@ -295,47 +300,8 @@ include 'script/modules/CookieManager.php';
             let ratingIdx=0
             let lim=0
 
-            async function read_more() {
-                foods={}
-                if (lim === rating_list.length) {
-                    document.getElementById('loading').innerHTML=`
-                    <div style="display: inline-block; margin: auto;">
-                        <span>더 이상 불러올 음식이 없어요</span>
-                    </div>
-                    `
-                }
-                if((ratingIdx+20)>=src.length) {
-                    lim=rating_list.length
-                }
-                else {
-                    lim=ratingIdx+20
-                }
-                for(let i=0;i<lim;i++) {
-                    rating_list[i].style.cssText = "height: 100%; display: flex!important";
-                }
-                ratingIdx+=20
-            }
-            function show_foodinfo() {
-                let info=rating_info_json[arguments[0]]
-                if(flag===false) {
-                    let format=`
-                    <div class="card-body" id="title">
-                        <div class="box" style="height:360px; width:360px;">
-                            <img class="profile" id="food-info-image" src="${info.image}" />
-                        </div>
-                        <h1 class="card-title" id="food-name">${info.name}</h1>
-                        <p class="card-text" id="food-traits">특성 목록</p>
-                        <div id="desktop-rating-info" style="margin-bottom: 50px;">
-                            ${getScore(info.rating-1, arguments[0],100)}
-                        </div>
-                    </div>
-                    `
-                    document.getElementById('food-info').innerHTML=format
-                }
-                else {
-                    //foodInfo(arguments[0],rating_info_json[arguments[0]])
-                }
-            }
+            let userProfile={}
+            userProfile.userId=<?php echo $_COOKIE['user_id']; ?>
         </script>
         <script type="text/javascript" src="/script/rating.js"></script>
     </head>

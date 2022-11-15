@@ -2,12 +2,11 @@ import pymysql.cursors
 import pymysql
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Lasso
+
 
 connection = pymysql.connect(host='*',
                              user='*',
@@ -18,13 +17,13 @@ connection = pymysql.connect(host='*',
 with connection:
     with connection.cursor() as cursor:
         # Read a single record
-        sql = "SELECT * FROM `food`"
+        sql = "SELECT * FROM `*`"
         cursor.execute(sql)
         foods=cursor.fetchall()
-        sql = "SELECT * FROM `rating`"
+        sql = "SELECT * FROM `*`"
         cursor.execute(sql)
         ratings=cursor.fetchall()
-        sql = "SELECT * FROM `trait`"
+        sql = "SELECT * FROM `*`"
         cursor.execute(sql)
         traits=cursor.fetchall()
 
@@ -65,4 +64,6 @@ for idx,row in test.iterrows():
 test['predict']=predict
 
 user_profile_lasso.index.name='id'
-user_profile_lasso.to_csv('/var/www/html/database/user_profile_lasso.csv',index=True, encoding="utf-8-sig")
+
+user_profile_lasso.to_csv('PATH',index=True, encoding="utf-8-sig")
+user_profile_lasso.to_json('PATH')
