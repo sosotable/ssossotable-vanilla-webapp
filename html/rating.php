@@ -164,8 +164,13 @@ include 'script/modules/CookieManager.php';
         <script type="text/javascript">
             let mql = window.matchMedia("screen and (max-width: 768px)");
             let flag=false;
-            let traits=null;
+            let traits={};
             let trait_keys=null
+
+            let ratings=null
+            let unrating={}
+            let unrating_keys=null
+            let unrating_dict={}
             mql.addListener(function(e) {
                 if(e.matches) {
                     // 모바일

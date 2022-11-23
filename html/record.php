@@ -36,6 +36,7 @@ include 'script/modules/CookieManager.php';
                 width: 10px!important;
                 height: 20px!important;
             }
+
         }
         @media (max-width: 768px) {
             .card {
@@ -71,6 +72,13 @@ include 'script/modules/CookieManager.php';
             .masthead-brand {
                 width: 40px;
                 height: 40px;
+            }
+            #record-info {
+                display: none!important;
+            }
+            .form-check {
+                margin: 0!important;
+                padding: 0!important;
             }
         }
         /* iPhone4와 같은 높은 해상도 가로 */
@@ -154,6 +162,25 @@ include 'script/modules/CookieManager.php';
             background-color: transparent;
             text-decoration: underline;
         }
+        #menu-list {
+            max-height: 100%;
+            overflow-y: auto;
+        }
+        .menu-content {
+            font-size: 20px;
+        }
+        .menu-content-image {
+            width: 20px;
+            height: 20px;
+        }
+        .menu-add-image {
+            width: 40px;
+            height: 40px;
+        }
+        #place-info {
+            display: none;
+        }
+
     </style>
 
     <script
@@ -163,6 +190,7 @@ include 'script/modules/CookieManager.php';
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
+
         mql.addListener(function(e) {
             if(e.matches) {
                 // 모바일
@@ -189,6 +217,221 @@ include 'script/modules/CookieManager.php';
                 document.getElementById('record-info').style.cssText='display:flex!important;'
                 document.getElementById('record-map').style.cssText='margin:auto'
             }
+        }
+        async function add_menu() {
+            let idx=-1
+            let option=''
+            let menuname=''
+            let radio=null
+            let v,id=null
+            let foodid=-1
+            if(flag) {
+                menuname=document.getElementById("menu-name-mobile").value;
+                radio=document.querySelectorAll("input[class='form-check-input-mobile']")
+                for(let i=0;i<radio.length;i++) {
+                    if(radio[i].checked) {
+                        idx=i
+                        radio[i].checked=false
+                    }
+                }
+                switch (idx) {
+                    case 0: option='나쁨';break;
+                    case 1: option='보통';break;
+                    case 2: option='좋음';break;
+                }
+                if(idx !== -1) {
+                    let v=JSON.parse(await $.ajax({
+                        type: "POST",
+                        url: '/script/php/DAOHandler.php',
+                        data:{
+                            0:'select',
+                            1:'id',
+                            2:"food",
+                            3:`name='${menuname}'`
+                        }}))
+                    if(v.length===0) {
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'food(name)',
+                                2:`'${menuname}'`
+                            }})
+                        id=JSON.parse(await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'select',
+                                1:'id',
+                                2:"food",
+                                3:`1>0 order by id desc limit 1`
+                            }}))
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'trait(id)',
+                                2:`'${id[0][0]}'`
+                            }})
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'meal(foodid,userid,locationid,rating)',
+                                2:`'${id[0][0]}',${userId},${placeId},${idx}`
+                            }})
+                    }
+                    else {
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'meal(foodid,userid,locationid,rating)',
+                                2:`'${v[0][0]}',${userId},${placeId},${idx}`
+                            }})
+                    }
+                    document.getElementById("menu-name-mobile").value=''
+                    document.getElementById('menu-list-mobile').innerHTML+=`
+                    <li id="${menuname}" class="list-group-item menus d-flex justify-content-between">
+                        <span class="menu-content">${menuname}</span>
+                        <span class="menu-count">1</span>
+                        <img class="menu-add-image" onclick="add_menu_count('${menuname}')" src="src/read_more.png">
+                        <span class="menu-content">${option}</span>
+                        <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png">
+                    </li>
+                    `
+
+                }
+            }
+            else {
+                menuname=document.getElementById("menu-name").value;
+                radio=document.querySelectorAll("input[class='form-check-input']")
+                for(let i=0;i<radio.length;i++) {
+                    if(radio[i].checked) {
+                        idx=i
+                        radio[i].checked=false
+                    }
+                }
+                switch (idx) {
+                    case 0: option='나쁨';break;
+                    case 1: option='보통';break;
+                    case 2: option='좋음';break;
+                }
+                if(idx !== -1) {
+                    v=JSON.parse(await $.ajax({
+                        type: "POST",
+                        url: '/script/php/DAOHandler.php',
+                        data:{
+                            0:'select',
+                            1:'id',
+                            2:"food",
+                            3:`name='${menuname}'`
+                        }}))
+                    if(v.length===0) {
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'food(name)',
+                                2:`'${menuname}'`
+                            }})
+                        id=JSON.parse(await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'select',
+                                1:'id',
+                                2:"food",
+                                3:`1>0 order by id desc limit 1`
+                            }}))
+                        foodid=id[0][0]
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'trait(id)',
+                                2:`'${foodid}'`
+                            }})
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'meal(foodid,userid,locationid,rating)',
+                                2:`'${foodid}',${userId},${placeId},${idx}`
+                            }})
+                    }
+                    else {
+                        foodid=v[0][0]
+                        await $.ajax({
+                            type: "POST",
+                            url: '/script/php/DAOHandler.php',
+                            data:{
+                                0:'insert',
+                                1:'meal(foodid,userid,locationid,rating)',
+                                2:`'${v[0][0]}',${userId},${placeId},${idx}`
+                            }})
+                    }
+
+                    document.getElementById("menu-name").value=''
+                    document.getElementById('menu-list').innerHTML+=`
+                <li id="${placeId}-${foodid}" class="list-group-item menus d-flex justify-content-between">
+                    <span class="menu-content">${menuname}</span>
+                    <span class="menu-count">1</span>
+                    <img class="menu-add-image" onclick="add_menu_count('${foodid}')" src="src/read_more.png">
+                    <span class="menu-content">${option}</span>
+                    <img class="menu-content-image" onclick="delete_menu('${foodid}')" src="src/close.png">
+                </li>
+                `
+                }
+            }
+
+        }
+        async function delete_menu() {
+
+            let children
+            if(flag) {
+                children=document.getElementById('menu-list-mobile').children
+            }
+            else {
+                children=document.getElementById('menu-list').children
+            }
+            for(let i=0;i<children.length;i++) {
+                if(children[i].id==`${placeId}-`+arguments[0]) {
+                    children[i].remove()
+                    await $.post("script/php/DAOHandler.php",
+                        {
+                            0:'delete',
+                            1:'meal',
+                            2:`userid=${userId} and foodid=${arguments[0]} and locationid=${placeId}`
+                        })
+                }
+            }
+
+        }
+        function close_place_info() {
+            document.getElementById('place-info').style.display='none'
+            document.getElementById('record-map').style.height='100%'
+            document.getElementById('search-info').style.display='block'
+        }
+        async function add_menu_count() {
+            let cnt=parseInt(menus[arguments[0]].count)+1
+            menus[arguments[0]].count=cnt
+            const children=document.getElementById(`${placeId}-${arguments[0]}`).children
+            children[1].innerHTML=String(cnt)
+
+            await $.post("script/php/DAOHandler.php",
+                {
+                    0:'insert',
+                    1:'meal(foodid,userid,locationid,rating)',
+                    2:`${arguments[0]},${userId},${placeId},${menus[arguments[0]].rating_int}`
+                })
         }
     </script>
 </head>
@@ -244,19 +487,19 @@ include 'script/modules/CookieManager.php';
                 <p class="card-text">오늘 당신의 식사를 기록 해 주세요.</p>
             </div>
             <div id="map" style="width:500px;height:400px;"></div>
-
-            <ul class="list-group list-group-flush">
-
-                <li class="list-group-item">
-                    <input type="text" id="where" placeholder="where?" autocomplete='off'>
-                </li>
-            </ul>
-            <div class="card-body">
-                <input type="button" value="검색" class="btn text-white" style="background-color:#e4bd74; color:white;" onclick="search();">
-            </div>
-            <div class="card-body" id="search-result">
-                <ul class="list-group" id="search-result-list" style="max-height: 200px; overflow-y: auto;">
+            <div id="search-info">
+                <ul class="list-group list-group-flush" id="record-search">
+                    <li class="list-group-item">
+                        <input type="text" id="where" placeholder="where?" autocomplete='off'>
+                    </li>
                 </ul>
+                <div class="card-body">
+                    <input type="button" value="검색" class="btn text-white" style="background-color:#e4bd74; color:white;" onclick="search();">
+                </div>
+                <div class="card-body" id="search-result">
+                    <ul class="list-group" id="search-result-list" style="max-height: 100px; overflow-y: auto;">
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="card" id='record-info' style="">
@@ -278,6 +521,11 @@ include 'script/modules/CookieManager.php';
                 <ul class="dropdown-menu">
                 </ul>
             </div>
+            <ul class="list-group" id="menu-list">
+            </ul>
+        </div>
+        <div class="card" id="place-info">
+
         </div>
     </main>
 
@@ -315,6 +563,8 @@ include 'script/modules/CookieManager.php';
         let selectedFriendId=-1
         let format=``
         let format_right=``
+
+        let menus={}
 
         async function friend_selected() {
             selectedFriendId=parseInt(arguments[0])
@@ -377,9 +627,12 @@ include 'script/modules/CookieManager.php';
         }
 
         async function location_onclick() {
+            let ffmt=``
             let postJson={}
             let friendInfo={}
             placeId=parseInt(arguments[0])
+
+            document.getElementById('menu-list').innerHTML=``
 
             let v=JSON.parse(await $.post("script/php/DAOHandler.php",{
                 0:'select',
@@ -395,17 +648,124 @@ include 'script/modules/CookieManager.php';
                 3:`user.id in ( select friendid from user, friend where user.id=friend.userid and user.id=${userId} )`
             }));
 
-            let ffmt=``
+            let menu_info=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'distinct foodid,userid,meal.rating,name',
+                2:'meal, food',
+                3:`userid=${userId} and meal.locationid=${arguments[0]} and meal.foodid=food.id`
+            }));
+            let menu_count=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'foodid, name,count(*) `count`',
+                2:'meal, food',
+                3:`userid=${userId} and meal.foodid=food.id and meal.locationid=${arguments[0]} group by foodid`
+            }));
+            for(let i=0;i<menu_info.length;i++) {
+                let option=``
+                switch (parseInt(menu_info[i][2])) {
+                    case 0:option='나쁨';break;
+                    case 1:option='보통';break;
+                    case 2:option='좋음';break;
+                }
+                menus[menu_info[i][0]]={
+                    name:menu_info[i][3],
+                    rating:option,
+                    rating_int:parseInt(menu_info[i][2]),
+                    count:menu_count[i][2]
+                }
+            }
+            const menu_key=Object.keys(menus)
+            if(flag) {
+                document.getElementById('rating_main').classList.remove('d-flex')
+                document.getElementById('record-map').style.height='60%'
+                document.getElementById('search-info').style.display='none'
+                document.getElementById('place-info').style.display='flex'
+                if(v.length===0) {
+                    document.getElementById('place-info').innerHTML=`
+                        <img src="src/close.png" onclick="close_place_info();" style="
+                            height: 20px;
+                            width: 20px;
+                            margin: 5px 5px 5px auto;
+                        ">
+                        <div class="input-group mb-3">
+                            <input type="text" id='menu-name-mobile' class="form-control" placeholder="뭘 먹었나요?" autocomplete="off" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                    <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                    <label class="form-check-label" for="inlineRadio2">평범</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                    <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                            </div>
+                        </div>
+                        <ul class="list-group" id="menu-list-mobile">
+                            <li class="list-group-item menus" style="display: none;"></li>
+                        </ul>
+                        `
+                }
+                else {
+                    let menu_list=``
+                    for(let i=0;i<menu_key.length;i++) {
+                        menu_list+=`
+                        <li id="${placeId}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <img class="menu-add-image" onclick="add_menu_count('${menu_key[i]}')" src="src/read_more.png">
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                            <img class="menu-content-image" onclick="delete_menu('${menu_key[i]}')" src="src/close.png">
+                        </li>
+                        `
+                    }
+                    document.getElementById('place-info').innerHTML=`
+                        <img src="src/close.png" onclick="close_place_info();" style="
+                            height: 20px;
+                            width: 20px;
+                            margin: 5px 5px 5px auto;
+                        ">
+                        <div class="input-group mb-3">
+                            <input type="text" id='menu-name-mobile' class="form-control" placeholder="뭘 먹었나요?" autocomplete="off" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                    <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                    <label class="form-check-label" for="inlineRadio2">평범</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                    <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                            </div>
+                        </div>
+                        <ul class="list-group" id="menu-list-mobile">
+                          <li class="list-group-item menus" style="display: none;"></li>
+                          ${menu_list}
+                        </ul>
+                        `
+                }
+            }
 
             if(friends.length!==0) {
-
                 for(let i=0;i<friends.length;i++) {
                     ffmt+=`
                                 <li onclick="friend_selected(${friends[i][0]},'${friends[i][1]}')"><a class="dropdown-item" href="#">${friends[i][1]}</a></li>
                                 `
                 }
             }
-
             if(cok.before===null) {
                 cok.before=`list-content-${arguments[0]}`
                 document.getElementById(`list-content-${arguments[0]}`).classList.add('active')
@@ -443,10 +803,10 @@ include 'script/modules/CookieManager.php';
                                 `
                 format_right=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
+                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                                    <span>${arguments[2]}</span>
-                                    <div class="d-flex justify-content-start fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
+                                    <h2><span>${arguments[2]}</span></h2>
+                                    <div class="d-flex justify-content-center fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
                                         <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(0,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(1,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
                                         <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(2,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(3,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
                                         <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(4,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(5,${arguments[0]},'${arguments[3]}','${arguments[4]}','${arguments[2]}',${arguments[5]},${arguments[6]})">
@@ -458,16 +818,49 @@ include 'script/modules/CookieManager.php';
                                     <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                     </a>
-
                                     <ul class="dropdown-menu">
                                         ${ffmt}
                                     </ul>
-                                </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id='menu-name' class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                                <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                                <label class="form-check-label" for="inlineRadio2">평범</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                                <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                                        </div>
+                                    </div>
+                                <ul class="list-group" id="menu-list">
+                                  <li class="list-group-item menus" style="display: none;"></li>
+                                </ul>
                                 `
                 document.getElementById('record-info').innerHTML=format_right
                 infowindow.setContent(format);
             }
             else {
+                let menu_list=``
+                for(let i=0;i<menu_key.length;i++) {
+                    menu_list+=`
+                        <li id="${placeId}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <img class="menu-add-image" onclick="add_menu_count('${menu_key[i]}')" src="src/read_more.png">
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                            <img class="menu-content-image" onclick="delete_menu('${menu_key[i]}')" src="src/close.png">
+                        </li>
+                        `
+                }
                 let height=30
                 let f=``
                 let fr=``
@@ -540,7 +933,7 @@ include 'script/modules/CookieManager.php';
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
                                     <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                                    <span>${arguments[2]}</span>
+                                    <h2><span>${arguments[2]}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;">
                                         ${fr}
                                     </div>
@@ -553,7 +946,31 @@ include 'script/modules/CookieManager.php';
                                             ${ffmt}
                                         </ul>
                                     </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id='menu-name' class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                                <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                                <label class="form-check-label" for="inlineRadio2">평범</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                                <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="menu-list">
+                                    <li class="list-group-item menus" style="display: none;"></li>
+                                    ${menu_list}
+                                </ul>
                                 `
 
                 document.getElementById('record-info').innerHTML=format_right
@@ -589,6 +1006,8 @@ include 'script/modules/CookieManager.php';
 
                 placeId=parseInt(place.id)
 
+                document.getElementById('menu-list').innerHTML=``
+
                 let v=JSON.parse(await $.post("script/php/DAOHandler.php",
                     {
                         0:'select',
@@ -596,7 +1015,6 @@ include 'script/modules/CookieManager.php';
                         2:'record',
                         3:`userid=${userId} and \`where\`=${parseInt(place.id)}`
                     }));
-
                 let friends=JSON.parse(await $.post("script/php/DAOHandler.php",
                     {
                         0: 'select',
@@ -614,7 +1032,117 @@ include 'script/modules/CookieManager.php';
                                 `
                     }
                 }
+                let menu_info=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                    0:'select',
+                    1:'distinct foodid,userid,meal.rating,name',
+                    2:'meal, food',
+                    3:`userid=${userId} and meal.locationid=${place.id} and meal.foodid=food.id`
+                }));
+                let menu_count=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                    0:'select',
+                    1:'foodid, name,count(*) `count`',
+                    2:'meal, food',
+                    3:`userid=${userId} and meal.foodid=food.id and meal.locationid=${place.id} group by foodid`
+                }));
+                for(let i=0;i<menu_info.length;i++) {
+                    let option=``
+                    switch (parseInt(menu_info[i][2])) {
+                        case 0:option='나쁨';break;
+                        case 1:option='보통';break;
+                        case 2:option='좋음';break;
+                    }
+                    menus[menu_info[i][0]]={
+                        name:menu_info[i][3],
+                        rating:option,
+                        rating_int:parseInt(menu_info[i][2]),
+                        count:menu_count[i][2]
+                    }
+                }
+                const menu_key=Object.keys(menus)
 
+                if(flag) {
+                    document.getElementById('rating_main').classList.remove('d-flex')
+                    document.getElementById('record-map').style.height='60%'
+                    document.getElementById('search-info').style.display='none'
+                    document.getElementById('place-info').style.display='flex'
+                    if(v.length===0) {
+                        document.getElementById('place-info').innerHTML=`
+                        <img src="src/close.png" onclick="close_place_info();" style="
+                            height: 20px;
+                            width: 20px;
+                            margin: 5px 5px 5px auto;
+                        ">
+                        <div class="input-group mb-3">
+                            <input type="text" id='menu-name-mobile' class="form-control" placeholder="뭘 먹었나요?" autocomplete="off" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                    <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                    <label class="form-check-label" for="inlineRadio2">평범</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                    <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                            </div>
+                        </div>
+                        <ul class="list-group" id="menu-list-mobile">
+                            <li class="list-group-item menus" style="display: none;"></li>
+                        </ul>
+                        `
+                    }
+                    else {
+                        let menu_list=``
+                        for(let i=0;i<menu_key.length;i++) {
+                            menu_list+=`
+                        <li id="${placeId}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <img class="menu-add-image" onclick="add_menu_count('${menu_key[i]}')" src="src/read_more.png">
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                            <img class="menu-content-image" onclick="delete_menu('${menu_key[i]}')" src="src/close.png">
+                        </li>
+                        `
+                        }
+                        document.getElementById('place-info').innerHTML=`
+                        <img src="src/close.png" onclick="close_place_info();" style="
+                            height: 20px;
+                            width: 20px;
+                            margin: 5px 5px 5px auto;
+                        ">
+                        <div class="input-group mb-3">
+                            <input type="text" id='menu-name-mobile' class="form-control" placeholder="뭘 먹었나요?" autocomplete="off" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                    <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                    <label class="form-check-label" for="inlineRadio2">평범</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input-mobile" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                    <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                            </div>
+                        </div>
+                        <ul class="list-group" id="menu-list-mobile">
+                          <li class="list-group-item menus" style="display: none;"></li>
+                          ${menu_list}
+                        </ul>
+                        `
+                    }
+                }
                 let format=``
                 if(v.length===0) {
                     let width=15
@@ -645,7 +1173,7 @@ include 'script/modules/CookieManager.php';
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
                                     <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                                    <span>${place.place_name}</span>
+                                    <h2><span>${place.place_name}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
                                         <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(0,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(1,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
                                         <img src="/src/rate_star_before_half-left.png" height="${height*2}" width="${width*2}" onclick="set(2,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)"><img src="/src/rate_star_before_half-right.png" height="${height*2}" width="${width*2}" onclick="set(3,${place.id},'${place.road_address_name}','${place.category_name}','${place.place_name}',${place.y},${place.x},30)">
@@ -661,12 +1189,47 @@ include 'script/modules/CookieManager.php';
                                         ${ffmt}
                                       </ul>
                                     </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id='menu-name' class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                                <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                                <label class="form-check-label" for="inlineRadio2">평범</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                                <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="menu-list">
+                                  <li class="list-group-item menus" style="display: none;"></li>
+                                </ul>
                                 `
                     document.getElementById('record-info').innerHTML=format_right
                     infowindow.setContent(format);
                 }
                 else {
+                    let menu_list=``
+                    for(let i=0;i<menu_key.length;i++) {
+                        menu_list+=`
+                        <li id="${placeId}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <img class="menu-add-image" onclick="add_menu_count('${menu_key[i]}')" src="src/read_more.png">
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                            <img class="menu-content-image" onclick="delete_menu('${menu_key[i]}')" src="src/close.png">
+                        </li>
+                        `
+                    }
                     let f=``
                     let fr=``
                     let height=30
@@ -731,10 +1294,10 @@ include 'script/modules/CookieManager.php';
                                       <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                       </a>
-
                                       <ul class="dropdown-menu">
                                         ${ffmt}
                                       </ul>
+
                                     </div>
                                 </div>
                                 `
@@ -742,7 +1305,7 @@ include 'script/modules/CookieManager.php';
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
                                     <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                                    <span>${place.place_name}</span>
+                                    <h2><span>${place.place_name}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
                                         ${fr}
                                     </div>
@@ -750,12 +1313,35 @@ include 'script/modules/CookieManager.php';
                                       <a class="btn dropdown-toggle" id="record-friend" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         누구와 먹었나요?
                                       </a>
-
                                       <ul class="dropdown-menu">
                                         ${ffmt}
                                       </ul>
                                     </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id='menu-name' class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="low">
+                                                <label class="form-check-label" for="inlineRadio1">나쁨</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="medium">
+                                                <label class="form-check-label" for="inlineRadio2">평범</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="high">
+                                                <label class="form-check-label" for="inlineRadio3">좋음</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button id="add-menu" onclick="add_menu();" class="btn btn-outline-secondary" type="button">추가</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="menu-list">
+                                  <li class="list-group-item menus" style="display: none;"></li>
+                                  ${menu_list}
+                                </ul>
                                 `
                     document.getElementById('record-info').innerHTML=format_right
                     infowindow.setContent(format);
