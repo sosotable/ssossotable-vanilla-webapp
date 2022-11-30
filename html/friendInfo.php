@@ -13,343 +13,30 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="./css/footer.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
     <style>
-        @media only screen and (max-width : 768px) {
-            #scroll_layout {
-                max-width: 1000px !important;
-                width: 400px !important;
-                max-height: 600px !important;
-                margin: auto;
-                overflow-y: scroll;
-            }
-            .nav-link {
-                font-size: 10px;
-            }
-            .masthead-brand {
-                width: 40px;
-                height: 40px;
-            }
-            #high-rating-holder{
-                height: 100%!important;
-                display: flex;
-                overflow-y: hidden !important;
-            }
-            #low-rating-holder{
-                height: 100%!important;
-                display: flex;
-                overflow-y: hidden !important;
-            }
-        }
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
             src: url("css/font/Jua-Regular.ttf") format("truetype");
             font-weight: normal;
         }
-        main {
-            width: 550px;
-        }
-        html,
-        body {
-            font-family: Jua;
-            height: 100%;
-            overflow-y:scroll;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-            color: #2c3034;
-        }
-        header {
-            width: 550px;
-        }
-        .nav-link {
-            font-weight: 300 !important;
-        }
-        .nav-masthead .active {
-            color: #2c3034;
-            border-bottom-color: transparent;
-        }
-        a:focus, a:hover {
-            border-bottom-color: #2c3034 !important;
-            color: #2c3034 !important;
-        }
-        p {
-            color: #2c3034 !important;
-        }
-        #scroll_layout {
-            max-width: 1000px;
-            width: 500px;
-            max-height: 700px;
-            overflow-y:scroll;
-        }
-        html::-webkit-scrollbar {
-            display: none;  /* Safari and Chrome */
-        }
-        body {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-
-        }
-        .cover-container {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-        }
-        main {
-            padding: 0!important;
-            margin: 0!important;
-            height: 85%;
-            width: 100%;
-        }
-        .card {
-            width: 100% !important;
-        }
-        nav {
-            background-color:#ffebaa;
-            padding: 0!important;
-            height: 100%!important;
-        }
-        .cover-container {
-            max-width: 100%;
-            width: 100%;
-            padding-left: 0!important;
-            padding-right: 0!important;
-            margin: 0!important;
-        }
-        .img-box {
-            width: 150px;
-            height: 150px;
-            border-radius: 30%;
-            overflow: hidden;
-            border: 1px solid black;
-        }
-        .card-img-top {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        #high-rating-holder{
-            height: 100%!important;
-            display: flex;
-            overflow-y: hidden !important;
-        }
-
-        .high-rating-layout{
-            margin: 5px;
-            -webkit-box-flex: 0;
-            -ms-flex-positive: 0;
-            flex-grow: 0;
-            -ms-flex-negative: 0;
-            flex-shrink: 0;
-            max-width: 77px;
-        }
-        #low-rating-holder{
-            height: 100%!important;
-            display: flex;
-            overflow-y: hidden !important;
-        }
-
-        .low-rating-layout{
-            margin: 5px;
-            -webkit-box-flex: 0;
-            -ms-flex-positive: 0;
-            flex-grow: 0;
-            -ms-flex-negative: 0;
-            flex-shrink: 0;
-            max-width: 77px;
-        }
-        .box {
-            margin: auto;
-            border-radius: 30%;
-            overflow: hidden;
-        }
-        .profile {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
     </style>
+    <link rel="stylesheet" href="/css/friendInfo.css">
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
     <script type="text/javascript">
 
-        let userId= <?php echo $_POST['friendId'];?>
+        const friendId= <?php echo $_POST['friendId'];?>
+
+        const userId=<?php echo $_COOKIE['user_id']?>
+
+        let combi=''
 
         let nickname=''
-            function getScore() {
-                let height=parseInt(arguments[1])
-                let width=parseInt(arguments[1])/2
-                switch (parseInt(arguments[0])) {
-                    case 1:
-                        return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 2:
-                        return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 3:
-                        return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 4:
-                        return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 5:
-                        return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 6: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 7: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 8: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 9: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
-                    case 10: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">`
-                    default:
-                        break
-                }
-            }
-
-        async function init() {
-            const high_rating=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'food.id,food.name,user.image,food.image,rating,user.nickname',
-                    2:'user,food,rating',
-                    3:`user.id=${userId} and rating >= 8 and food.id=rating.foodid and user.id=rating.userid;`
-                }}))
-            const low_rating=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'food.id,food.name,user.image,food.image,rating,user.nickname',
-                    2:'user,food,rating',
-                    3:`user.id=${userId} and rating < 6 and food.id=rating.foodid and user.id=rating.userid;`
-                }}))
-
-            nickname=high_rating[0][5]
-
-            document.getElementById('nickname').innerText=nickname
-
-            document.getElementById('myFoodModalLabel').innerText=nickname+'님의 취향'
-
-            document.getElementById('high-rating-holder').innerHTML=''
-            document.getElementById('low-rating-holder').innerHTML=''
-
-            document.getElementById('user-image').src=high_rating[0][2]
-
-            for(let i=0; i <high_rating.length;i++) {
-                let high_div=
-                    `<div class="high-rating-layout">
-                        <div>
-                            <div class="box" style="height: 80px; width: 80px;">
-                                <img class="profile" src="${high_rating[i][3]}">
-                            </div>
-                        </div>
-                        <span style="display: block;">${high_rating[i][1]}</span>
-                        <span>${getScore(high_rating[i][4],10)}</span>
-                        </div>`
-                document.getElementById('high-rating-holder').innerHTML+=high_div
-            }
-            for(let i=0; i <low_rating.length;i++) {
-                let low_div=
-                    `<div class="high-rating-layout">
-                        <div>
-                            <div class="box" style="height: 80px; width: 80px;">
-                                <img class="profile" src="${low_rating[i][3]}">
-                            </div>
-                        </div>
-                        <span style="display: block;">${low_rating[i][1]}</span>
-                        <span>${getScore(low_rating[i][4],10)}</span>
-                        </div>`
-                document.getElementById('low-rating-holder').innerHTML+=low_div
-            }
-            const v=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'userid,foodid,rating,name,image',
-                    2:'rating,food',
-                    3:`rating.userid=${userId} and rating.foodid=food.id;`
-                }}))
-            let rating_divs=``
-            let rating_stars=``
-            for(let j=0;j<v.length;j++) {
-                const rate=parseInt(v[j][2])
-                rating_stars=getScore(rate,40)
-                rating_divs+=`
-                    <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
-                    <div style="display: inline-block; margin: 0;">
-                    <div>
-                        <div class="box" style="height: 80px; width: 80px;">
-                            <img class="profile" src="${v[j][4]}">
-                        </div>
-                    </div>
-                    </div>
-                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
-                    <div class="d-flex justify-content-start fs-3" style="">
-                        <span class="col-10">${v[j][3]}</span>
-                    </div>
-                    ${rating_stars}
-                    </div>
-                    </div>`
-            }
-            document.getElementById('scroll-layout-rating').innerHTML=rating_divs
-        }
     </script>
+    <script type="text/javascript" src="script/javascript/friendInfo.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -361,7 +48,7 @@ include 'script/modules/CookieManager.php';
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column" style="margin: 0 !important;">
     <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
@@ -370,7 +57,7 @@ include 'script/modules/CookieManager.php';
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                <a  class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -505,15 +192,20 @@ include 'script/modules/CookieManager.php';
                         <img id="taste-image" src="config/ratingInfos/<?php echo $_POST['friendId'];?>.png" style="width: 100%!important; height: fit-content!important;"/>
                     </div>
                 </div>
+                <div class="placeholder-glow">
+                    <span style="display: block">나와의 취향 유사도</span>
+                    <div id="taste-diff-list" style="max-height:300px; overflow-y:auto;">
+
+                    </div>
+                </div>
             </div>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" style="padding:0;">
                 <input type="button" value="평가한 음식" class="btn" style="background-color:#e4bd74; color:white; width: 100%;" data-bs-toggle="modal" data-bs-target="#myFoodModal" style="width:100%;">
-
             </li>
             <li class="list-group-item" style="padding: 0;">
-
+                <input type="button" value="다이어리 보기" class="btn" style="background-color:#e4bd74; color:white; width: 100%;" onclick="toFriendDiary();">
             </li>
         </ul>
         <footer class="mastfoot mt-auto" style="background-color:#ffebaa;">

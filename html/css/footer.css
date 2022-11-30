@@ -1,0 +1,20 @@
+.footer-link:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+}
+.footer-link:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+}
+.footer-link:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+.footer-link:active {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}

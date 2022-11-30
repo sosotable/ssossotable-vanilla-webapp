@@ -13,157 +13,13 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/recipe.css">
     <style>
-        /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 768px) {
-            #default_traits span {
-                font-size: 14px !important;
-                font-weight: 150 !important;
-                margin: 1px 1px 1px 1px !important;
-            }
-            #add_trait, #commit_to_database {
-                width: 350px !important;
-            }
-            .nav-link {
-                font-size: 10px;
-            }
-            .masthead-brand {
-                width: 40px;
-                height: 40px;
-            }
-        }
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
             src: url("css/font/Jua-Regular.ttf") format("truetype");
             font-weight: normal;
-        }
-        html,
-        body {
-            font-family: Jua;
-            height: 100%;
-            overflow-y:scroll;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-            color: #2c3034;
-        }
-        header {
-            width: 550px;
-        }
-        .form-rating {
-            width: 100%;#F5F4DD      padding: 15px;
-            margin: auto;
-        }
-        #food_name_modify, #food_location_modify {
-            width: 250px !important;
-            margin: 1rem 0 1rem 0;
-            display: inline-block;
-        }
-        #food_name_modify_button, #food_loaction_modify_button {
-            width: 50px !important;
-            height: 30px !important;
-            font-size: 15px;
-            padding: 0;
-            margin: 1rem 0 1rem 0;
-            display: inline-block;
-        }
-        #trait_name {
-            width: 250px !important;
-        }
-        #traits_list {
-            text-align: left;
-            width: 300px !important;
-            margin: auto;
-            padding-top: 20px;
-        }
-        #add_trait, #commit_to_database{
-            margin-top: 20px;
-            width: 250px;
-        }
-        #rating .material-symbols-outlined {
-            font-variation-settings:
-                    'FILL' 0,
-                    'wght' 400,
-                    'GRAD' 0,
-                    'opsz' 48
-        }
-        #traits ul .material-symbols-outlined {
-            display: inline-block !important;
-            vertical-align: middle;
-        }
-        #traits ul li {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 24px;
-            align-items: start;
-        }
-        #default_traits {
-            margin: 10px 0 10px 0 !important;
-            color: whitesmoke;
-        }
-        #default_traits span {
-            font-size: 18px;
-            font-weight: 200;
-            margin: 2px 2px 2px 2px;
-        }
-        .btn {
-            font-weight:100 !important;
-        }
-
-        .nav-link {
-            font-weight: 300 !important;
-        }
-        .nav-masthead .active {
-            color: #2c3034;
-            border-bottom-color: transparent;
-        }
-        a:focus, a:hover {
-            border-bottom-color: #2c3034 !important;
-            color: #2c3034 !important;
-        }
-        p {
-            color: #2c3034 !important;
-        }
-        html::-webkit-scrollbar {
-            display: none;  /* Safari and Chrome */
-        }
-        nav {
-            background-color:#ffebaa;
-            padding: 0!important;
-            height: 80px!important;
-        }
-        body {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-
-        }
-        .cover-container {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-        }
-        main {
-            height: 100%;
-            margin: 0!important;
-            padding: 0!important;
-        }
-        #food_rating_database {
-            height: 100%;
-            width: 100%;
-        }
-        .cover-container {
-            max-width: 100%;
-            width: 100%;
-            padding-left: 0!important;
-            padding-right: 0!important;
-            margin: 0!important;
         }
     </style>
 
@@ -171,26 +27,80 @@ include 'script/modules/CookieManager.php';
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+    <script>
+        let key_flag=false
+        // [전역 변수 관리]
+        var bodyHeightOriginalSize = "";
+        var bodyHeightChangeSize = "";
+
+        // [dom 생성 및 이벤트 상시 대기 실시]
+        document.addEventListener("DOMContentLoaded", ready);
+        function ready(){
+            console.log("");
+            console.log("[window ready] : [start]");
+            console.log("");
+        }
+
+        // [html 최초 로드 및 이벤트 상시 대기 실시]
+        window.onload = function() {
+            console.log("");
+            console.log("[window onload] : [start]");
+            console.log("");
+            // [브라우저 초기 로드 시 가상 키보드 비활성 상태 인 Height 값 저장 실시]
+            bodyHeightOriginalSize = document.body.clientHeight;
+        };
+
+        // [html 화면 사이즈 변경 이벤트 감지]
+        window.onresize = function() {
+            console.log("");
+            console.log("[window onresize] : [start]");
+            console.log("");
+
+            // [실시간 변경 된 Height 값 저장 실시]
+            bodyHeightChangeSize = document.body.clientHeight;
+
+            console.log("");
+            console.log("[window onresize] : [body 높이 값 확인 실시]");
+            console.log("[bodyHeightOriginalSize] : [원본] : " + bodyHeightOriginalSize);
+            console.log("[bodyHeightChangeSize] : [변경] : " + bodyHeightChangeSize);
+            console.log("");
+
+            // [접속 한 디바이스 확인 실시]
+            var uagent = navigator.userAgent.toLowerCase();
+            var android_agent = uagent.search("android");
+            var iphone = uagent.search("iphone");
+            var ipad = uagent.search("ipad");
+
+            // [접속 한 디바이스가 안드로이드 인 경우]
+            if (android_agent > -1) {
+                // [원본 사이즈와 변화된 사이즈가 같은 경우 : 가상 키보드 비활성 상태]
+                if (bodyHeightOriginalSize == bodyHeightChangeSize){ // [원본 사이즈와 변화된 사이즈가 같은 경우 : ]
+
+                    console.log("");
+                    console.log("[window onresize] : [가상 키보드 비활성]");
+                    console.log("");
+                }
+                // [원본 사이즈와 변화된 사이즈가 다른 경우 : 가상 키보드 활성 상태]
+                else {
+
+                    console.log("");
+                    console.log("[window onresize] : [가상 키보드 활성]");
+                    console.log("");
+
+                }
+            }
+        };
+    </script>
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
         mql.addListener(function(e) {
             if(e.matches) {
                 // 모바일
-                flag=true;
-                document.getElementById('recipe-info').style.cssText='display:none!important'
-                document.getElementById('recipe-contents').style.display='flex'
-                document.getElementById('recipe-title').style.width='60%'
-                document.getElementById('title').style.width='100%'
-                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
+                flag=true
             } else {
                 // 데스크탑
                 flag=false
-                document.getElementById('recipe-info').style.cssText='display:flex!important'
-                document.getElementById('recipe-contents').style.cssText='display:none!important'
-                document.getElementById('recipe-title').style.width='30%'
-                document.getElementById('title').style.width='80%'
-                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
             }
         });
         let file=null
@@ -203,11 +113,6 @@ include 'script/modules/CookieManager.php';
         function init() {
             if(mql.matches) {
                 // 모바일
-                document.getElementById('recipe-info').style.cssText='display:none!important'
-                document.getElementById('recipe-contents').style.display='flex'
-                document.getElementById('recipe-title').style.width='60%'
-                document.getElementById('title').style.width='100%'
-                document.getElementById('preview').innerHTML=`<img src="src/food_placeholder.png" style="width: 150px!important; height: 150px!important;" class="card-img-top" alt="...">`
                 flag=true;
             }
             else {
@@ -334,7 +239,7 @@ include 'script/modules/CookieManager.php';
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="64px" height="64px"></a>
+        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="64px" height="64px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link active p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
@@ -343,7 +248,7 @@ include 'script/modules/CookieManager.php';
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                <a  class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -374,11 +279,11 @@ include 'script/modules/CookieManager.php';
     <main role="main" class="inner cover d-flex" id="rating-main">
         <div id="food_rating_database" class="d-flex">
             <div class="card d-flex flex-column align-items-center justify-content-center" style="width: 100%; height: 100%;">
-                <div class="d-flex justify-content-center">
-                    <div id="preview"><img src="src/food_placeholder.png" style="width: 300px!important; height: 300px!important;" class="card-img-top" alt="..."></div>
+                <div id="recipe-image" class="d-flex justify-content-center">
+                    <div class="box" id="preview"><img class="food-image card-img-top" src="src/food_placeholder.png"alt="..."></div>
                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                 </div>
-                <div id="recipe-title" class="mb-3" style="width: 30%">
+                <div id="recipe-title" class="mb-3" >
                     <h1 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h1>
                     <div class="input-group mb-3">
                         <input id="food-name-modify-input" type="text" class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -386,19 +291,10 @@ include 'script/modules/CookieManager.php';
                     </div>
                 </div>
                 <div id="recipe-contents" style="display: none">
-                    <div class="align-middle" id="title" style="width: 80%;">
+                    <div class="align-middle" id="recipe-textarea-div">
                         <div class="mb-3">
-                            <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="3"></textarea>
+                            <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="7"></textarea>
                         </div>
-                        <div id="recipes">
-                            <div class="input-group mb-3">
-                                <input type="text" id="recipe-input" class="form-control" placeholder="레시피를 추가해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" onclick="add_recipe();">추가</button>
-                            </div>
-                        </div>
-                        <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
-                        </ul>
-                        <br>
                         <input type="button" value="저장하기" onclick="commit();" class="w-100 btn" style="background-color:#e4bd74; color:white;">
                     </div>
                 </div>
@@ -407,16 +303,8 @@ include 'script/modules/CookieManager.php';
         <div class="card d-flex flex-column align-items-center justify-content-center" id='recipe-info' style="width: 100%; height: 100%; background-color: transparent;">
             <div class="align-middle" id="title" style="width: 80%;">
                 <div class="mb-3">
-                    <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="3"></textarea>
+                    <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="10"></textarea>
                 </div>
-                <div id="recipes">
-                    <div class="input-group mb-3">
-                        <input type="text" id="recipe-input" class="form-control" placeholder="레시피를 추가해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" onclick="add_recipe();">추가</button>
-                    </div>
-                </div>
-                <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
-                </ul>
                 <br>
                 <input type="button" value="저장하기" onclick="commit();" class="w-100 btn" style="background-color:#e4bd74; color:white;">
             </div>

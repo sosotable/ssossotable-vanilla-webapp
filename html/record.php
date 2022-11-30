@@ -14,172 +14,10 @@ include 'script/modules/CookieManager.php';
 
 
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/record.css">
     <link rel="stylesheet" href="/css/footer.css">
     <style>
-        @media screen and (max-resolution: 50dpi) {
-
-            .card {
-                width: 350px !important;
-                margin: auto;
-            }
-            .list-group {
-                width: 100%;
-            }
-            #map {
-                width: 300px!important;
-                height: 300px!important;
-                left:50%!important;
-                transform:translate(-50%, 0%)!important;
-            }
-            .rating-marker img {
-                width: 10px!important;
-                height: 20px!important;
-            }
-
-        }
-        @media (max-width: 768px) {
-            .card {
-                width: 350px !important;
-                margin: auto;
-            }
-            .list-group {
-                width: 100%;
-            }
-            #map {
-                width: 300px!important;
-                height: 300px!important;
-                left:50%!important;
-                transform:translate(-50%, 0%)!important;
-            }
-            .rating-marker img {
-                width: 10px!important;
-                height: 20px!important;
-            }
-            #map {
-                width: 300px!important;
-                height: 300px!important;
-                left:50%!important;
-                transform:translate(-50%, 0%)!important;
-            }
-            .rating-marker img {
-                width: 10px!important;
-                height: 20px!important;
-            }
-            .nav-link {
-                font-size: 10px;
-            }
-            .masthead-brand {
-                width: 40px;
-                height: 40px;
-            }
-            #record-info {
-                display: none!important;
-            }
-            .form-check {
-                margin: 0!important;
-                padding: 0!important;
-            }
-        }
-        /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 768px) {
-
-        }
-        .list-group-item.active {
-            background-color:#e4bd74;
-            color:white;
-        }
-        input.img-button {
-            background: url( "src/food_placeholder.png" ) no-repeat;
-            border: none;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-        }
-        body {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-
-        }
-        .cover-container {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-        }
-        main {
-            padding: 0!important;
-            margin: 0!important;
-            height: 100%!important;
-            width: 100% !important;
-        }
-
-        nav {
-            background-color:#ffebaa;
-            height: 80px!important;
-            padding: 0!important;
-        }
-        .cover-container {
-            max-width: 100%;
-            width: 100%;
-            padding-left: 0!important;
-            padding-right: 0!important;
-            margin: 0!important;
-        }
-        #record-info {
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-        }
-        .card {
-            width: 100% !important;
-            margin: 0 !important;
-        }
-        #map {
-            width: 100%!important;
-            height: 100%!important;
-            padding:20px;
-        }
-        .footer-link:link {
-            color: black;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-        .footer-link:visited {
-            color: black;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-        .footer-link:hover {
-            color: white;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-        .footer-link:active {
-            color: white;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-        #menu-list {
-            max-height: 100%;
-            overflow-y: auto;
-        }
-        .menu-content {
-            font-size: 20px;
-        }
-        .menu-content-image {
-            width: 20px;
-            height: 20px;
-        }
-        .menu-add-image {
-            width: 40px;
-            height: 40px;
-        }
-        #place-info {
-            display: none;
-        }
 
     </style>
 
@@ -194,246 +32,14 @@ include 'script/modules/CookieManager.php';
         mql.addListener(function(e) {
             if(e.matches) {
                 // 모바일
-                document.getElementById('record-info').style.cssText='display:none!important;'
-                document.getElementById('record-map').style.cssText='margin:0'
                 flag=true
             } else {
                 // 데스크탑
-                document.getElementById('record-info').style.cssText='display:flex!important;'
-                document.getElementById('record-map').style.cssText='margin:auto'
                 flag=false
             }
         });
-        async function init() {
-            if(mql.matches) {
-                // 모바일
-                flag=true
-                document.getElementById('record-info').style.cssText='display:none!important;'
-                document.getElementById('record-map').style.cssText='margin:0'
-            }
-            else {
-                // 데스크톱
-                flag=false
-                document.getElementById('record-info').style.cssText='display:flex!important;'
-                document.getElementById('record-map').style.cssText='margin:auto'
-            }
-        }
-        async function add_menu() {
-            let idx=-1
-            let option=''
-            let menuname=''
-            let radio=null
-            let v,id=null
-            let foodid=-1
-            if(flag) {
-                menuname=document.getElementById("menu-name-mobile").value;
-                radio=document.querySelectorAll("input[class='form-check-input-mobile']")
-                for(let i=0;i<radio.length;i++) {
-                    if(radio[i].checked) {
-                        idx=i
-                        radio[i].checked=false
-                    }
-                }
-                switch (idx) {
-                    case 0: option='나쁨';break;
-                    case 1: option='보통';break;
-                    case 2: option='좋음';break;
-                }
-                if(idx !== -1) {
-                    let v=JSON.parse(await $.ajax({
-                        type: "POST",
-                        url: '/script/php/DAOHandler.php',
-                        data:{
-                            0:'select',
-                            1:'id',
-                            2:"food",
-                            3:`name='${menuname}'`
-                        }}))
-                    if(v.length===0) {
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'food(name)',
-                                2:`'${menuname}'`
-                            }})
-                        id=JSON.parse(await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'select',
-                                1:'id',
-                                2:"food",
-                                3:`1>0 order by id desc limit 1`
-                            }}))
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'trait(id)',
-                                2:`'${id[0][0]}'`
-                            }})
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'meal(foodid,userid,locationid,rating)',
-                                2:`'${id[0][0]}',${userId},${placeId},${idx}`
-                            }})
-                    }
-                    else {
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'meal(foodid,userid,locationid,rating)',
-                                2:`'${v[0][0]}',${userId},${placeId},${idx}`
-                            }})
-                    }
-                    document.getElementById("menu-name-mobile").value=''
-                    document.getElementById('menu-list-mobile').innerHTML+=`
-                    <li id="${menuname}" class="list-group-item menus d-flex justify-content-between">
-                        <span class="menu-content">${menuname}</span>
-                        <span class="menu-count">1</span>
-                        <img class="menu-add-image" onclick="add_menu_count('${menuname}')" src="src/read_more.png">
-                        <span class="menu-content">${option}</span>
-                        <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png">
-                    </li>
-                    `
-
-                }
-            }
-            else {
-                menuname=document.getElementById("menu-name").value;
-                radio=document.querySelectorAll("input[class='form-check-input']")
-                for(let i=0;i<radio.length;i++) {
-                    if(radio[i].checked) {
-                        idx=i
-                        radio[i].checked=false
-                    }
-                }
-                switch (idx) {
-                    case 0: option='나쁨';break;
-                    case 1: option='보통';break;
-                    case 2: option='좋음';break;
-                }
-                if(idx !== -1) {
-                    v=JSON.parse(await $.ajax({
-                        type: "POST",
-                        url: '/script/php/DAOHandler.php',
-                        data:{
-                            0:'select',
-                            1:'id',
-                            2:"food",
-                            3:`name='${menuname}'`
-                        }}))
-                    if(v.length===0) {
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'food(name)',
-                                2:`'${menuname}'`
-                            }})
-                        id=JSON.parse(await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'select',
-                                1:'id',
-                                2:"food",
-                                3:`1>0 order by id desc limit 1`
-                            }}))
-                        foodid=id[0][0]
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'trait(id)',
-                                2:`'${foodid}'`
-                            }})
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'meal(foodid,userid,locationid,rating)',
-                                2:`'${foodid}',${userId},${placeId},${idx}`
-                            }})
-                    }
-                    else {
-                        foodid=v[0][0]
-                        await $.ajax({
-                            type: "POST",
-                            url: '/script/php/DAOHandler.php',
-                            data:{
-                                0:'insert',
-                                1:'meal(foodid,userid,locationid,rating)',
-                                2:`'${v[0][0]}',${userId},${placeId},${idx}`
-                            }})
-                    }
-
-                    document.getElementById("menu-name").value=''
-                    document.getElementById('menu-list').innerHTML+=`
-                <li id="${placeId}-${foodid}" class="list-group-item menus d-flex justify-content-between">
-                    <span class="menu-content">${menuname}</span>
-                    <span class="menu-count">1</span>
-                    <img class="menu-add-image" onclick="add_menu_count('${foodid}')" src="src/read_more.png">
-                    <span class="menu-content">${option}</span>
-                    <img class="menu-content-image" onclick="delete_menu('${foodid}')" src="src/close.png">
-                </li>
-                `
-                }
-            }
-
-        }
-        async function delete_menu() {
-
-            let children
-            if(flag) {
-                children=document.getElementById('menu-list-mobile').children
-            }
-            else {
-                children=document.getElementById('menu-list').children
-            }
-            for(let i=0;i<children.length;i++) {
-                if(children[i].id==`${placeId}-`+arguments[0]) {
-                    children[i].remove()
-                    await $.post("script/php/DAOHandler.php",
-                        {
-                            0:'delete',
-                            1:'meal',
-                            2:`userid=${userId} and foodid=${arguments[0]} and locationid=${placeId}`
-                        })
-                }
-            }
-
-        }
-        function close_place_info() {
-            document.getElementById('place-info').style.display='none'
-            document.getElementById('record-map').style.height='100%'
-            document.getElementById('search-info').style.display='block'
-        }
-        async function add_menu_count() {
-            let cnt=parseInt(menus[arguments[0]].count)+1
-            menus[arguments[0]].count=cnt
-            const children=document.getElementById(`${placeId}-${arguments[0]}`).children
-            children[1].innerHTML=String(cnt)
-
-            await $.post("script/php/DAOHandler.php",
-                {
-                    0:'insert',
-                    1:'meal(foodid,userid,locationid,rating)',
-                    2:`${arguments[0]},${userId},${placeId},${menus[arguments[0]].rating_int}`
-                })
-        }
     </script>
+    <script type="text/javascript" src="script/javascript/record.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -442,7 +48,7 @@ include 'script/modules/CookieManager.php';
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
         <a class="nav-link active p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
@@ -451,7 +57,7 @@ include 'script/modules/CookieManager.php';
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                <a  class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -502,7 +108,7 @@ include 'script/modules/CookieManager.php';
                 </div>
             </div>
         </div>
-        <div class="card" id='record-info' style="">
+        <div class="card" id='record-info'>
             <div style="padding:5px;font-size:36px;display: inline-block;">
                 <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
                 <span>어디를 방문했나요?</span>
@@ -708,7 +314,6 @@ include 'script/modules/CookieManager.php';
                             </div>
                         </div>
                         <ul class="list-group" id="menu-list-mobile">
-                            <li class="list-group-item menus" style="display: none;"></li>
                         </ul>
                         `
                 }
@@ -752,7 +357,6 @@ include 'script/modules/CookieManager.php';
                             </div>
                         </div>
                         <ul class="list-group" id="menu-list-mobile">
-                          <li class="list-group-item menus" style="display: none;"></li>
                           ${menu_list}
                         </ul>
                         `
@@ -780,7 +384,7 @@ include 'script/modules/CookieManager.php';
                 let width=15
                 format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
+                                    <div class="box-preview" id="preview"><img class="food-image" id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${arguments[2]}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
@@ -803,7 +407,7 @@ include 'script/modules/CookieManager.php';
                                 `
                 format_right=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
+                                    <div class="box" id="preview"><img class="food-image" id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <h2><span>${arguments[2]}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;" class="rating-marker">
@@ -842,7 +446,6 @@ include 'script/modules/CookieManager.php';
                                         </div>
                                     </div>
                                 <ul class="list-group" id="menu-list">
-                                  <li class="list-group-item menus" style="display: none;"></li>
                                 </ul>
                                 `
                 document.getElementById('record-info').innerHTML=format_right
@@ -910,7 +513,7 @@ include 'script/modules/CookieManager.php';
                 }
                 format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="${v[0][9]}" width="60px" height="60px"></div>
+                                    <div class="box-preview" id="preview"><img class="food-image" id="preview-img" src="${v[0][9]}" width="60px" height="60px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${arguments[2]}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;">
@@ -931,7 +534,7 @@ include 'script/modules/CookieManager.php';
                 infowindow.setContent(format);
                 format_right=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
+                                    <div class="box" id="preview"><img class="food-image" id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <h2><span>${arguments[2]}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${arguments[0]}" style=" margin: 0px !important; padding: 0px !important;">
@@ -968,7 +571,6 @@ include 'script/modules/CookieManager.php';
                                     </div>
                                 </div>
                                 <ul class="list-group" id="menu-list">
-                                    <li class="list-group-item menus" style="display: none;"></li>
                                     ${menu_list}
                                 </ul>
                                 `
@@ -1093,7 +695,6 @@ include 'script/modules/CookieManager.php';
                             </div>
                         </div>
                         <ul class="list-group" id="menu-list-mobile">
-                            <li class="list-group-item menus" style="display: none;"></li>
                         </ul>
                         `
                     }
@@ -1137,7 +738,6 @@ include 'script/modules/CookieManager.php';
                             </div>
                         </div>
                         <ul class="list-group" id="menu-list-mobile">
-                          <li class="list-group-item menus" style="display: none;"></li>
                           ${menu_list}
                         </ul>
                         `
@@ -1149,7 +749,7 @@ include 'script/modules/CookieManager.php';
                     let height=30
                     format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
+                                    <div class="box-preview" id="preview"><img class="food-image" id="preview-img" src="src/food_placeholder.png" width="60px" height="60px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${place.place_name}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
@@ -1171,7 +771,7 @@ include 'script/modules/CookieManager.php';
                                 `
                     format_right=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
+                                    <div class="box" id="preview"><img class="food-image" id="preview-img" src="src/food_placeholder.png" width="300px" height="300px"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <h2><span>${place.place_name}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
@@ -1211,7 +811,6 @@ include 'script/modules/CookieManager.php';
                                     </div>
                                 </div>
                                 <ul class="list-group" id="menu-list">
-                                  <li class="list-group-item menus" style="display: none;"></li>
                                 </ul>
                                 `
                     document.getElementById('record-info').innerHTML=format_right
@@ -1284,7 +883,7 @@ include 'script/modules/CookieManager.php';
 
                     format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="${v[0][9]}" width="60px" height="60px"></div>
+                                    <div id="preview" class="box-preview"><img class="food-image" id="preview-img" src="${v[0][9]}"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <span>${place.place_name}</span>
                                     <div class="d-flex justify-content-start fs-2" id="record-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
@@ -1303,7 +902,7 @@ include 'script/modules/CookieManager.php';
                                 `
                     format_right=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
-                                    <div id="preview"><img id="preview-img" src="${v[0][9]}" width="300px" height="300px"></div>
+                                    <div class="box" id="preview"><img class="food-image" id="preview-img" src="${v[0][9]}"></div>
                                     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
                                     <h2><span>${place.place_name}</span></h2>
                                     <div class="d-flex justify-content-center fs-2" id="record-desktop-${place.id}" style=" margin: 0px !important; padding: 0px !important;">
@@ -1339,7 +938,6 @@ include 'script/modules/CookieManager.php';
                                     </div>
                                 </div>
                                 <ul class="list-group" id="menu-list">
-                                  <li class="list-group-item menus" style="display: none;"></li>
                                   ${menu_list}
                                 </ul>
                                 `

@@ -4,7 +4,7 @@
     /**쿠키값 확인**/
     if(isset($_COOKIE['user_name'])) {
         $user_name = $_COOKIE['user_name'];
-        echo "<meta http-equiv='refresh' content='0;url=rating.php'>";
+        echo "<meta http-equiv='refresh' content='0;url=recommendation.php'>";
         exit;
     }
 ?>
@@ -54,7 +54,6 @@
         </div>
 
         <form action="/script/php/auth.php" method="post">
-
             <div class="form-floating">
                 <input type="password" id="user_name" name="user_name" class="form-control" id="floatingInput" placeholder="password" autocomplete='off'>
                 <label for="floatingInput">Auth Code</label>

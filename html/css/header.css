@@ -1,0 +1,26 @@
+@media only screen and (max-width : 768px) {
+    #nav {
+        height: 64px!important;
+    }
+    .navbar-toggler-icon {
+        width: 1em!important;
+        height: 1em!important;
+    }
+    .nav-link {
+        font-size: 12px;
+    }
+    .masthead-brand {
+        width: 50px!important;
+        height: 50px!important;
+    }
+}
+.masthead-brand {
+    width: 80px;
+    height: 80px;
+}
+#nav {
+    height: 90px!important;
+}
+.navbar {
+    height: 90px!important;
+}

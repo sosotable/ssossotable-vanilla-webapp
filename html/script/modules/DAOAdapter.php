@@ -7,9 +7,17 @@
         {
         }
         public function execute(...$args) {
+            $option=-1;
             $arg=$args[0];
+            if(is_numeric($arg[0])) { $option=$arg[0]; }
+            else {
+                if(!strcmp($arg[0],'insert')) { $option=1; }
+                else if(!strcmp($arg[0],'select')) { $option=2; }
+                else if(!strcmp($arg[0],'update')) { $option=3; }
+                else if(!strcmp($arg[0],'delete')) { $option=4; }
+            }
             try {
-                switch ($arg[0]) {
+                switch ($option) {
                     //insert
                     case 1:
                         $result=((DAO::factory())->insert(

@@ -1,11 +1,56 @@
-@media only screen and (max-width : 640px) {
-    #scroll_layout {
-        max-width: 1000px !important;
-        width: 400px !important;
-        max-height: 600px !important;
-        margin: auto;
-        overflow-y: scroll;
+/* iPhone4와 같은 높은 해상도 가로 */
+@media only screen and (max-width : 768px) {
+    body {
+        padding: 0!important;
+        margin: 0!important;
     }
+    .cover-container {
+        padding: 0!important;
+        margin: 0!important;
+    }
+    #scroll_layout {
+        width: 100% !important;
+        margin: 0!important;
+    }
+    main {
+        padding: 0!important;
+        margin: 0!important;
+    }
+    .food-image img {
+        width: 40px!important;
+        height: 40px!important;
+    }
+    .fs-3 {
+        font-size: 14px !important;
+    }
+    .food-rating img {
+        width: 20px!important;
+        height: 40px!important;
+    }
+    .food-name {
+        font-size: 20px!important;
+    }
+    #food-info-image {
+        width: 240px;
+        height: 240px;
+    }
+    .rating-stars {
+        width: 25px !important;
+        height: 50px !important;
+    }
+    .box {
+        width: 100px!important;
+        height: 100px!important;
+    }
+    .box img {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .list-group-item {
+        height: 120px!important;
+    }
+}
+@media (min-width : 768px) and (max-width : 1366px) {
 }
 @font-face { /* 애플산돌고딕 폰트 적용 */
     font-family: "Jua";
@@ -44,11 +89,56 @@ p {
     color: #2c3034 !important;
 }
 #scroll_layout {
-    max-width: 1000px;
-    width: 500px;
-    max-height: 700px;
+    width: 100%;
     overflow-y:scroll;
 }
 html::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
+}
+body {
+    padding:0!important;
+    margin-left: 0!important;
+    margin-right: 0!important;
+    margin-bottom: 0!important;
+
+}
+.cover-container {
+    padding:0!important;
+    margin-left: 0!important;
+    margin-right: 0!important;
+    margin-bottom: 0!important;
+}
+main {
+    padding: 0!important;
+    margin: 0!important;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+.card {
+    width: 100% !important;
+}
+#scroll_layout {
+    height: 100%;
+}
+nav {
+    background-color:#ffebaa;
+    padding: 0!important;
+    height: 100%!important;
+}
+.box img {
+    width: 100% !important;
+    height: 100% !important;
+}
+.cover-container {
+    max-width: 100%;
+    width: 100%;
+    padding-left: 0!important;
+    padding-right: 0!important;
+    margin: 0!important;
+}
+#food-info {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
 }

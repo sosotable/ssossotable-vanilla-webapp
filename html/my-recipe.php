@@ -13,85 +13,13 @@ include 'script/modules/CookieManager.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="./css/footer.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/my-recipe.css">
     <style type="text/css">
-
-        /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 768px) {
-            #scroll_layout {
-                width: 300px !important;
-            }
-            .food-image img {
-                width: 40px!important;
-                height: 40px!important;
-            }
-            .fs-3 {
-                font-size: 14px !important;
-            }
-            .food-rating img {
-                width: 15px!important;
-                height: 30px!important;
-            }
-            .nav-link {
-                font-size: 10px;
-            }
-            .masthead-brand {
-                width: 40px;
-                height: 40px;
-            }
-        }
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
             src: url("css/font/Jua-Regular.ttf") format("truetype");
             font-weight: normal;
-        }
-        html,
-        body {
-            font-family: Jua;
-            height: 100%;
-            overflow-y:scroll !important;
-        }
-        .bg-ssosseji {
-            --bs-bg-opacity: 1;
-            background-color: #e4bd74;
-        }
-        body {
-            padding: 0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-
-        }
-        .cover-container {
-            padding: 0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-        }
-        main {
-            padding: 0!important;
-            margin: 0!important;
-            height: 100%;
-            width: 100%;
-        }
-        .card {
-            width: 100% !important;
-        }
-        nav {
-            background-color:#ffebaa;
-            padding: 0!important;
-        }
-        .cover-container {
-            max-width: 100%;
-            width: 100%;
-            padding-left: 0!important;
-            padding-right: 0!important;
-            margin: 0!important;
-        }
-        #my-recipe-info {
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
         }
     </style>
 
@@ -103,6 +31,9 @@ include 'script/modules/CookieManager.php';
         let recipeInfos=null
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
+
+        const userId=<?php echo $_COOKIE['user_id']; ?>
+
         mql.addListener(function(e) {
             if(e.matches) {
                 // 모바일
@@ -112,73 +43,8 @@ include 'script/modules/CookieManager.php';
                 flag=false
             }
         });
-        async function init() {
-            recipeInfos=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'*',
-                    2:'recipe',
-                    3:`userid=<?php echo $_COOKIE['user_id']; ?>`
-                }}))
-            let format=``
-            for(let i=0;i<recipeInfos.length;i++) {
-                format+=`<li class="list-group-item" onclick="show_recipe(${i})">${recipeInfos[i][1]}</li>`
-            }
-            if(mql.matches) {
-                // 모바일
-                document.getElementById('my-recipe-info').style.cssText='display:none!important'
-                document.getElementById('recipe-list-layout').style.cssText='display:none!important'
-                document.getElementById('mobile-recipe').style.cssText='width: 100%!important;'
-                document.getElementById('recipe-list-mobile').innerHTML=format
-                flag=true;
-            } else {
-                // 데스크탑
-                document.getElementById('recipe-list').innerHTML=format
-                flag=false
-            }
-
-
-        }
-        async function show_recipe() {
-            let recipeInfo=recipeInfos[arguments[0]]
-            let traits=recipeInfo[3].split('\|')
-            let traitList=``
-            for(let i=0;i<traits.length;i++) {
-                traitList+=`
-                <li>
-                    <span class="recipe-content">${traits[i]}</span>
-                </li>
-                `
-            }
-            let recipeForm=`
-            <div class="d-flex justify-content-center">
-                <div id="preview"><img src="${recipeInfo[4]}" style="width: 240px!important; height: 240px!important;" class="card-img-top" alt="..."></div>
-                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-            </div>
-            <div class="mb-3">
-                <h5 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">${recipeInfo[1]}</label></h5>
-            </div>
-            <div class="mb-3">
-                <p id="recipe-memo" class="card-text">${recipeInfo[2]}</p>
-            </div>
-            <ul id="recipe-list" class="list-group list-group-flush" style="height: 100px; max-height: 100px; overflow-y:auto;">
-                ${traitList}
-            </ul>
-            <br>
-            `
-            document.getElementById('navbarToggleExternalContent').classList.remove('show')
-            if(mql.matches) {
-                document.getElementById('food-rating-database').innerHTML=recipeForm
-            }
-            else {
-                document.getElementById('my-recipe-info').innerHTML=recipeForm
-            }
-
-
-        }
     </script>
+    <script type="text/javascript" src="script/javascript/my-recipe.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -211,7 +77,7 @@ include 'script/modules/CookieManager.php';
                         <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                        <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>

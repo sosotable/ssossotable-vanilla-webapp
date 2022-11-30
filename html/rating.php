@@ -14,147 +14,8 @@ include 'script/modules/CookieManager.php';
 
         <link rel="stylesheet" href="/css/rating.css">
         <link rel="stylesheet" href="/css/footer.css">
+        <link rel="stylesheet" href="/css/header.css">
         <style type="text/css">
-            /* iPhone4와 같은 높은 해상도 가로 */
-            @media only screen and (max-width : 768px) {
-                body {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                .cover-container {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                #scroll_layout {
-                    width: 100% !important;
-                    margin: 0!important;
-                }
-                main {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                .food-image img {
-                    width: 40px!important;
-                    height: 40px!important;
-                }
-                .fs-3 {
-                    font-size: 14px !important;
-                }
-                .food-rating img {
-                    width: 15px!important;
-                    height: 30px!important;
-                }
-                .nav-link {
-                    font-size: 10px;
-                }
-                .masthead-brand {
-                    width: 40px;
-                    height: 40px;
-                }
-                #food-info-image {
-                    width: 240px;
-                    height: 240px;
-                }
-                .rating-stars {
-                    width: 25px !important;
-                    height: 50px !important;
-                }
-                .box img {
-                    width: 100% !important;
-                    height: 100% !important;
-                }
-                .rating-image {
-                    width: 120px !important;
-                    height: 120px !important;
-                }
-                .list-group-item {
-                    height: 120px!important;
-                }
-                .box {
-                    width: 80px !important;
-                    height: 80px !important;
-                    margin: auto;
-                    border-radius: 30%;
-                    overflow: hidden;
-                }
-            }
-            @media (min-width : 768px) and (max-width : 1366px) {
-                body {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                .cover-container {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                #scroll_layout {
-                    width: 100% !important;
-                    margin: 0!important;
-                }
-                main {
-                    padding: 0!important;
-                    margin: 0!important;
-                }
-                .food-image img {
-                    width: 40px!important;
-                    height: 40px!important;
-                }
-            }
-            body {
-                padding:0!important;
-                margin-left: 0!important;
-                margin-right: 0!important;
-                margin-bottom: 0!important;
-
-            }
-            .cover-container {
-                padding:0!important;
-                margin-left: 0!important;
-                margin-right: 0!important;
-                margin-bottom: 0!important;
-            }
-            main {
-                padding: 0!important;
-                margin: 0!important;
-                height: 85%;
-                width: 100%;
-            }
-            .card {
-                width: 100% !important;
-            }
-            #scroll_layout {
-                height: 100%;
-            }
-            nav {
-                background-color:#ffebaa;
-                padding: 0!important;
-                height: 100%!important;
-            }
-            .cover-container {
-                max-width: 100%;
-                width: 100%;
-                padding-left: 0!important;
-                padding-right: 0!important;
-                margin: 0!important;
-            }
-            #food-info {
-                width: 100%;
-                height: 100%;
-                background-color: transparent;
-            }
-            .box {
-                margin: auto;
-                border-radius: 30%;
-                overflow: hidden;
-            }
-            .profile {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .predict-disable {
-                display: none;
-            }
         </style>
 
         <script
@@ -308,7 +169,7 @@ include 'script/modules/CookieManager.php';
             let userProfile={}
             userProfile.userId=<?php echo $_COOKIE['user_id']; ?>
         </script>
-        <script type="text/javascript" src="/script/rating.js"></script>
+        <script type="text/javascript" src="/script/javascript/rating.js"></script>
     </head>
 
     <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -317,7 +178,7 @@ include 'script/modules/CookieManager.php';
         </script>
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column" style="">
         <nav id="nav" class="navbar d-flex">
-            <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="64px" height="64px"></a>
+            <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="64px" height="64px"></a>
             <a class="nav-link active p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
             <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
             <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
@@ -326,7 +187,7 @@ include 'script/modules/CookieManager.php';
             </button>
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
+                    <a  class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -374,7 +235,7 @@ include 'script/modules/CookieManager.php';
             </div>
             <div class="card" id='food-info'>
                 <div class="card-body" id="title">
-                    <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
+                    <img id="food-info-image" src="/src/food_placeholder.png" style="width: 100%!important;"/>
                     <h1 class="card-title" id="food-name">음식 이름</h1>
                     <p class="card-text" id="food-traits">특성 목록</p>
                     <div id="desktop-rating-info" style="margin-bottom: 50px;">

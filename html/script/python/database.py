@@ -7,7 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Lasso
 
-
 connection = pymysql.connect(host='*',
                              user='*',
                              password='*',
@@ -17,13 +16,13 @@ connection = pymysql.connect(host='*',
 with connection:
     with connection.cursor() as cursor:
         # Read a single record
-        sql = "SELECT * FROM `*`"
+        sql = "SELECT * FROM `food`"
         cursor.execute(sql)
         foods=cursor.fetchall()
-        sql = "SELECT * FROM `*`"
+        sql = "SELECT * FROM `rating`"
         cursor.execute(sql)
         ratings=cursor.fetchall()
-        sql = "SELECT * FROM `*`"
+        sql = "SELECT * FROM `trait`"
         cursor.execute(sql)
         traits=cursor.fetchall()
 
@@ -65,5 +64,5 @@ test['predict']=predict
 
 user_profile_lasso.index.name='id'
 
-user_profile_lasso.to_csv('PATH',index=True, encoding="utf-8-sig")
-user_profile_lasso.to_json('PATH')
+user_profile_lasso.to_csv('/var/www/html/database/user_profile_lasso.csv',index=True, encoding="utf-8-sig")
+user_profile_lasso.to_json('/var/www/html/database/user_profile_lasso.json')

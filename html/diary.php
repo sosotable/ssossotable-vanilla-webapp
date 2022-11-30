@@ -20,79 +20,13 @@ else {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="./css/footer.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/diary.css">
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
             src: url("css/font/Jua-Regular.ttf") format("truetype");
             font-weight: normal;
-        }
-        html,
-        body {
-            font-family: Jua;
-            height: 100%;
-            overflow-y: auto;
-        }
-        /* iPhone4와 같은 높은 해상도 가로 */
-        @media only screen and (max-width : 768px) {
-            .nav-link {
-                font-size: 10px;
-            }
-        }
-        .list-group-item.active {
-            background-color:#e4bd74;
-            color:white;
-        }
-        body {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-
-        }
-        .cover-container {
-            padding:0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-            margin-bottom: 0!important;
-        }
-        main {
-            padding: 0!important;
-            margin: 0!important;
-            height: 100%!important;
-            width: 100% !important;
-        }
-        #scroll_layout {
-            height: 100%;
-        }
-        nav {
-            background-color:#ffebaa;
-            padding: 0!important;
-        }
-        .cover-container {
-            max-width: 100%;
-            width: 100%;
-            padding-left: 0!important;
-            padding-right: 0!important;
-            margin: 0!important;
-        }
-        #diary-info {
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-        }
-        .card {
-            width: 100% !important;
-        }
-        #map {
-            width: 100%!important;
-            height: 100%!important;
-            padding:20px;
-        }
-        #diary-list {
-            width: 100%;
-        }
-        .list-group-item {
-            max-width: 55px!important;
         }
     </style>
 
@@ -103,6 +37,10 @@ else {
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
+
+        let menus={}
+        const userId=<?php echo $_COOKIE['user_id'];?>
+
         mql.addListener(function(e) {
             if(e.matches) {
                 // 모바일
@@ -124,7 +62,7 @@ else {
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
     <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/rating.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
         <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
@@ -145,7 +83,7 @@ else {
                         <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
+                        <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/diary.php">다이어리</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
@@ -176,7 +114,9 @@ else {
         </div>
         <div class="card" id='diary-info' style="">
             <div class="card-body" id="title">
-                <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
+                <div class="box">
+                    <img class="food-image" id="food-info-image" src="/src/food_placeholder.png"/>
+                </div>
                 <h1 class="card-title" id="food-name">식당명</h1>
                 <p class="card-text" id="food-traits">위치</p>
                 <div id="rating" style="margin-bottom: 50px;">
@@ -186,7 +126,11 @@ else {
                     <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
                     <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
                 </div>
+                <div id="menu-list" class="list-group">
+
+                </div>
             </div>
+
         </div>
     </main>
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
@@ -248,6 +192,34 @@ else {
 
         // 마커에 클릭이벤트를 등록합니다
         kakao.maps.event.addListener(marker, 'click', async function(event) {
+            let menu_info=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'distinct foodid,userid,meal.rating,name',
+                2:'meal, food',
+                3:`userid=${userId} and meal.locationid=${info[3]} and meal.foodid=food.id`
+            }));
+            let menu_count=JSON.parse(await $.post("script/php/DAOHandler.php",{
+                0:'select',
+                1:'foodid, name,count(*) `count`',
+                2:'meal, food',
+                3:`userid=${userId} and meal.foodid=food.id and meal.locationid=${info[3]} group by foodid`
+            }));
+            menus={}
+            for(let i=0;i<menu_info.length;i++) {
+                let option=``
+                switch (parseInt(menu_info[i][2])) {
+                    case 0:option='나쁨';break;
+                    case 1:option='보통';break;
+                    case 2:option='좋음';break;
+                }
+                menus[menu_info[i][0]]={
+                    name:menu_info[i][3],
+                    rating:option,
+                    rating_int:parseInt(menu_info[i][2]),
+                    count:menu_count[i][2]
+                }
+            }
+            const menu_key=Object.keys(menus)
             if(flag) {
                 let f=``
                 let fr=``
@@ -327,7 +299,9 @@ else {
                                 `
                 let format_right=`
                                 <div class="card-body" id="title">
-                                    <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
+                                    <div class="box">
+                                        <img class="food-image" id="food-info-image" src="/src/food_placeholder.png"/>
+                                    </div>
                                     <h1 class="card-title" id="diary-name">${info[2]}</h1>
                                     <p class="card-text" id="diary-location">${info[6]}</p>
                                     <p class="card-text" id="diary-traits">${info[7]}</p>
@@ -343,6 +317,16 @@ else {
             else {
                 let f=``
                 let fr=``
+                let menu_list=``
+                for(let i=0;i<menu_key.length;i++) {
+                    menu_list+=`
+                        <li id="${info[3]}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                        </li>
+                        `
+                }
                 switch (parseInt(info[1])) {
                     case 1:
                         f=getScore(0,info[3],`${info[6]}`,`${info[7]}`,`${info[2]}`,info[4],info[5],30)
@@ -387,7 +371,6 @@ else {
                     default :
                         break
                 }
-                //document.getElementById(`diary-list-${info[3]}`).click()
                 let format=`
                                 <div style="padding:5px;font-size:12px;display: inline-block;">
                                     <span>${info[2]}</span>
@@ -398,13 +381,16 @@ else {
                                 `
                 let format_right=`
                                 <div class="card-body" id="title">
-                                    <img id="food-info-image" src="/src/food_placeholder.png" height="360px" width="360px"/>
+                                    <div class="box">
+                                        <img class="food-image" id="food-info-image" src="/src/food_placeholder.png"/>
+                                    </div>
                                     <h1 class="card-title" id="diary-name">${info[2]}</h1>
                                     <p class="card-text" id="diary-location">${info[6]}</p>
                                     <p class="card-text" id="diary-traits">${info[7]}</p>
                                     <div id="rating" style="margin-bottom: 50px;">
                                         ${fr}
                                     </div>
+                                    <div id="menu-list" class="list-group">${menu_list}</div>
                                 </div>
                                 `
                 document.getElementById('diary-info').innerHTML=format_right
@@ -432,6 +418,34 @@ else {
         setMarkers(null);
     }
     async function showInfo() {
+        menus={}
+        let menu_info=JSON.parse(await $.post("script/php/DAOHandler.php",{
+            0:'select',
+            1:'distinct foodid,userid,meal.rating,name',
+            2:'meal, food',
+            3:`userid=${userId} and meal.locationid=${arguments[2]} and meal.foodid=food.id`
+        }));
+        let menu_count=JSON.parse(await $.post("script/php/DAOHandler.php",{
+            0:'select',
+            1:'foodid, name,count(*) `count`',
+            2:'meal, food',
+            3:`userid=${userId} and meal.foodid=food.id and meal.locationid=${arguments[2]} group by foodid`
+        }));
+        for(let i=0;i<menu_info.length;i++) {
+            let option=``
+            switch (parseInt(menu_info[i][2])) {
+                case 0:option='나쁨';break;
+                case 1:option='보통';break;
+                case 2:option='좋음';break;
+            }
+            menus[menu_info[i][0]]={
+                name:menu_info[i][3],
+                rating:option,
+                rating_int:parseInt(menu_info[i][2]),
+                count:menu_count[i][2]
+            }
+        }
+        const menu_key=Object.keys(menus)
         if(flag) {
             let diary_list=document.getElementsByClassName('diary-list')
             for(let i=0;i<diary_list.length;i++) {
@@ -451,31 +465,6 @@ else {
             const marker=markers[arguments[2]]
             let f=``
             let fr=``
-            let commentContent=``
-            const commentInfo=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'*',
-                    2:`diary_comment`,
-                    3:`userId=<?php echo $_COOKIE['user_id']?> and locationid=${arguments[2]}`
-                }}))
-            if(commentInfo.length!==0) {
-                for(let i=0;i<commentInfo.length;i++) {
-                    commentContent+=`
-                        <li class="list-group-item d-flex justify-content-evenly" id='${commentInfo[i][0]}'>
-                            <div>
-                                <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
-                                <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
-                            </div>
-                            <span style="display:block;">${commentInfo[i][3]}</span>
-                            <div>
-                                <img src='src/close.png' width="20px" height="20px" onclick="delete_comment('${commentInfo[i][0]}')"/>
-                            </div>
-                        </li>`
-                }
-            }
             switch (parseInt(arguments[0])) {
                 case 1:
                     f=getScore(0,arguments[2],`${arguments[5]}`,`${arguments[6]}`,`${arguments[1]}`,arguments[3],arguments[4],30)
@@ -527,13 +516,6 @@ else {
                             <div><span>${f}</span></div>
                             <div><span>${arguments[5]}</span></div>
                             <div><span>${arguments[6]}</span></div>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="comment-value" placeholder="코멘트 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
-                              <button class="btn btn-outline-secondary" type="button" onclick="add_comment(${arguments[2]});" id="button-addon2">작성</button>
-                            </div>
-                            <ul class="list-group" id="comment-list">
-                                ${commentContent}
-                            </ul>
                         </div>
                         `
             document.getElementById('modal-content').innerHTML=``
@@ -548,7 +530,9 @@ else {
                                 `
             let format_right=`
                                 <div class="card-body" id="title">
-                                    <img id="food-info-image" src="${arguments[7]}" height="360px" width="360px"/>
+                                    <div class="box">
+                                        <img class="food-image" id="food-info-image" src="${arguments[7]}"/>
+                                    </div>
                                     <h1 class="card-title" id="diary-name">${arguments[1]}</h1>
                                     <p class="card-text" id="diary-location">${arguments[5]}</p>
                                     <p class="card-text" id="diary-traits">${arguments[6]}</p>
@@ -562,6 +546,16 @@ else {
             infowindow.open(map,marker);
         }
         else {
+            let menu_list=``
+            for(let i=0;i<menu_key.length;i++) {
+                menu_list+=`
+                        <li id="${arguments[2]}-${menu_key[i]}" class="list-group-item menus d-flex justify-content-between">
+                            <span class="menu-content">${menus[menu_key[i]].name}</span>
+                            <span class="menu-count">${menus[menu_key[i]].count}</span>
+                            <span class="menu-content">${menus[menu_key[i]].rating}</span>
+                        </li>
+                        `
+            }
             let diary_list=document.getElementsByClassName('diary-list')
             for(let i=0;i<diary_list.length;i++) {
                 diary_list[i].removeAttribute('data-bs-toggle')
@@ -580,30 +574,6 @@ else {
             const marker=markers[arguments[2]]
             let f=``
             let fr=``
-            let commentContent=``
-            const commentInfo=JSON.parse(await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'select',
-                    1:'*',
-                    2:`diary_comment`,
-                    3:`userId=<?php echo $_COOKIE['user_id']?> and locationid=${arguments[2]}`
-                }}))
-            if(commentInfo.length!==0) {
-                for(let i=0;i<commentInfo.length;i++) {
-                    commentContent+=`<li class="list-group-item d-flex justify-content-evenly" id='${commentInfo[i][0]}'>
-                            <div>
-                                <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
-                                <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
-                            </div>
-                            <span style="display:block;">${commentInfo[i][3]}</span>
-                            <div>
-                                <img src='src/close.png' width="20px" height="20px" onclick="delete_comment('${commentInfo[i][0]}')"/>
-                            </div>
-                        </li>`
-                }
-            }
             switch (parseInt(arguments[0])) {
                 case 1:
                     f=getScore(0,arguments[2],`${arguments[5]}`,`${arguments[6]}`,`${arguments[1]}`,arguments[3],arguments[4],30)
@@ -658,13 +628,16 @@ else {
                                 `
             let format_right=`
                                 <div class="card-body" id="title">
-                                    <img id="food-info-image" src="${arguments[7]}" height="360px" width="360px"/>
+                                    <div class="box">
+                                        <img class="food-image" id="food-info-image" src="${arguments[7]}" />
+                                    </div>
                                     <h1 class="card-title" id="diary-name">${arguments[1]}</h1>
                                     <p class="card-text" id="diary-location">${arguments[5]}</p>
                                     <p class="card-text" id="diary-traits">${arguments[6]}</p>
                                     <div id="rating" style="margin-bottom: 50px;">
                                         ${fr}
                                     </div>
+                                    <div id="menu-list" class="list-group">${menu_list}</div>
                                 </div>
                                 `
             document.getElementById('diary-info').innerHTML=format_right
@@ -672,48 +645,6 @@ else {
             infowindow.open(map,marker);
         }
 
-    }
-    async function add_comment() {
-        const userId=<?php echo $_COOKIE['user_id'];?>
-
-        const locationId=parseInt(arguments[0])
-        const comment=document.getElementById('comment-value').value
-        const commentId=`comment-${userId}-${locationId}-${Date.now()}`
-        document.getElementById('comment-value').value=''
-        if(comment!=='') {
-            let comment_format=`
-                        <li class="list-group-item d-flex justify-content-evenly" id='${commentId}'>
-                            <div>
-                                <img style="display:block;" src='<?php echo $_COOKIE['user_image']; ?>' width="40px" height="40px"/>
-                                <span style="display:block;"><?php echo $_COOKIE['user_nickname']; ?></span>
-                            </div>
-                            <span style="display:block;">${comment}</span>
-                            <div>
-                                <img src='src/close.png' width="20px" height="20px" onclick="delete_comment('${commentId}')"/>
-                            </div>
-                        </li>
-                        `
-            document.getElementById('comment-list').innerHTML+=comment_format
-            await $.ajax({
-                type: "POST",
-                url: '/script/php/DAOHandler.php',
-                data: {
-                    0:'insert',
-                    1:'diary_comment(id,userid,locationid,comment)',
-                    2:`'${commentId}',${userId},${locationId},'${comment}'`
-                }})
-        }
-    }
-    async function delete_comment() {
-        await $.ajax({
-            type: "POST",
-            url: '/script/php/DAOHandler.php',
-            data: {
-                0:'delete',
-                1:'diary_comment',
-                2:`userid=<?php echo $_COOKIE['user_id']?> and id='${arguments[0]}'`
-            }})
-        document.getElementById(arguments[0]).remove()
     }
     async function init() {
         if(mql.matches) {
