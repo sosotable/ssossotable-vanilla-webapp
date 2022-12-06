@@ -9,17 +9,28 @@ include 'script/modules/CookieManager.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food-db.rating</title>
+    <title>소소식탁</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="icon" href="src/favicon.ico">
 
-    <link rel="stylesheet" href="/css/rating.css">
+
+    <style type="text/css">
+        @font-face { /* 애플산돌고딕 폰트 적용 */
+            font-family: "Jua";
+            src: url("css/font/Jua-Regular.ttf") format("truetype");
+            font-weight: normal;
+        }
+        .carousel-control-prev-icon {
+            background-image: url("http://ssossotable.com/src/arrow_back.png") !important;
+        }
+        .carousel-control-next-icon {
+            background-image: url("http://ssossotable.com/src/arrow_forward.png") !important;
+        }
+    </style>
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/recommendation.css">
-    <style type="text/css">
-    </style>
 
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -28,29 +39,18 @@ include 'script/modules/CookieManager.php';
     <script type="text/javascript">
         let mql = window.matchMedia("screen and (max-width: 768px)");
         let flag=false;
+        mql.addListener(function(e) { flag=!!e.matches });
 
-        mql.addListener(function(e) {
-            if(e.matches) {
-                // 모바일
-                flag=true;
-            } else {
-                // 데스크탑
-                flag=false
-            }
-        });
-
-        const userId=<?php echo $_COOKIE['user_id']; ?>
-
-        let ratings=null
-        let init_traits=null
-        let trait_info=null
-        let unrating={}
-        let unrating_keys=null
-        let userProfile={}
-        let my_ratings=null
-        let info=null
+        const userId=<?php echo $_COOKIE['user_id']."\n";?>
+        let ratings, init_traits,
+            trait_info, my_ratings,
+            unrating_keys, info=null
+        let unrating = {},
+            userProfile={}
         let combi=``
+
     </script>
+    <script type="text/javascript" src="/script/javascript/modules.js"></script>
     <script type="text/javascript" src="script/javascript/recommendation.js"></script>
 </head>
 
@@ -69,7 +69,7 @@ include 'script/modules/CookieManager.php';
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <a  class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png"></a>
+                <a class="offcanvas-title" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png"></a>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -86,45 +86,60 @@ include 'script/modules/CookieManager.php';
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
-                    </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                    <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main role="main" class="inner cover" id="recommendation-main">
-        <div class="recommendation card" id="friend-recommendation">
-            <div class="card-title"><h1>음식 추천</h1></div>
-            <div class="d-flex">
-                <div class="user">
-                    <div class="box-profile"><img id="my-image" class="card-img" src="<?php echo $_COOKIE['user_image']; ?>"/></div>
-                    <span id="my-name"><?php  echo $_COOKIE['user_nickname'];?></span>
+    <main role="main" class="inner cover carousel slide" data-bs-ride="carousel" id="recommendation-main">
+        <div class="carousel-inner">
+            <div class="recommendation card carousel-item active" data-bs-interval="1000000" id="friend-recommendation">
+                <div class="card-title"><h5 id="friend-recommendation-title"></h5></div>
+                <div class="d-flex">
+                    <div class="user">
+                        <div class="box-profile"><img id="my-image" class="card-img" src="<?php echo $_COOKIE['user_image']; ?>"/></div>
+                        <span id="my-name"><?php echo $_COOKIE['user_nickname'];?></span>
+                    </div>
+                    <div class="user">
+                        <div class="box-profile"><img id="friend-image" class="card-img" src="src/Portrait_Placeholder.png"/></div>
+                        <span id="friend-name"></span>
+                    </div>
                 </div>
-                <div class="user">
-                    <div class="box-profile"><img id="friend-image" class="card-img" src="src/Portrait_Placeholder.png"/></div>
-                    <span id="friend-name"></span>
+                <div class="card-body">
+                    <ul class="list-group" id="friend-recommendation-list">
+
+                    </ul>
                 </div>
             </div>
-            <div class="card-body">
-                <ul class="list-group" id="friend-recommendation-list">
+            <div class="recommendation card carousel-item" data-bs-interval="1000000" id="food-recommendation-1">
+                <div class="card-title"><h3>익숙한 맛이 좋은 법이죠</h3><h5>평균적으로 높은 점수를 준 음식들이에요</h5></div>
+                <div class="card-body">
+                    <ul class="list-group" id="food-recommendation-list-1">
 
-                </ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="recommendation card carousel-item" data-bs-interval="1000000" id="food-recommendation-2">
+                <div class="card-title" id="food-recommendation-title-2"><h3></h3><h5></h5></div>
+                <div class="card-body">
+                    <ul class="list-group" id="food-recommendation-list-2">
+
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="recommendation card" id="food-recommendation" style="margin: auto;">
-            <div class="card-title"><h1>음식 추천</h1></div>
-            <div class="card-body">
-                <ul class="list-group" id="food-recommendation-list">
-
-                </ul>
-            </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#recommendation-main" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#recommendation-main" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </main>
 
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">

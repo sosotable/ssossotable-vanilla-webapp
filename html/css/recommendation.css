@@ -15,7 +15,6 @@
     main {
         padding: 0!important;
         margin: 0!important;
-        display: block!important;
     }
     .food-image img {
         width: 40px!important;
@@ -30,21 +29,24 @@
         height: 100% !important;
     }
     .box-profile {
-        width: 120px!important;
-        height: 120px!important;
+        width: 160px!important;
+        height: 160px!important;
         margin: auto;
         border-radius: 20%;
         overflow: hidden;
     }
     .box {
-        width: 240px!important;
-        height: 240px!important;
+        width: 300px!important;
+        height: 300px!important;
         margin: auto;
         border-radius: 20%;
         overflow: hidden;
     }
     #rating {
         display: none;
+    }
+    .list-group-item span {
+        font-size: 24px!important;
     }
 }
 /*태블릿 css(미구현)*/
@@ -68,6 +70,12 @@ main {
     height: 100%;
     width: 100%;
     display: flex;
+}
+html,
+body {
+    font-family: Jua;
+    height: 100%;
+    overflow-y: auto;
 }
 nav {
     background-color:#ffebaa;
@@ -116,6 +124,7 @@ nav {
 }
 .recommendation {
     overflow-y: auto;
+    margin: 0!important;
 }
 .user {
     margin: auto;

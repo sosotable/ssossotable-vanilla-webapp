@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <?php
-if(!isset($_COOKIE['user_name'])) {
-    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
-    exit;
-}
-else {
-    setcookie('user_name', $_COOKIE['user_name'], time() + (3600), '/');
-    setcookie('user_id', $_COOKIE['user_id'], time() + 3600, '/');
-    setcookie('user_nickname',$_COOKIE['user_nickname'],time()+3600,'/');
-}
+include 'script/modules/CookieManager.php';
+(CookieManager::factory())->refreshCookie();
 ?>
 <html lang="en">
 <head>
@@ -19,9 +12,8 @@ else {
     <title>ssosso-table.food-db.diary</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link href="./css/footer.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/diary.css">
+    <link rel="icon" href="src/favicon.ico">
+
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
@@ -29,6 +21,9 @@ else {
             font-weight: normal;
         }
     </style>
+    <link href="./css/footer.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/diary.css">
 
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -53,6 +48,7 @@ else {
             }
         });
     </script>
+    <script type="text/javascript" src="/script/javascript/modules.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -88,13 +84,10 @@ else {
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
-                    </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                    <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
             </div>
         </div>

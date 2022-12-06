@@ -1,4 +1,23 @@
+
+async function set_user_profile() {
+    userProfile.userId=userId
+
+    info=JSON.parse(await $.ajax({
+        type: "POST",
+        url: 'http://ssossotable.com/script/php/JSONHandler.php',
+        data:{
+            'path':'http://ssossotable.com/database/user_profile_lasso.json'
+        }}))
+    let keys=Object.keys(info)
+    for(let i=0; i < keys.length; i++) {
+        userProfile[keys[i]]=info[keys[i]][userProfile.userId]
+    }
+}
+function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 async function set_food_traits() {
+    traits={}
     init_traits=JSON.parse(await $.ajax({
         type: "POST",
         url: '/script/php/DAOHandler.php',
@@ -8,7 +27,6 @@ async function set_food_traits() {
             2:"trait",
             3:`1>0`
         }}))
-    traits={}
     for(let i=0;i<init_traits.length;i++) {
         let idx=init_traits[i][0]
         traits[idx]={
@@ -44,31 +62,8 @@ async function set_food_traits() {
         }
     }
 }
-async function set_user_profile() {
-    userProfile.userId=userId
-
-    info=JSON.parse(await $.ajax({
-        type: "POST",
-        url: '/script/php/JSONParser.php',
-        data:{
-            'path':'/script/get_user_profile_lasso.php'
-        }}))
-    let keys=Object.keys(info)
-    for(let i=0; i < keys.length; i++) {
-        userProfile[keys[i]]=info[keys[i]][userProfile.userId]
-    }
-}
-function rand(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 async function init() {
-    if(mql.matches) {
-        // 모바일
-        flag=true;
-    } else {
-        // 데스크탑
-        flag=false
-    }
+    flag = !!mql.matches;
     await set_food_traits()
     await set_user_profile()
 
@@ -89,9 +84,30 @@ async function init() {
         data: {
             'path':'/var/www/html/database/user_tastes.json'
         }}))
+    const user_profiles=JSON.parse(await $.ajax({
+        type: "POST",
+        url: '/script/php/JSONHandler.php',
+        data: {
+            'path':'/var/www/html/database/user_food_recommendation.json'
+        }}))
+    const user_profiles_kor=JSON.parse(await $.ajax({
+        type: "POST",
+        url: '/script/php/JSONHandler.php',
+        data: {
+            'path':'/var/www/html/database/user_food_recommendation_kor.json'
+        }}))
+    const user_profile=JSON.parse(user_profiles[userId])
+    const user_profile_kor=JSON.parse(user_profiles_kor[userId])
+    const profile_keys=Object.keys(user_profile)
+    const profile_keys_kor=Object.keys(user_profile_kor)
+    const selected_trait_idx=rand(0,profile_keys.length-1)
+
     const info_keys=Object.keys(info)
     if(info_keys.includes(String(selectedFriend[0])+'-'+String(userId))) { combi=String(selectedFriend[0])+'-'+String(userId) }
     else { combi=String(userId)+'-'+String(selectedFriend[0]) }
+    document.getElementById('friend-recommendation-title').innerHTML=`
+        오늘은 ${selectedFriend[2]}님과<br>이런 음식을 먹어보는건 어때요?
+    `
     document.getElementById('friend-image').src=selectedFriend[1]
     document.getElementById('friend-name').innerText=selectedFriend[2]
 
@@ -136,6 +152,21 @@ async function init() {
             2:"food",
             3:`id not in (select foodid from rating where userid=${userId})`
         }}))
+    const trait_food_recommendation=JSON.parse(await $.ajax({
+        type: "POST",
+        url: '/script/php/DAOHandler.php',
+        data:{
+            0:'select',
+            1:"id,name,image",
+            2:"food",
+            3:`id `+
+                `IN( `+
+                `SELECT foodid `+
+                `FROM rating,trait `+
+                `WHERE rating.foodid=trait.id AND rating.userid=${userId} AND rating.rating>=8 AND trait.${profile_keys[selected_trait_idx]}=1)`
+        }}))
+    const trait_food_recommendation_keys=Object.keys(trait_food_recommendation)
+
     for(let i=0;i<ratings.length;i++) {
         trait_info=traits[ratings[i][0]]
         let ex_rating=userProfile['intercept']
@@ -158,77 +189,119 @@ async function init() {
 
     let selected_my_rating = new Set()
     let selected_friend_rating = new Set()
-    let selected_foods = ``
+    let selected_food_rating = new Set()
+    let selected_foods_1 = ``
     let selected_friend_foods=``
+    let selected_foods_2 = ``
 
-    if(unrating_keys.length>0) {
-        let lim=-1
-        if(flag) {
-            if(unrating_keys.length<10) {lim=unrating_keys.length}
-            else { lim=10 }
-            while (selected_friend_rating.size < 10) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
-            while (selected_my_rating.size < lim) { selected_my_rating.add(rand(0, unrating_keys.length - 1)) }
-        }
-        else {
-            if(unrating_keys.length<20) {lim=unrating_keys.length}
-            else { lim=20 }
-            while (selected_friend_rating.size < 20) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
-            while (selected_my_rating.size <lim) { selected_my_rating.add(rand(0, unrating_keys.length - 1)) }
-        }
-        for (let item of selected_friend_rating) {
-            selected_friend_foods += `
-                        <div class="list-group-item">
-                            <div class="box">
-                                <img class="card-img" src="${friend_food_recommendation[item][2]}"/>
-                            </div>
-                            <span>${friend_food_recommendation[item][1]}</span>
+    while (selected_friend_rating.size < 5) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
+    while (selected_my_rating.size < 5) { selected_my_rating.add(rand(0, my_ratings.length - 1)) }
+    if(trait_food_recommendation_keys.length<5) { while(selected_food_rating.size<trait_food_recommendation_keys.length) { selected_food_rating.add(rand(0, trait_food_recommendation_keys.length - 1)) } }
+    else { while(selected_food_rating.size<5) { selected_food_rating.add(rand(0, trait_food_recommendation_keys.length - 1)) } }
+    for (let item of selected_friend_rating) {
+        selected_friend_foods += `
+                    <div class="list-group-item">
+                        <div class="box">
+                            <img class="card-img" src="${friend_food_recommendation[item][2]}" alt="..."/>
                         </div>
-                        `
-        }
-        for (let item of selected_my_rating) {
-            selected_foods += `
-                        <div class="list-group-item">
-                            <div class="box">
-                                <img class="card-img" src="${unrating[unrating_keys[item]].image}"/>
-                            </div>
-                            <span>${unrating[unrating_keys[item]].name}</span>
+                        <span>${friend_food_recommendation[item][1]}</span>
+                    </div>
+                    `
+    }
+    for (let item of selected_my_rating) {
+        selected_foods_1 += `
+                    <div class="list-group-item">
+                        <div class="box">
+                            <img class="card-img" src="${my_ratings[item][2]}" alt="..."/>
                         </div>
-                        `
-        }
-        document.getElementById('friend-recommendation-list').innerHTML=selected_friend_foods
-        document.getElementById('food-recommendation-list').innerHTML=selected_foods
+                        <span>${my_ratings[item][1]}</span>
+                    </div>`
+    }
+    for (let item of selected_food_rating) {
+        selected_foods_2 += `
+                    <div class="list-group-item">
+                        <div class="box">
+                            <img class="card-img" src="${trait_food_recommendation[item][2]}" alt="..."/>
+                        </div>
+                        <span>${trait_food_recommendation[item][1]}</span>
+                    </div>
+                    `
+    }
+    document.getElementById('friend-recommendation-list').innerHTML=selected_friend_foods
+    document.getElementById('food-recommendation-list-1').innerHTML=selected_foods_1
+    document.getElementById('food-recommendation-list-2').innerHTML=selected_foods_2
 
-    }
-    else {
-        if(flag) {
-            while (selected_friend_rating.size < 10) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
-            while (selected_my_rating.size < 10) { selected_my_rating.add(rand(0, my_ratings.length - 1)) }
-        }
-        else {
-            while (selected_friend_rating.size < 20) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
-            while (selected_my_rating.size < 20) { selected_my_rating.add(rand(0, my_ratings.length - 1)) }
-        }
-        for (let item of selected_my_rating) {
-            selected_foods += `
-                        <div class="list-group-item">
-                            <div class="box">
-                                <img class="card-img" src="${my_ratings[item][2]}"/>
-                            </div>
-                            <span>${my_ratings[item][1]}</span>
-                        </div>
-                        `
-        }
-        for (let item of selected_friend_rating) {
-            selected_friend_foods += `
-                        <div class="list-group-item">
-                            <div class="box">
-                                <img class="card-img" src="${friend_food_recommendation[item][2]}"/>
-                            </div>
-                            <span>${friend_food_recommendation[item][1]}</span>
-                        </div>
-                        `
-        }
-        document.getElementById('friend-recommendation-list').innerHTML=selected_friend_foods
-        document.getElementById('food-recommendation-list').innerHTML=selected_foods
-    }
+    document.getElementById('food-recommendation-title-2').innerHTML=`
+    <h3>높은 점수를 준</h3><h5>${profile_keys_kor[selected_trait_idx]} 특성의 음식들이에요</h5>
+    `
+    // if(unrating_keys.length>0) {
+    //     let lim
+    //     if(flag) {
+    //         if(unrating_keys.length<10) {lim=unrating_keys.length}
+    //         else { lim=10 }
+    //         while (selected_friend_rating.size < 10) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
+    //         while (selected_my_rating.size < lim) { selected_my_rating.add(rand(0, unrating_keys.length - 1)) }
+    //     }
+    //     else {
+    //         if(unrating_keys.length<20) {lim=unrating_keys.length}
+    //         else { lim=20 }
+    //         while (selected_friend_rating.size < 20) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
+    //         while (selected_my_rating.size <lim) { selected_my_rating.add(rand(0, unrating_keys.length - 1)) }
+    //     }
+    //     for (let item of selected_friend_rating) {
+    //         selected_friend_foods += `
+    //                     <div class="list-group-item">
+    //                         <div class="box">
+    //                             <img class="card-img" src="${friend_food_recommendation[item][2]}" alt="..."/>
+    //                         </div>
+    //                         <span>${friend_food_recommendation[item][1]}</span>
+    //                     </div>
+    //                     `
+    //     }
+    //     for (let item of selected_my_rating) {
+    //         selected_foods += `
+    //                     <div class="list-group-item">
+    //                         <div class="box">
+    //                             <img class="card-img" src="${unrating[unrating_keys[item]].image}" alt="..."/>
+    //                         </div>
+    //                         <span>${unrating[unrating_keys[item]].name}</span>
+    //                     </div>
+    //                     `
+    //     }
+    //     document.getElementById('friend-recommendation-list').innerHTML=selected_friend_foods
+    //     document.getElementById('food-recommendation-list').innerHTML=selected_foods
+    //
+    // }
+    // else {
+    //     if(flag) {
+    //         while (selected_friend_rating.size < 10) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
+    //         while (selected_my_rating.size < 10) { selected_my_rating.add(rand(0, my_ratings.length - 1)) }
+    //     }
+    //     else {
+    //         while (selected_friend_rating.size < 20) { selected_friend_rating.add(rand(0, friend_food_recommendation.length - 1)) }
+    //         while (selected_my_rating.size < 20) { selected_my_rating.add(rand(0, my_ratings.length - 1)) }
+    //     }
+    //     for (let item of selected_my_rating) {
+    //         selected_foods += `
+    //                     <div class="list-group-item">
+    //                         <div class="box">
+    //                             <img class="card-img" src="${my_ratings[item][2]}" alt="..."/>
+    //                         </div>
+    //                         <span>${my_ratings[item][1]}</span>
+    //                     </div>
+    //                     `
+    //     }
+    //     for (let item of selected_friend_rating) {
+    //         selected_friend_foods += `
+    //                     <div class="list-group-item">
+    //                         <div class="box">
+    //                             <img class="card-img" src="${friend_food_recommendation[item][2]}" alt="..."/>
+    //                         </div>
+    //                         <span>${friend_food_recommendation[item][1]}</span>
+    //                     </div>
+    //                     `
+    //     }
+    //     document.getElementById('friend-recommendation-list').innerHTML=selected_friend_foods
+    //     document.getElementById('food-recommendation-list').innerHTML=selected_foods
+    // }
 }

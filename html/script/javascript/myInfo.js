@@ -4,69 +4,69 @@ function getScore() {
     switch (parseInt(arguments[0])) {
         case 1:
             return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 2:
             return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 3:
             return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 4:
             return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 5:
             return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 6: return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 7: return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 8: return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 9: return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         case 10: return `
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(1,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(3,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(5,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(7,${arguments[2]})">
-            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" onclick="set(9,${arguments[2]})">`
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(0,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(1,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(2,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(3,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(4,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(5,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(6,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(7,${arguments[2]})">
+            <img class="rating-stars" src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..." onclick="set(8,${arguments[2]})"><img class="rating-stars" src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="..." onclick="set(9,${arguments[2]})">`
         default:
             break
     }
@@ -85,14 +85,7 @@ async function set() {
 
 }
 async function init() {
-    if(mql.matches) {
-        // 모바일
-        flag=true
-    }
-    else {
-        // 데스크톱
-        flag=false
-    }
+    flag = !!mql.matches;
     const high_rating=JSON.parse(await $.ajax({
         type: "POST",
         url: '/script/php/DAOHandler.php',
@@ -121,7 +114,7 @@ async function init() {
             `<div class="high-rating-layout">
                         <div>
                             <div class="box" style="width: 80px; height: 80px">
-                                <img class="profile" src="${high_rating[i][3]}">
+                                <img class="profile" src="${high_rating[i][3]}" alt="..."/>
                             </div>
                         </div>
 
@@ -135,7 +128,7 @@ async function init() {
             `<div class="high-rating-layout">
                         <div>
                             <div class="box" style="width: 80px; height: 80px">
-                                <img src="${low_rating[i][3]}" width="80px" height="80px">
+                                <img class="profile" src="${low_rating[i][3]}" alt="..."/>
                             </div>
                         </div>
                         <span style="display: block;">${low_rating[i][1]}</span>
@@ -164,7 +157,7 @@ async function init() {
                 <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                 <div style="display: inline-block; margin: 0;">
                     <div class="box" style="height: 80px; width: 80px;">
-                        <img class="profile" src="${v[j][4]}">
+                        <img class="profile" src="${v[j][4]}" alt="..."/>
                     </div>
                 </div>
                 <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
@@ -197,7 +190,8 @@ async function handleFiles(files) {
 
         const file = files[i];
         const idx=(file.name).indexOf('.')
-        const fileName=`${userId}.${(file.name).substring(idx+1)}`
+        const format=((file.name).substring(idx+1)).toLowerCase()
+        const fileName=`${userId}.${format}`
         const filePath=`/var/www/html/config/userImages/${fileName}`
         postJson[0]=3
         postJson[1]='user'

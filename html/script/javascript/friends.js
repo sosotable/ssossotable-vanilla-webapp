@@ -17,8 +17,6 @@ async function init() {
                 <input type="text" class="form-control" placeholder="코드 입력" aria-label="Recipient's username" aria-describedby="button-addon2" id="friendInputInfo">
                 <button class="btn btn-outline-secondary" type="button" value="친구 추가" onclick="searchFriend()" data-bs-toggle="modal" data-bs-target="#friendSearchModal">Button</button>
             </div>`
-    let modal=``
-    let rating=``
 
     let v=JSON.parse(await $.ajax({
         type: "POST",
@@ -38,7 +36,7 @@ async function init() {
         div+=`
                 <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true" onclick="toFriendInfo(${v[i][0]},'${v[i][1]}');" id="friend-${v[i][0]}">
                     <div class="img-box" style="display: inline-block; margin: 0;">
-                        <img id="img-${v[i][0]}" class="friend-img" src="${v[i][2]}" height="80" width="80">
+                        <img id="img-${v[i][0]}" class="friend-img" src="${v[i][2]}" height="80" width="80" alt="...">
                     </div>
                     <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
                         <div class="placeholder-glow d-flex justify-content-start fs-3" id="nickname-${v[i][0]}">
@@ -59,9 +57,9 @@ async function init() {
             0:'select',
             1:'userid,id,image,nickname',
             2:`friend_request,user`,
-            3:'`to`=<?php echo $_COOKIE['user_id'];?> and friend_request.`from`=user.id;'
+            3:`\`to\`=${id} and friend_request.\`from\`=user.id;`
         }}))
-    if(search_res.length==0) {
+    if(search_res.length===0) {
         document.getElementById('friend-request-notification').src='src/notification.png'
         document.getElementById('friend-request').innerHTML=`<span>친구 요청이 없어요</span>`
     }
@@ -70,7 +68,7 @@ async function init() {
             request_format+=`
                     <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                         <div class="img-box" style="display: inline-block; margin: 0;">
-                            <img class="friend-request-img" src="${search_res[i][2]}" height="80" width="80">
+                            <img class="friend-request-img" src="${search_res[i][2]}" height="80" width="80" alt="...">
                         </div>
                         <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
                             <div class="d-flex justify-content-start fs-3" style="">
@@ -108,7 +106,7 @@ async function toFriendInfo() {
         document.getElementById(`friend-info-${arguments[0]}`).submit()
     }
     else {
-        let combi=''
+        let combi
         document.getElementById('friend-nickname').innerHTML=arguments[1]
         const info=JSON.parse(await $.ajax({
             type: "POST",
@@ -124,8 +122,6 @@ async function toFriendInfo() {
             combi=String(userId)+'-'+String(arguments[0])
         }
         const tastes_diff_path=`http://ssossotable.com/config/userTastes/${combi}.png`
-        const friend_taste=JSON.parse(info[combi])
-        const friend_taste_keys=Object.keys(friend_taste)
         const friendInfo=JSON.parse(await $.ajax({
             type: "POST",
             url: '/script/php/DAOHandler.php',
@@ -163,7 +159,7 @@ async function toFriendInfo() {
                 `<div class="high-rating-layout">
                     <div>
                         <div class="box" style="height: 80px; width: 80px;">
-                            <img class="profile" src="${high_rating[i][3]}">
+                            <img class="profile" src="${high_rating[i][3]}" alt="...">
                         </div>
                     </div>
                     <span style="display: block;">${high_rating[i][1]}</span>
@@ -176,7 +172,7 @@ async function toFriendInfo() {
                 `<div class="high-rating-layout">
                     <div>
                         <div class="box" style="height: 80px; width: 80px;">
-                            <img class="profile" src="${low_rating[i][3]}">
+                            <img class="profile" src="${low_rating[i][3]}" alt="...">
                         </div>
                     </div>
                     <span style="display: block;">${low_rating[i][1]}</span>
@@ -185,8 +181,41 @@ async function toFriendInfo() {
             document.getElementById('low-rating-holder').innerHTML+=low_div
         }
         let ratingInfoPath=`http://ssossotable.com/config/ratingInfos/${arguments[0]}.png`
-        document.getElementById('taste-list').innerHTML=`<img src="${ratingInfoPath}">`
-        document.getElementById('taste-diff-list').innerHTML=`<img src="${tastes_diff_path}">`
+        document.getElementById('taste-list').innerHTML=`<img src="${ratingInfoPath}" alt="...">`
+        document.getElementById('taste-diff-list').innerHTML=`<img src="${tastes_diff_path}" alt="...">`
+
+        const v=JSON.parse(await $.ajax({
+            type: "POST",
+            url: '/script/php/DAOHandler.php',
+            data: {
+                0:'select',
+                1:'userid,foodid,rating,name,image',
+                2:'rating,food',
+                3:`rating.userid=${arguments[0]} and rating.foodid=food.id;`
+            }}))
+        let rating_divs=``
+        let rating_stars=``
+        for(let j=0;j<v.length;j++) {
+            const rate=parseInt(v[j][2])
+            rating_stars=getScore(rate,40)
+            rating_divs+=`
+                    <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                    <div style="display: inline-block; margin: 0;">
+                    <div>
+                        <div class="box" style="height: 80px; width: 80px;">
+                            <img class="profile" src="${v[j][4]}" alt="...">
+                        </div>
+                    </div>
+                    </div>
+                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                    <div class="d-flex justify-content-start fs-3" style="">
+                        <span class="col-10">${v[j][3]}</span>
+                    </div>
+                    ${rating_stars}
+                    </div>
+                    </div>`
+        }
+        document.getElementById('scroll-layout-rating').innerHTML=rating_divs
     }
 
 }
@@ -196,76 +225,76 @@ function getScore() {
     switch (parseInt(arguments[0])) {
         case 1:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 2:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 3:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 4:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 5:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 6: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 7: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 8: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 9: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 10: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">`
         default:
             break
     }
 }
 async function searchFriend() {
     let userInfo=document.getElementById("friendInputInfo").value
-    let friends_info=null
+    let friends_info
 
     if(isNaN(userInfo)) {
         friends_info=JSON.parse(await $.ajax({
@@ -295,10 +324,10 @@ async function searchFriend() {
     if(friends_info.length!==0) {
         friendAddInfo.friendId=friends_info[0][1]
         friendId=friends_info[0][1]
-        let format=`
+        document.getElementById("friend-modal-body").innerHTML=`
                 <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
                     <div class="img-box" style="display: inline-block; margin: 0;">
-                        <img class="friend-img" src="${friends_info[0][4]}" height="80" width="80">
+                        <img class="friend-img" src="${friends_info[0][4]}" height="80" width="80" alt="...">
                     </div>
                     <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
                         <div class="d-flex justify-content-start fs-3" style="">
@@ -310,7 +339,6 @@ async function searchFriend() {
                     </div>
                 </div>
                 `
-        document.getElementById("friend-modal-body").innerHTML=format
     }
 }
 async function friend_request() {
@@ -320,7 +348,7 @@ async function friend_request() {
         data: {
             0:'insert',
             1:'friend_request(`from`,`to`)',
-            2:`<?php echo $_COOKIE['user_id'];?>,${arguments[0]}`
+            2:`${id},${arguments[0]}`
         }})
     if(document.getElementById(`add-friend-button-${arguments[0]}`).disabled===false) {
         document.getElementById(`add-friend-button-${arguments[0]}`).disabled=true
@@ -333,41 +361,6 @@ async function friend_request() {
 
     location.reload()
 }
-async function add_friend() {
-    const search_res=JSON.parse(await $.ajax({
-        type: "POST",
-        url: '/script/php/DAOHandler.php',
-        data: {
-            0:'select',
-            1:'*',
-            2:'friend',
-            3:`userid=${id} and friendid=${friendId};`
-        }}))
-    if(search_res.length>0) {
-        alert('already friend')
-    }
-    else {
-        await $.ajax({
-            type: "POST",
-            url: '/script/php/DAOHandler.php',
-            data: {
-                0:'insert',
-                1:'friend(userid,friendid)',
-                2:`${id},${friendId};`
-            }})
-    }
-
-    if(document.getElementById('add-friend-button').disabled===false) {
-        document.getElementById('add-friend-button').disabled=true
-        document.getElementById('add-friend-button').value="친구 추가됨"
-    }
-    else {
-        document.getElementById('add-friend-button').disabled=false
-        document.getElementById('add-friend-button').value="친구 추가"
-    }
-
-    location.reload()
-}
 async function accept_request() {
     if(document.getElementById(`request-friend-button-${arguments[0]}`).disabled===false) {
         await $.ajax({
@@ -376,7 +369,7 @@ async function accept_request() {
             data: {
                 0:'insert',
                 1:'friend(userid,friendid)',
-                2:`<?php echo $_COOKIE['user_id'];?>, ${arguments[0]}`
+                2:`${id}, ${arguments[0]}`
             }})
         await $.ajax({
             type: "POST",
@@ -384,7 +377,7 @@ async function accept_request() {
             data: {
                 0:'delete',
                 1:'friend_request',
-                2:`\`from\`=${arguments[0]} and \`to\`=<?php echo $_COOKIE['user_id'];?>`
+                2:`\`from\`=${arguments[0]} and \`to\`=${id}`
             }})
         document.getElementById(`request-friend-button-${arguments[0]}`).disabled=true
         document.getElementById(`request-friend-button-${arguments[0]}`).value="친구 추가됨"

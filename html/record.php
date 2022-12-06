@@ -9,17 +9,22 @@ include 'script/modules/CookieManager.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food-db.record</title>
+    <title>식사 기록하기</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="icon" href="src/favicon.ico">
 
     <!-- Custom styles for this template -->
+    <style>
+        @font-face { /* 애플산돌고딕 폰트 적용 */
+            font-family: "Jua";
+            src: url("css/font/Jua-Regular.ttf") format("truetype");
+            font-weight: normal;
+        }
+    </style>
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/record.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <style>
-
-    </style>
 
     <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -73,9 +78,6 @@ include 'script/modules/CookieManager.php';
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
                     </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">

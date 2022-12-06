@@ -1,3 +1,5 @@
+# 사용자간 표준편차 구하는 파일
+
 import pymysql.cursors
 import pymysql
 import pandas as pd
@@ -5,11 +7,7 @@ import numpy as np
 from itertools import combinations
 import json
 
-connection = pymysql.connect(host='*',
-                             user='*',
-                             password='*',
-                             database='*',
-                             cursorclass=pymysql.cursors.DictCursor)
+connection = pymysql.connect
 
 with connection:
     with connection.cursor() as cursor:
@@ -41,15 +39,14 @@ del trait_cols[0]
 for col in trait_cols:
     ratings[col] = ratings[col]*ratings['rating']
 
+ratings[trait_cols]=ratings[trait_cols].replace(0,np.NaN)
 user_profile=ratings.groupby('userid')[trait_cols].mean()
 
 user_tastes={}
 for combi in users_combi:
     user=str(combi[0])+'-'+str(combi[1])
     std=user_profile.loc[[combi[0],combi[1]]].describe().loc['std'].sort_values()
-    std=std.replace(np.NaN,std.mean())
-    std=std.replace(0,std.mean())
-    user_tastes[user]=pd.concat([std[:3],std[-3:]]).to_json()
+    user_tastes[user]=std[:3].to_json()
 
 with open('/var/www/html/database/user_tastes.json','w') as f:
     json.dump(user_tastes, f, ensure_ascii=False, indent=4)

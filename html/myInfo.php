@@ -9,12 +9,11 @@ include 'script/modules/CookieManager.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food-db.myinfo</title>
+    <title>내 정보</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/myInfo.css">
+    <link rel="icon" href="src/favicon.ico">
+
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
@@ -22,6 +21,10 @@ include 'script/modules/CookieManager.php';
             font-weight: normal;
         }
     </style>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/myInfo.css">
+
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -43,6 +46,7 @@ include 'script/modules/CookieManager.php';
         });
     </script>
     <script type="text/javascript" src="script/javascript/myInfo.js"></script>
+    <script type="text/javascript" src="/script/javascript/modules.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -78,13 +82,10 @@ include 'script/modules/CookieManager.php';
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
-                    </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                    <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
             </div>
         </div>
@@ -198,7 +199,7 @@ include 'script/modules/CookieManager.php';
                     <span class="card-title" style="display: block">음식 취향 순위</span>
                     <div class="placeholder-glow">
                         <div class="card-img-top" id="taste-list" style="">
-                            <img id="taste-image" src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png" style="width: 640px; height: 480px">
+                            <img id="taste-image" src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png">
                         </div>
                     </div>
                     <ul class="card list-group list-group-flush" style="margin-top: auto;">
@@ -217,7 +218,7 @@ include 'script/modules/CookieManager.php';
             <span class="card-title" style="display: block">음식 취향 순위</span>
             <div class="placeholder-glow">
                 <div class="card-img-top" id="taste-list" style="">
-                    <img src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png" style="width: 640px; height: 480px">
+                    <img id="taste-list-img" src="config/ratingInfos/<?php echo $_COOKIE['user_id'];?>.png">
                 </div>
             </div>
             <ul class="card list-group list-group-flush" style="margin-top: auto;">

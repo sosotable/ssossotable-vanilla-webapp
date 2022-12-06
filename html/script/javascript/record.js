@@ -1,19 +1,13 @@
 
 async function init() {
-    if(mql.matches) {
-        // 모바일
-        flag=true
-    }
-    else {
-        // 데스크톱
-        flag=false
-    }
+    flag = !!mql.matches;
 }
+
 async function add_menu() {
     let idx=-1
-    let option=''
-    let menuname=''
-    let radio=null
+    let option=null
+    let menuname
+    let radio
     let v,id=null
     let foodid=-1
     if(flag) {
@@ -90,9 +84,9 @@ async function add_menu() {
                     <li id="${menuname}" class="list-group-item menus d-flex justify-content-between">
                         <span class="menu-content">${menuname}</span>
                         <span class="menu-count">1</span>
-                        <img class="menu-add-image" onclick="add_menu_count('${menuname}')" src="src/read_more.png">
+                        <img class="menu-add-image" onclick="add_menu_count('${menuname}')" src="src/read_more.png" alt="...">
                         <span class="menu-content">${option}</span>
-                        <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png">
+                        <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png" alt="...">
                     </li>
                     `
 
@@ -175,9 +169,10 @@ async function add_menu() {
                 <li id="${placeId}-${foodid}" class="list-group-item menus d-flex justify-content-between">
                     <span class="menu-content">${menuname}</span>
                     <span class="menu-count">1</span>
-                    <img class="menu-add-image" onclick="add_menu_count('${foodid}')" src="src/read_more.png">
+                    <img class="menu-add-image" onclick="add_menu_count('${foodid}')" src="src/read_more.png" alt="...">
+                   
                     <span class="menu-content">${option}</span>
-                    <img class="menu-content-image" onclick="delete_menu('${foodid}')" src="src/close.png">
+                    <img class="menu-content-image" onclick="delete_menu('${foodid}')" src="src/close.png" alt="...">
                 </li>
                 `
         }
@@ -193,7 +188,7 @@ async function delete_menu() {
         children=document.getElementById('menu-list').children
     }
     for(let i=0;i<children.length;i++) {
-        if(children[i].id==`${placeId}-`+arguments[0]) {
+        if(children[i].id===`${placeId}-`+arguments[0]) {
             children[i].remove()
             await $.post("script/php/DAOHandler.php",
                 {

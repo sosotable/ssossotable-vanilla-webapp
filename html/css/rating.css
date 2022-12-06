@@ -49,6 +49,9 @@
     .list-group-item {
         height: 120px!important;
     }
+    #food-info {
+        display: none;
+    }
 }
 @media (min-width : 768px) and (max-width : 1366px) {
 }
@@ -141,4 +144,7 @@ nav {
     width: 100%;
     height: 100%;
     background-color: transparent;
+}
+#food-info-image {
+    width: 50% !important;
 }

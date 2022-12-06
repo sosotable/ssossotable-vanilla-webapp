@@ -9,12 +9,11 @@ include 'script/modules/CookieManager.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food.recipe</title>
+    <title>레시피 기록하기</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/recipe.css">
+    <link rel="icon" href="src/favicon.ico">
+
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
@@ -22,6 +21,9 @@ include 'script/modules/CookieManager.php';
             font-weight: normal;
         }
     </style>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/recipe.css">
 
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -228,6 +230,7 @@ include 'script/modules/CookieManager.php';
             location.reload()
         }
     </script>
+    <script type="text/javascript" src="/script/javascript/modules.js"></script>
 </head>
 
 <body class="text-center vsc-initialized" cz-shortcut-listen="true">
@@ -265,38 +268,33 @@ include 'script/modules/CookieManager.php';
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
-                    </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                    <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                 </div>
             </div>
         </div>
     </nav>
     <main role="main" class="inner cover d-flex" id="rating-main">
-        <div id="food_rating_database" class="d-flex">
-            <div class="card d-flex flex-column align-items-center justify-content-center" style="width: 100%; height: 100%;">
-                <div id="recipe-image" class="d-flex justify-content-center">
-                    <div class="box" id="preview"><img class="food-image card-img-top" src="src/food_placeholder.png"alt="..."></div>
-                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+        <div class="card d-flex flex-column align-items-center justify-content-center" style="overflow-y:auto; width: 100%; height: 100%;">
+            <div id="recipe-image" class="d-flex justify-content-center">
+                <div class="box" id="preview"><img class="food-image card-img-top" src="src/food_placeholder.png"alt="..."></div>
+                <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+            </div>
+            <div id="recipe-title" class="mb-3" >
+                <h1 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h1>
+                <div class="input-group mb-3">
+                    <input id="food-name-modify-input" type="text" class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" onclick="food_name_modify();" id="food-name-modify">입력</button>
                 </div>
-                <div id="recipe-title" class="mb-3" >
-                    <h1 class="card-title"><label for="exampleFormControlInput1" class="form-label" id="food-name">음식명</label></h1>
-                    <div class="input-group mb-3">
-                        <input id="food-name-modify-input" type="text" class="form-control" placeholder="뭘 먹었나요?" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" onclick="food_name_modify();" id="food-name-modify">입력</button>
+            </div>
+            <div id="recipe-contents" style="display: none">
+                <div class="align-middle" id="recipe-textarea-div">
+                    <div class="mb-3">
+                        <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="7"></textarea>
                     </div>
-                </div>
-                <div id="recipe-contents" style="display: none">
-                    <div class="align-middle" id="recipe-textarea-div">
-                        <div class="mb-3">
-                            <textarea class="form-control" placeholder="메모를 남겨주세요" id="recipe-memo" rows="7"></textarea>
-                        </div>
-                        <input type="button" value="저장하기" onclick="commit();" class="w-100 btn" style="background-color:#e4bd74; color:white;">
-                    </div>
+                    <input type="button" value="저장하기" onclick="commit();" class="w-100 btn" style="background-color:#e4bd74; color:white;">
                 </div>
             </div>
         </div>

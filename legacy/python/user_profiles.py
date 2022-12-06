@@ -9,11 +9,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from matplotlib import font_manager, rc
 
-connection = pymysql.connect(host='*',
-                             user='*',
-                             password='*',
-                             database='*',
-                             cursorclass=pymysql.cursors.DictCursor)
+connection = pymysql.connect
 
 with connection:
     with connection.cursor() as cursor:

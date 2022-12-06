@@ -10,11 +10,7 @@ from itertools import combinations
 import json
 import matplotlib.pyplot as plt
 
-connection = pymysql.connect(host='*',
-                             user='*',
-                             password='*',
-                             database='*',
-                             cursorclass=pymysql.cursors.DictCursor)
+connection = pymysql.connect
 
 with connection:
     with connection.cursor() as cursor:

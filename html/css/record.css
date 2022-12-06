@@ -38,6 +38,12 @@
         margin: 0!important;
         padding: 0!important;
     }
+    #place-info {
+        height: 40% !important;
+    }
+    #menu-list-mobile {
+        overflow-y: auto;
+    }
 }
 html,
 body {

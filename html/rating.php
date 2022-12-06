@@ -9,14 +9,21 @@ include 'script/modules/CookieManager.php';
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-        <title>ssosso-table.food-db.rating</title>
+        <title>음식 평가하기</title>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 
+        <link rel="icon" href="src/favicon.ico">
+
+        <style>
+            @font-face { /* 애플산돌고딕 폰트 적용 */
+                font-family: "Jua";
+                src: url("css/font/Jua-Regular.ttf") format("truetype");
+                font-weight: normal;
+            }
+        </style>
         <link rel="stylesheet" href="/css/rating.css">
         <link rel="stylesheet" href="/css/footer.css">
         <link rel="stylesheet" href="/css/header.css">
-        <style type="text/css">
-        </style>
 
         <script
                 src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -169,6 +176,7 @@ include 'script/modules/CookieManager.php';
             let userProfile={}
             userProfile.userId=<?php echo $_COOKIE['user_id']; ?>
         </script>
+        <script type="text/javascript" src="/script/javascript/modules.js"></script>
         <script type="text/javascript" src="/script/javascript/rating.js"></script>
     </head>
 
@@ -204,13 +212,10 @@ include 'script/modules/CookieManager.php';
                         <li class="nav-item">
                             <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://ssossotable.com/insert.php">음식 추가하기(for dev)</a>
-                        </li>
                     </ul>
                     <div class="input-group mb-3 mt-3">
-                        <input type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                        <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
                     </div>
                 </div>
             </div>
@@ -220,11 +225,9 @@ include 'script/modules/CookieManager.php';
             <script>
                 let lock=false
                 $(async function () {
+                    console.log($('#scroll_layout').height())
                     $('#scroll_layout').scroll(function() {
                         if($('#scroll_layout').scrollTop() + $('main').height() >= $('#scroll_layout').prop('scrollHeight')) {
-                            // $('html, #scroll_layout').animate({
-                            //     scrollTop: 0
-                            // }, 1000);
                             read_more()
                         }
                     });
@@ -235,16 +238,8 @@ include 'script/modules/CookieManager.php';
             </div>
             <div class="card" id='food-info'>
                 <div class="card-body" id="title">
-                    <img id="food-info-image" src="/src/food_placeholder.png" style="width: 100%!important;"/>
+                    <img id="food-info-image" src="/src/food_placeholder.png"/>
                     <h1 class="card-title" id="food-name">음식 이름</h1>
-                    <p class="card-text" id="food-traits">특성 목록</p>
-                    <div id="desktop-rating-info" style="margin-bottom: 50px;">
-                        <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                        <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                        <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                        <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                        <img class="rating-stars" src="/src/rate_star_before_half-left.png" height="100" width="50"><img class="rating-stars" src="/src/rate_star_before_half-right.png" height="100" width="50">
-                    </div>
                 </div>
             </div>
             <script>

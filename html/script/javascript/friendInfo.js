@@ -4,69 +4,69 @@ function getScore() {
     switch (parseInt(arguments[0])) {
         case 1:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 2:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 3:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 4:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 5:
             return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 6: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 7: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 8: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_before_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 9: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_before_half-right.png" height="${height}" width="${width}" alt="...">`
         case 10: return `
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">
-        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}"><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}">`
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">
+        <img src="/src/rate_star_after_half-left.png" height="${height}" width="${width}" alt="..."><img src="/src/rate_star_after_half-right.png" height="${height}" width="${width}" alt="...">`
         default:
             break
     }
@@ -87,7 +87,7 @@ async function init() {
     }
     const tastes_diff_path=`http://ssossotable.com/config/userTastes/${combi}.png`
 
-    document.getElementById('taste-diff-list').innerHTML=`<img id="taste-image" src="${tastes_diff_path}" style="width: 100%!important; height: fit-content!important;"/>`
+    document.getElementById('taste-diff-list').innerHTML=`<img id="taste-image" src="${tastes_diff_path}" style="width: 100%!important; height: fit-content!important;" alt="..."/>`
 
     const high_rating=JSON.parse(await $.ajax({
         type: "POST",
@@ -124,7 +124,7 @@ async function init() {
             `<div class="high-rating-layout">
                         <div>
                             <div class="box" style="height: 80px; width: 80px;">
-                                <img class="profile" src="${high_rating[i][3]}">
+                                <img class="profile" src="${high_rating[i][3]}" alt="...">
                             </div>
                         </div>
                         <span style="display: block;">${high_rating[i][1]}</span>
@@ -137,7 +137,7 @@ async function init() {
             `<div class="high-rating-layout">
                         <div>
                             <div class="box" style="height: 80px; width: 80px;">
-                                <img class="profile" src="${low_rating[i][3]}">
+                                <img class="profile" src="${low_rating[i][3]}" alt="...">
                             </div>
                         </div>
                         <span style="display: block;">${low_rating[i][1]}</span>
@@ -164,7 +164,7 @@ async function init() {
                     <div style="display: inline-block; margin: 0;">
                     <div>
                         <div class="box" style="height: 80px; width: 80px;">
-                            <img class="profile" src="${v[j][4]}">
+                            <img class="profile" src="${v[j][4]}" alt="..."/>
                         </div>
                     </div>
                     </div>

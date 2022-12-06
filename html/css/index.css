@@ -3,6 +3,28 @@
     src: url("font/Jua-Regular.ttf") format("truetype");
     font-weight: normal;
 }
+@media only screen and (max-width : 768px) {
+    .box-logo {
+        width: 240px!important;
+        height: 240px!important;
+        border-radius: 20%;
+        overflow: hidden;
+        margin: auto auto 30px auto;
+    }
+    .profile-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    body {
+        margin: 0 auto;
+        padding: 0!important;
+        height: 100% !important;
+    }
+    main {
+        margin: 0px auto auto auto!important;
+    }
+}
 html,
 body {
     font-family: Jua;
@@ -44,4 +66,16 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.box-logo {
+    width: 300px;
+    height: 300px;
+    border-radius: 20%;
+    overflow: hidden;
+    margin: auto auto 30px auto;
+}
+.profile-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

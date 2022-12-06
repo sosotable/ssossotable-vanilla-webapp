@@ -9,13 +9,15 @@ include 'script/modules/CookieManager.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food-db.friends</title>
+    <title>친구 목록</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="icon" href="src/favicon.ico">
 
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";
-            src: url("font/Jua-Regular.ttf") format("truetype");
+            src: url("css/font/Jua-Regular.ttf") format("truetype");
             font-weight: normal;
         }
     </style>
@@ -208,6 +210,114 @@ include 'script/modules/CookieManager.php';
 
         <!-- Modal -->
         <div id="modal-layout">
+            <div class="modal fade" id="myFoodModal" tabindex="-1" aria-labelledby="myFoodModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myFoodModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="scroll-layout-rating">
+                            <div class="rating-placeholders">
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 120px;" class="list-group-item list-group-item-action py-3 lh-tight d-flex align-items-center" aria-current="true">
+                                    <div style="display: inline-block; margin: 0;">
+                                        <img src="/src/food_placeholder.png" height="60" width="60">
+                                    </div>
+                                    <div style="width:300px; display: inline-block; margin: 0 0 0 20px;" class="rating_content">
+                                        <div class="placeholder-glow d-flex justify-content-start fs-3" style="">
+                                            <span class="placeholder col-5"></span>
+                                        </div>
+                                        <div class="placeholder-glow d-flex justify-content-start fs-2" style="margin:10px 0 0 0">
+                                            <span class="placeholder col-10 placeholder-lg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal -->
             <div class="modal fade" id="friendRequestModal" tabindex="-1" aria-labelledby="friendRequestModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -320,7 +430,6 @@ include 'script/modules/CookieManager.php';
                 </div>
             </div>
         </div>
-
     </main>
 
     <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
@@ -333,7 +442,6 @@ include 'script/modules/CookieManager.php';
 </body>
 <script>
     init()
-    init_v2()
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </html>
