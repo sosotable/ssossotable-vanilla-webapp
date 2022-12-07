@@ -23,7 +23,7 @@ include 'script/modules/CookieManager.php';
     </style>
     <link href="./css/footer.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/friendInfo.css">
+    <link rel="stylesheet" href="/css/friend_info.css">
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -38,7 +38,7 @@ include 'script/modules/CookieManager.php';
 
         let nickname=''
     </script>
-    <script type="text/javascript" src="script/javascript/friendInfo.js"></script>
+    <script type="text/javascript" src="script/javascript/friend_info.js"></script>
     <script type="text/javascript" src="/script/javascript/modules.js"></script>
 </head>
 
@@ -66,7 +66,7 @@ include 'script/modules/CookieManager.php';
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
                     <li class="nav-item">
-                        <a class="nav-link " href="http://ssossotable.com/myInfo.php">내 정보</a>
+                        <a class="nav-link " href="http://ssossotable.com/my_info.php">내 정보</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
@@ -75,7 +75,7 @@ include 'script/modules/CookieManager.php';
                         <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                        <a class="nav-link" href="http://ssossotable.com/my_recipe.php">나만의 레시피북</a>
                     </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">

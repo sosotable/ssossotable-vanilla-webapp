@@ -73,16 +73,16 @@ include 'script/modules/CookieManager.php';
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
                     <li class="nav-item">
-                        <a class="nav-link " href="http://ssossotable.com/myInfo.php">내 정보</a>
+                        <a class="nav-link " href="http://ssossotable.com/my_info.php">내 정보</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/diary.php">다이어리</a>
+                        <a class="nav-link active" href="http://ssossotable.com/diary.php">다이어리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                        <a class="nav-link" href="http://ssossotable.com/my_recipe.php">나만의 레시피북</a>
                     </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">

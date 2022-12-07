@@ -10,6 +10,14 @@ async function add_menu() {
     let radio
     let v,id=null
     let foodid=-1
+    let rating_rate
+    const ts=Date.now()
+    const d=new Date()
+    console.log(d.getUTCMonth())
+    console.log(d.getUTCMonth())
+    const time_format=`
+            ${d.getFullYear()}.${d.getMonth()+1}.${d.getDay()}
+            `
     if(flag) {
         menuname=document.getElementById("menu-name-mobile").value;
         radio=document.querySelectorAll("input[class='form-check-input-mobile']")
@@ -20,11 +28,12 @@ async function add_menu() {
             }
         }
         switch (idx) {
-            case 0: option='나쁨';break;
-            case 1: option='보통';break;
-            case 2: option='좋음';break;
+            case 0: option='나쁨'; rating_rate=1; break;
+            case 1: option='보통'; rating_rate=6; break;
+            case 2: option='좋음'; rating_rate=10; break;
         }
         if(idx !== -1) {
+
             let v=JSON.parse(await $.ajax({
                 type: "POST",
                 url: '/script/php/DAOHandler.php',
@@ -68,6 +77,22 @@ async function add_menu() {
                         1:'meal(foodid,userid,locationid,rating)',
                         2:`'${id[0][0]}',${userId},${placeId},${idx}`
                     }})
+                await $.ajax({
+                    type: "POST",
+                    url: '/script/php/DAOHandler.php',
+                    data:{
+                        0:'insert',
+                        1:'meal(foodid,userid,locationid,rating)',
+                        2:`'${id[0][0]}',${userId},${placeId},${idx}`
+                    }})
+                await $.ajax({
+                    type: "POST",
+                    url: '/script/php/DAOHandler.php',
+                    data:{
+                        0:'insert',
+                        1:'meal_rating(userid,foodid,rating)',
+                        2:`${userId},${id[0][0]},${rating_rate}`
+                    }})
             }
             else {
                 await $.ajax({
@@ -78,13 +103,22 @@ async function add_menu() {
                         1:'meal(foodid,userid,locationid,rating)',
                         2:`'${v[0][0]}',${userId},${placeId},${idx}`
                     }})
+                await $.ajax({
+                    type: "POST",
+                    url: '/script/php/DAOHandler.php',
+                    data:{
+                        0:'insert',
+                        1:'meal_rating(userid,foodid,rating)',
+                        2:`${userId},${v[0][0]},${rating_rate}`
+                    }})
             }
             document.getElementById("menu-name-mobile").value=''
             document.getElementById('menu-list-mobile').innerHTML+=`
                     <li id="${menuname}" class="list-group-item menus d-flex justify-content-between">
-                        <span class="menu-content">${menuname}</span>
-                        <span class="menu-count">1</span>
-                        <img class="menu-add-image" onclick="add_menu_count('${menuname}')" src="src/read_more.png" alt="...">
+                        <div class="menus-info-div">
+                            <span class="menu-content">${menuname}</span>
+                            <span class="menu-content time">${time_format}</span>
+                        </div>
                         <span class="menu-content">${option}</span>
                         <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png" alt="...">
                     </li>
@@ -166,13 +200,13 @@ async function add_menu() {
 
             document.getElementById("menu-name").value=''
             document.getElementById('menu-list').innerHTML+=`
-                <li id="${placeId}-${foodid}" class="list-group-item menus d-flex justify-content-between">
-                    <span class="menu-content">${menuname}</span>
-                    <span class="menu-count">1</span>
-                    <img class="menu-add-image" onclick="add_menu_count('${foodid}')" src="src/read_more.png" alt="...">
-                   
+                <li id="${menuname}" class="list-group-item menus d-flex justify-content-between">
+                    <div>
+                        <span class="menu-content">${menuname}</span>
+                        <span class="menu-content time">${time_format}</span>
+                    </div>
                     <span class="menu-content">${option}</span>
-                    <img class="menu-content-image" onclick="delete_menu('${foodid}')" src="src/close.png" alt="...">
+                    <img class="menu-content-image" onclick="delete_menu('${menuname}')" src="src/close.png" alt="...">
                 </li>
                 `
         }

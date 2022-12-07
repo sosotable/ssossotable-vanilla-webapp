@@ -23,7 +23,7 @@ include 'script/modules/CookieManager.php';
     </style>
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/myInfo.css">
+    <link rel="stylesheet" href="/css/my_info.css">
 
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -45,7 +45,7 @@ include 'script/modules/CookieManager.php';
             }
         });
     </script>
-    <script type="text/javascript" src="script/javascript/myInfo.js"></script>
+    <script type="text/javascript" src="script/javascript/my_info.js"></script>
     <script type="text/javascript" src="/script/javascript/modules.js"></script>
 </head>
 
@@ -56,10 +56,10 @@ include 'script/modules/CookieManager.php';
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column" style="margin: 0 !important;">
     <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
+        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating">음식 평가하기</a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe">레시피 추가하기</a>
+        <a class="nav-link text-muted p-2" href="http://ssossotable.com/record">식사 기록하기</a>
         <button style="margin: 10px;" class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -71,16 +71,16 @@ include 'script/modules/CookieManager.php';
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
                     <li class="nav-item">
-                        <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/myInfo.php">내 정보</a>
+                        <a class="nav-link active" href="http://ssossotable.com/my_info">내 정보</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
+                        <a class="nav-link" href="http://ssossotable.com/friends">친구 목록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/diary.php">다이어리</a>
+                        <a class="nav-link" href="http://ssossotable.com/diary">다이어리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                        <a class="nav-link" href="http://ssossotable.com/my_recipe">나만의 레시피북</a>
                     </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">

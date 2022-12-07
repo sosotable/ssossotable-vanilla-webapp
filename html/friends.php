@@ -66,7 +66,7 @@ include 'script/modules/CookieManager.php';
 
     <header class="masthead mb-auto">
         <div class="inner d-flex justify-content-between">
-            <a class="d-flex align-items-center" href="http://ssossotable.com/recommendation.php"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
+            <a class="d-flex align-items-center" href="http://ssossotable.com/recommendation"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
             <nav class="nav nav-masthead justify-content-center align-items-center">
                 <a href="#" data-bs-toggle="modal" data-bs-target="#friendRequestModal" style="margin: 10px;">
                     <img id='friend-request-notification'src="src/notification.png" width="36px" height="36px"/>

@@ -37,15 +37,7 @@ include 'script/modules/CookieManager.php';
         const userId=<?php echo $_COOKIE['user_id'];?>
 
         mql.addListener(function(e) {
-            if(e.matches) {
-                // 모바일
-                flag=true;
-                document.getElementById('diary-info').style.cssText='display:none!important;'
-                console.log(flag)
-            } else {
-                // 데스크탑
-                flag=false
-            }
+            flag=!!e.matches
         });
     </script>
     <script type="text/javascript" src="/script/javascript/modules.js"></script>
@@ -73,7 +65,7 @@ include 'script/modules/CookieManager.php';
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
                     <li class="nav-item">
-                        <a class="nav-link " href="http://ssossotable.com/myInfo.php">내 정보</a>
+                        <a class="nav-link " href="http://ssossotable.com/my_info.php">내 정보</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
@@ -82,7 +74,7 @@ include 'script/modules/CookieManager.php';
                         <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/diary.php">다이어리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my-recipe.php">나만의 레시피북</a>
+                        <a class="nav-link" href="http://ssossotable.com/my_recipe.php">나만의 레시피북</a>
                     </li>
                 </ul>
                 <div class="input-group mb-3 mt-3">

@@ -202,3 +202,21 @@ nav {
     height: 100%;
     object-fit: cover;
 }
+div .menu-content {
+    display: block!important;
+}
+.time {
+    font-size: 14px!important;
+}
+.menus-info-div {
+    margin-right: auto;
+}
+.menus span {
+    padding: 0 20px 0 0;
+}
+.menu-content-image {
+    margin:5px;
+}
+#place-info {
+    display: none;
+}

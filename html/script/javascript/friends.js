@@ -91,7 +91,7 @@ async function toFriendInfo() {
 
         form.setAttribute("type", "hidden");
         form.setAttribute("id",`friend-info-${arguments[0]}`)
-        form.setAttribute("action","friendInfo.php")
+        form.setAttribute("action","friend_info.php")
         form.setAttribute("method","post")
 
         let input = document.createElement("input")

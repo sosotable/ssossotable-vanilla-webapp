@@ -223,7 +223,7 @@ async function foodInfo() {
 
         form.setAttribute("type", "hidden");
         form.setAttribute("id","food-info")
-        form.setAttribute("action","foodinfo.php")
+        form.setAttribute("action","http://ssossotable.com/food_info")
         form.setAttribute("method","post")
 
         const input = document.createElement("input")
