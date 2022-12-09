@@ -5,14 +5,10 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>친구 목록</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="icon" href="src/favicon.ico">
+    <?php
+    include 'script/modules/LayoutHandler.php';
+    (LayoutHandler::factory())->createTitle('친구 목록');
+    ?>
 
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
@@ -62,19 +58,7 @@ include 'script/modules/CookieManager.php';
 
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-
-
-    <header class="masthead mb-auto">
-        <div class="inner d-flex justify-content-between">
-            <a class="d-flex align-items-center" href="http://ssossotable.com/recommendation"><img class="masthead-brand" src="src/logo.png" width="72px" height="72px"></a>
-            <nav class="nav nav-masthead justify-content-center align-items-center">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#friendRequestModal" style="margin: 10px;">
-                    <img id='friend-request-notification'src="src/notification.png" width="36px" height="36px"/>
-                </a>
-            </nav>
-        </div>
-
-    </header>
+    <?php (LayoutHandler::factory())->createFriendsHeader(); ?>
 
     <main role="main" class="inner cover d-flex" id="rating" >
         <div class="p-3 bg-light card" id="friend-layout">
@@ -432,11 +416,7 @@ include 'script/modules/CookieManager.php';
         </div>
     </main>
 
-    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
-        <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
-        </div>
-    </footer>
+    <?php (LayoutHandler::factory())->createFooter(); ?>
 </div>
 
 </body>

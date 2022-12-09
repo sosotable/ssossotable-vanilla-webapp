@@ -309,11 +309,7 @@ include 'script/modules/CookieManager.php';
         </div>
     </main>
 
-    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
-        <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
-        </div>
-    </footer>
+    <?php (LayoutHandler::factory())->createFooter(); ?>
     <script>
         init()
     </script>

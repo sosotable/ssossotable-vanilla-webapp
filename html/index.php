@@ -5,14 +5,11 @@
     (CookieManager::factory())->checkUserCookie();
 ?>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <link rel="icon" href="src/favicon.ico">
-    <title>로그인</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <?php
+    include 'script/modules/LayoutHandler.php';
+    (LayoutHandler::factory())->createTitle('로그인');
+    ?>
+    
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
             font-family: "Jua";

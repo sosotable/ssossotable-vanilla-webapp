@@ -1,18 +1,14 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <?php
 include 'script/modules/CookieManager.php';
 (CookieManager::factory())->refreshCookie();
 ?>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>ssosso-table.food-db.diary</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="icon" href="src/favicon.ico">
+    <?php
+    include 'script/modules/LayoutHandler.php';
+    (LayoutHandler::factory())->createTitle('내 다이어리');
+    ?>
 
     <style>
         @font-face { /* 애플산돌고딕 폰트 적용 */
@@ -49,41 +45,8 @@ include 'script/modules/CookieManager.php';
 </script>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
-    <nav class="navbar d-flex">
-        <a class="navbar-brand p-2" href="http://ssossotable.com/recommendation.php" style="margin-right: auto;"><img class="masthead-brand" src="src/logo.png" width="60px" height="60px"></a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/rating.php">음식 평가하기</a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/recipe.php">레시피 추가하기</a>
-        <a class="nav-link text-muted p-2" href="http://ssossotable.com/record.php">식사 기록하기</a>
-        <button style="margin: 10px;" class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <a  class="offcanvas-title" href="http://ssossotable.com/rating.php"><img class="masthead-brand" src="src/logo.png" width="48px" height="48px"></a>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="text-align: left;">
-                    <li class="nav-item">
-                        <a class="nav-link " href="http://ssossotable.com/my_info.php">내 정보</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/friends.php">친구 목록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" style="border-bottom: 1px solid black;" href="http://ssossotable.com/diary.php">다이어리</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://ssossotable.com/my_recipe.php">나만의 레시피북</a>
-                    </li>
-                </ul>
-                <div class="input-group mb-3 mt-3">
-                    <input id="search" type="text" class="form-control" placeholder="음식명을 넣어주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button onclick="search()" class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php (LayoutHandler::factory())->createHeader(); ?>
+    
     <main role="main" class="inner cover d-flex" id="rating_main"  style="">
         <div class="card">
             <div class="card-body" id="title">
@@ -118,11 +81,7 @@ include 'script/modules/CookieManager.php';
 
         </div>
     </main>
-    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
-        <div class="inner">
-            <p style="margin: 0;">Created by<a href="http://ssossotable.com" class="footer-link"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
-        </div>
-    </footer>
+    <?php (LayoutHandler::factory())->createFooter(); ?>
 
 </div>
 

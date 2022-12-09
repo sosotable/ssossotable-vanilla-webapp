@@ -5,14 +5,10 @@ include 'script/modules/CookieManager.php';
 ?>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>식사 기록하기</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="icon" href="src/favicon.ico">
+    <?php
+    include 'script/modules/TitleHandler.php';
+    (TitleHandler::factory())->create('식사 기록하기');
+    ?>
 
     <!-- Custom styles for this template -->
     <style>
@@ -163,11 +159,7 @@ include 'script/modules/CookieManager.php';
         </div>
     </main>
 
-    <footer id="footer"  class="mastfoot mt-auto" style="background-color:#ffebaa;">
-        <div class="inner">
-            <p style="margin: 0;">Created by<a class="footer-link" href="http://ssossotable.com"> ssosso.table.u</a>, of <a href="http://ssossotable.com" class="footer-link">@ssosso.table</a></p>
-        </div>
-    </footer>
+    <?php (LayoutHandler::factory())->createFooter(); ?>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a4b680f23e6397395260cfd7b38420b8&libraries=services,clusterer,drawing"></script>
     <script>
         let placeId=-1
