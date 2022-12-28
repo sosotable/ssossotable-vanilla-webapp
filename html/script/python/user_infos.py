@@ -11,7 +11,7 @@ from itertools import combinations
 import json
 from matplotlib import font_manager, rc
 
-font_path = "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf"
+font_path = "path"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
@@ -60,8 +60,8 @@ for user in users:
 user_profile=pd.DataFrame(user_profile_list,index=users,columns=['intercept',*trait_cols])
 user_profile.index.name='id'
 
-user_profile.to_csv('/var/www/html/database/user_profile_lasso.csv',index=True, encoding="utf-8-sig")
-user_profile.to_json('/var/www/html/database/user_profile_lasso.json')
+user_profile.to_csv('path',index=True, encoding="utf-8-sig")
+user_profile.to_json('path')
 
 user_profile_recommendation=user_profile.copy()
 user_profile_recommendation=user_profile_recommendation.drop('intercept',axis=1)
@@ -110,10 +110,10 @@ for idx,row in user_profile_recommendation.iterrows():
     u=(user_profile_recommendation_kor.loc[idx].sort_values(ascending=False))[:3]
     sorted_recommendation_user_json_kor[idx]=u.to_json()
 
-with open('/var/www/html/database/user_food_recommendation.json','w', encoding='utf-8') as f:
+with open('path','w', encoding='utf-8') as f:
     json.dump(sorted_recommendation_user_json, f, ensure_ascii=False, indent=4)
 
-with open('/var/www/html/database/user_food_recommendation_kor.json','w', encoding='utf-8') as f:
+with open('path','w', encoding='utf-8') as f:
     json.dump(sorted_recommendation_user_json_kor, f, ensure_ascii=False, indent=4)
 
 sorted_users={}
@@ -164,7 +164,7 @@ for key in sorted_users.keys():
     plt.title('user_profile')
     plt.ylabel('rating')
     plt.tight_layout()
-    filename='/var/www/html/config/ratingInfos/'+str(key)+('.png')
+    filename='path'+str(key)+('.png')
     plt.savefig(filename)
     plt.cla()
 
@@ -183,7 +183,7 @@ for combi in users_combi:
     std=user_profile_taste.loc[[combi[0],combi[1]]].describe().loc['std'].sort_values()
     user_tastes[user]=std[:3].to_json()
 
-with open('/var/www/html/database/user_tastes.json','w') as f:
+with open('path','w') as f:
     json.dump(user_tastes, f, ensure_ascii=False, indent=4)
 
 ratings_taste=ratings.copy()
@@ -249,5 +249,5 @@ for key in tastes_std.keys():
     plt.title('user_profile')
     plt.ylabel('rating')
     plt.tight_layout()
-    plt.savefig('/var/www/html/config/userTastes/'+filename)
+    plt.savefig('path'+filename)
     plt.cla()

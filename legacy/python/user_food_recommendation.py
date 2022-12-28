@@ -13,7 +13,7 @@ from scipy.stats import uniform as sp_rand
 import json
 
 from matplotlib import font_manager, rc
-font_path = "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf"
+font_path = "path"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
@@ -97,8 +97,8 @@ for idx,row in user_profile.iterrows():
     u=(user_profile_kor.loc[idx].sort_values(ascending=False))[:3]
     sorted_user_json_kor[idx]=u.to_json()
 
-with open('/var/www/html/database/user_food_recommendation.json','w', encoding='utf-8') as f:
+with open('path','w', encoding='utf-8') as f:
     json.dump(sorted_user_json, f, ensure_ascii=False, indent=4)
 
-with open('/var/www/html/database/user_food_recommendation_kor.json','w', encoding='utf-8') as f:
+with open('path','w', encoding='utf-8') as f:
     json.dump(sorted_user_json_kor, f, ensure_ascii=False, indent=4)

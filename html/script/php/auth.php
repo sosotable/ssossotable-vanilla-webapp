@@ -2,8 +2,8 @@
 // 로그인 php
 // 편의상 DAOHanlder 대신 DAO에 직접접근하여 사용함
     try {
-        include '../modules/DAO.php';
-        include '../modules/CookieManager.php';
+        include 'path';
+        include 'path';
 
         if(!isset($_POST['user_name'])) exit;
         $result = ((DAO::factory())->select(

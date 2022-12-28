@@ -93,7 +93,7 @@ for key in sorted_users.keys():
     sorted_users[key]=pd.concat([df1,df2])
 
 from matplotlib import font_manager, rc
-font_path = "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf"
+font_path = "path"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
@@ -104,6 +104,6 @@ for key in sorted_users.keys():
     plt.title('user_profile')
     plt.ylabel('rating')
     plt.tight_layout()
-    filename='/var/www/html/config/ratingInfos/'+str(key)+('.png')
+    filename='path'+str(key)+('.png')
     plt.savefig(filename)
     plt.cla()

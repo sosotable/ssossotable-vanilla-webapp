@@ -42,7 +42,7 @@ for col in cols :
 
 user_profile=train.groupby('userid')[cols].mean()
 
-user_profile.to_json('/var/www/html/database/user_profile.json')
+user_profile.to_json('path')
 
 predict=[]
 for idx,row in test.iterrows():

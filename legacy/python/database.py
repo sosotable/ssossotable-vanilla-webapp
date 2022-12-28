@@ -49,5 +49,5 @@ for user in users:
 user_profile=pd.DataFrame(user_profile_list,index=users,columns=['intercept',*trait_cols])
 user_profile.index.name='id'
 
-user_profile.to_csv('/var/www/html/database/user_profile_lasso.csv',index=True, encoding="utf-8-sig")
-user_profile.to_json('/var/www/html/database/user_profile_lasso.json')
+user_profile.to_csv('path',index=True, encoding="utf-8-sig")
+user_profile.to_json('path')

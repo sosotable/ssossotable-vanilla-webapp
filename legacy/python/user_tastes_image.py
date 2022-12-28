@@ -91,7 +91,7 @@ for combi in users_combi:
 tastes_std[users]=tastes_std[users]*-1
 
 from matplotlib import font_manager, rc
-font_path = "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf"
+font_path = "path"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
@@ -105,5 +105,5 @@ for key in tastes_std.keys():
     plt.title('user_profile')
     plt.ylabel('rating')
     plt.tight_layout()
-    plt.savefig('/var/www/html/config/userTastes/'+filename)
+    plt.savefig('path'+filename)
     plt.cla()
